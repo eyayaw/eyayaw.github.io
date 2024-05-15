@@ -10,7 +10,7 @@ format: html
     <summary>Abstract</summary>
     > *This study presents new empirical evidence for the monocentric city model in a developing country, using unique real estate data for Addis Ababa. The study confirms two of the key predictions of the model: the negative rent and the negative structural density gradients. Both house prices and rents decrease as we move away from the center of Addis Ababa. Using building footprint datasets, the study also demonstrates that the structural density (measured by building height) strongly decreases with distance to the Central Business District (CBD). This study provides a comprehensive georeferenced real estate dataset for Addis Ababa, the first study to do so. The findings highlight the enduring relevance of the monocentric city model in cities in developed and developing countries.*
     </details> 
--   **The impact of COVID-19 on real estate markets in Germany.** [[*link*](https://ssrn.com/abstract=4700238)] </[code](https://github.com/eyayaw/donut-effect-de)>
+-   **The impact of COVID-19 on real estate markets in Germany.** [[*link*](https://ssrn.com/abstract=4700238)] </[code](https://github.com/eyayaw/de-donut-effect)>
     <details>
     <summary>Abstract</summary>
     

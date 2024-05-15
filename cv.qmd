@@ -1,147 +1,53 @@
 ---
 format:
-  pdf:
-    fontsize: 10pt
-    header-includes: |
-      \usepackage[utf8]{inputenc}
-      \usepackage[a4paper, margin=1in]{geometry}%total={6in, 8in}
-      \usepackage{setspace}
-      \doublespacing
-      \usepackage{xcolor, amsmath}
-      \usepackage{booktabs}
-      \usepackage{float}
-      \usepackage{array}
-      \usepackage[english]{babel}
-      \usepackage{hyperref}
-      \hypersetup{
-      colorlinks=true,
-      linkcolor=blue,
-      filecolor=magenta,
-      urlcolor=blue,
-      }
-execute:
-  freeze: true
+  html:
+    toc: false
 ---
 
-```{=tex}
-\begin{center}
-\Huge{\textbf{Eyayaw Teka Beze}}
-\end{center}
-\vspace{1pt}
-\begin{flushleft}
-\Large{\uppercase{Personal Data}}\\
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
-% \vspace{0.2in}
-\-\ Mercator School of Management (University of Duisburg-Essen)\\
-\-\ Chair of Economics \\
-\-\ Lotharstr. 65
-47057 Duisburg, Germany \\
-\-\ Email: \href{mailto:eyayaw.beze@uni-due.de}{eyayaw.beze@uni-due.de} \\
-\-\ Website: \href{https://eyayaw.github.io}{eyayaw.github.io}
-\begin{flushleft}
-\Large{\uppercase{Education}}\\
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
-\begin{table}[H]
-\begin{tabular}{p{0.205\textwidth} p{0.785\textwidth}}
-10/2019 -- & Ph.D. candidate in Economics, University of Duisburg Essen, Germany\\
-09/2017 -- 09/2019 &
- Joint European Master in Comparative Local Development Studies, Corvinus University of Budapest, University of (Regensburg, Trento, and Ljubljana).\\
-08/2014 -- 12/2015       & MA in Development Policy,  KDI School, Korea              \\
-10/2008 -- 06/2012       & BA in Economics, Bahir Dar University, Ethiopia
-\end{tabular}
-\end{table}
+Please find the full CV [here](./cv_eyayaw_beze.pdf).
 
-\begin{flushleft}
-\Large\uppercase{Work Experience}\\
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
-\begin{table}[H]
-\begin{tabular}{p{0.15\textwidth} p{0.85\textwidth}}
-08 -- 10/2019  & RA, Leibniz Institute for East \& SE European Studies, Regensburg, Germany\\
-04 -- 07/2019 & Intern, ditto\\
-2016 -- 2017  & Lecturer of Economics, Department of Economics, Jimma University, Ethiopia\\
-2012 -- 2014 & Graduate Assistant, Department of Economics, Jimma University, Ethiopia\\
-\end{tabular}
-\end{table}
+------------------------------------------------------------------------
 
-\newpage
-\begin{flushleft}
-\Large\uppercase{Teaching}\\
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
+## About
 
-\begin{table}[H]
-\begin{tabular}{p{0.175\textwidth} p{0.8\textwidth}}
- Winter 2021/22 & TA for Econometrics (Master), University of Duisburg-Essen, Germany\\
-Spring 2017 & Linear Algebra (BA), Jimma University, Ethiopia                  \\
-Fall 2016   & Econometrics I (BA), Jimma University, Ethiopia       \\
-Spring 2016 & Linear Algebra (BA), Jimma University, Ethiopia       \\
-Spring 2014 & Mathematical Economics (BA), Jimma University, Ethiopia     \\
-Fall 2013   & Introduction to Statistics (BA), Jimma University, Ethiopia \\
-Spring 2013 & Microeconomics I (BA), Jimma University, Ethiopia           \\
-Fall 2012   & Introduction to Statistics (BA), Jimma University, Ethiopia
-\end{tabular}
-\end{table}
-\begin{flushleft}
-\Large\uppercase{Research/Publication}\\
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
+<a href="https://www.github.com/eyayaw/"> <img src="https://img.shields.io/badge/eyayaw-blue?style=flat&amp;logo=github" alt="Static Badge"/> </a> <a href="https://www.linkedin.com/in/eyayaw/"> <img src="https://img.shields.io/badge/eyayaw-blue?style=flat&amp;logo=linkedin" alt="Static Badge"/> </a> <a href="mailto:eyayaw.beze@gmail.com"> <img src="https://img.shields.io/badge/eyayaw.beze-blue?style=flat&amp;logo=Gmail" alt="Static Badge"/> </a>
 
-\begin{itemize}
-    \item "Geographic Constraints and the Housing Supply Elasticity in Germany" --- \href{https://www.rwi-essen.de/en/publications/scientific/ruhr-economic-papers/detail/geographic-constraints-and-the-housing-supply-elasticity-germany}{Ruhr Economic Papers \#1003}
+**Ph.D. candidate in Economics**\
+**R and Python enthusiast \| Urban Economics \| Housing Markets \| Data Science**
 
-     \item \href{https://doi.org/10.46404/panjogov.v1i2.2342}{"Trends in Contemporary International Migration of Ethiopia" PanAfrican Journal of Governance and Development (PJGD), 1(2), 30-60}
+::: callout
+A strong background in econometrics, statistics, and data science. I am interested in the application of data science and econometrics in the field of urban economics and housing markets. I have experience in working with large datasets, data cleaning, data visualization, and data analysis. I am proficient in R, Python, and SQL.
+:::
 
-   \item “Energy Consumption and Economic
-Growth in Selected East African Countries: 1990-2015” --- MA thesis
+------------------------------------------------------------------------
 
-     \item “Sources of Growth in Sub-Saharan-African Countries: A Growth Accounting Analysis over 1980-2011 time period” --- MA thesis
+## Work Experience
 
-\end{itemize}
+-   Scientific researcher at the Chair of Economics, University of Duisburg-Essen
+-   Intern and RA at IOS Regensburg
+-   Lecturer and ICT coordinator at Jimma University
 
-\begin{flushleft}
-\Large{\uppercase{Computer Skills}}
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
+## Education
 
-\-\ R, Python, MATLAB, Stata, \LaTeX{}, Markdown
+-   Ph.D. candidate in Economics, Ruhr Graduate School in Economics
+-   MA in Comparative Local Development, University of {Corvinus, Regensburg, Trento, Lijubljana}
+-   MA in Development Policy, KDI School of Public Policy and Management
+-   BA in Economics, Bahir Dar University
 
-\newpage
-\begin{flushleft}
-\Large\uppercase{Awards and Scholarships}\\
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
-\begin{table}[H]
-    \begin{tabular}{p{0.15\textwidth} p{0.8\textwidth}}
-2019 -- 2024 & German Research Foundation (DFG) Ph.D. fellow\\
-2017 -- 2019 &  Erasmus+ Scholarship Joint European Master Degree Development\\
-2014 -- 2016 & Korea International Cooperation Agency (KOICA) Master's in Global Leaders in Economic Policy Fellowship Program, South Korea\\
-2012-06-29 & $1^{\text{st}}$ distinction, College of Business and Economics, Bahir Dar University, Ethiopia
-    \end{tabular}
-\end{table}
+## Dissertation
 
-\begin{flushleft}
-\Large{\uppercase{References}}
-\end{flushleft}
-\vspace{-18pt}
-\rule{\textwidth}{1pt}
+Title: **Essays on Housing Supply and the Monocentric City Model**\
 
-\begin{itemize}
-\item\textbf{Tobias Seidel} (Ph.D. in Economics, Ludwig-Maximilians-Universität Munich)\\
-Professor at Mercator School of Management, University of Duisburg Essen\\
-Email: \href{tobias.seidel@uni-due.de}{tobias.seidel@uni-due.de}
+1.  [**Testing the Gradient Predictions of the Monocentric City Model in Addis Ababa**](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4803607) \</[code](https://github.com/eyayaw/the-monocentric-city-gradients-addis-ababa)\>
 
-\item \textbf{Natnael Simachew Nigatu} (Ph.D. in Economics, Copenhagen University)\\
-Consultant at World Bank Group\\
-Email: \href{nsn@econ.ku.dk}{nsn@econ.ku.dk}
-\end{itemize}
-```
+2.  [**The impact of COVID-19 on real estate markets in Germany.**](https://ssrn.com/abstract=4700238) \</[code](https://github.com/eyayaw/de-donut-effect)\>
+
+3.  [**Geographic Constraints and the Housing Supply Elasticity in Germany**](https://uni-duisburg-essen.sciebo.de/s/km7tQzcygRQjwp6). \</[code](https://github.com/eyayaw/housing-supply-elasticity-in-germany)\>
+
+## Skills
+
+-   R, Python, Stata, Zsh, Git, MySQL, GIS, LaTeX/Quarto/Markdown, Shiny
+
+## Interests
+
+-   Data, web scraping, football
