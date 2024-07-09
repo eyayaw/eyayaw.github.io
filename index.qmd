@@ -18,10 +18,7 @@ toc: false
 
 # Hi there, welcome!
 
-My name is Eyayaw Beze, and I am a Ph.D. candidate at the [University of
-Duisburg-Essen](https://www.uni-due.de/en/index.php). My research
-focuses on urban and regional economics, particularly housing market
-issues. Additionally, I am highly interested in data science with `R`
+My name is Eyayaw Beze, and I completed my Ph.D. in Urban/Regional Economics, focusing on housing supply and the empirical application of the monocentric city model (also known as the Alonso, Mills, and Muth model). Additionally, I am highly interested in data science with `R`
 and `Python`.
 
 <details>
@@ -47,7 +44,6 @@ For more than three years, I worked for Jimma University, [department of
 Economics](https://ju.edu.et/college-of-business-and-conomics/), where I
 taught undergrad economics courses.
 
-Now, I am a Ph.D. candidate at the [University of
-Duisburg-Essen](https://www.uni-due.de/en/index.php).
+I completed my Ph.D. in Urban Economics at [RGS Econ](https://www.rgs-econ.org/), based at the [University of Duisburg-Essen](https://www.uni-due.de/en/index.php).
 
 </details>

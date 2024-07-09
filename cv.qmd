@@ -12,7 +12,7 @@ Please find the full CV [here](./cv_eyayaw_beze.pdf).
 
 <a href="https://www.github.com/eyayaw/"> <img src="https://img.shields.io/badge/eyayaw-blue?style=flat&amp;logo=github" alt="Static Badge"/> </a> <a href="https://www.linkedin.com/in/eyayaw/"> <img src="https://img.shields.io/badge/eyayaw-blue?style=flat&amp;logo=linkedin" alt="Static Badge"/> </a> <a href="mailto:eyayaw.beze@gmail.com"> <img src="https://img.shields.io/badge/eyayaw.beze-blue?style=flat&amp;logo=Gmail" alt="Static Badge"/> </a>
 
-**Ph.D. candidate in Economics**\
+**Ph.D. in Economics**\
 **R and Python enthusiast \| Urban Economics \| Housing Markets \| Data Science**
 
 ::: callout
@@ -29,7 +29,7 @@ A strong background in econometrics, statistics, and data science. I am interest
 
 ## Education
 
--   Ph.D. candidate in Economics, Ruhr Graduate School in Economics
+-   Ph.D. in Economics, Ruhr Graduate School in Economics
 -   MA in Comparative Local Development, University of {Corvinus, Regensburg, Trento, Lijubljana}
 -   MA in Development Policy, KDI School of Public Policy and Management
 -   BA in Economics, Bahir Dar University
