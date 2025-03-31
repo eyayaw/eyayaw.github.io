@@ -1,0 +1,11 @@
+---
+title: String formatting in R and Python
+date: "2024-11-24"
+categories: [code, r, python]
+draft: true
+---
+
+In this post, we will go through **string formatting** in R and Python. Spoiler alert: In R, we're going to use `sprintf()` function to format strings, as there is no native formatting support as in Python. Python offers more options, from C-style formatting (using the `%` operator), to `str.format()` method, and everyone's favorite `fstrings`.
+
+
+String formatting refers to styling text (and numerical data) to appear in a desired format. This includes adding padding to align content to the left, center, or right of a given space or character, adding units, other other symbols by transforming the content.

@@ -1,0 +1,213 @@
+---
+title: Some Base R Functions
+date: "2024-11-26"
+draft: true
+category: "[code, r, base-r]"
+engine: knitr
+execute:
+  echo: false
+---
+
+Let's go through a few `base R` functions that we may have underutilized.
+
+::: callout-note
+```{r}
+base = installed.packages(.Library, priority = "base")[, "Package"]
+high = installed.packages(.Library, priority = "high")[, "Package"]
+
+base_pkgs = knitr::combine_words(base, before="`")
+```
+
+**Base R** refers to built-in packages that come with R[^almost]. Some of us don't probably use or even know exist some of these packages. According to the documentation (see [?installed.packages](https://search.r-project.org/R/refmans/utils/html/installed.packages.html)), Base R includes `{r} base_pkgs`.
+:::
+
+[^almost]: Packages that come with R includes more than base packages: `installed.packages(priority="high")` shows `base + recommended` packages.
+
+### `base::file.path`
+
+I see people use the [`{here}`](https://github.com/r-lib/here) package a lot, but it has not yet occurred to me that I needed it in my workflows when I already have `file.path`. While the goal of the package is to replace `setwd`, I often see people use it to construct file paths relative to the project directory like:
+
+``` r
+# Taken from the repo (see the readme)
+path = here::here("inst", "demo-project", "data", "penguins.csv")
+#> [1] "/home/kirill/git/R/here/inst/demo-project/data/penguins.csv"
+write.csv(palmerpenguins::penguins, path)
+```
+
+If that is the sole use case, we can just use `file.path` provided we *setup our working directory properly*. Just replace `here::here` with `file.path` and we are good to go.
+
+```{r}
+#| echo: true
+#| eval: false
+
+path = file.path("inst", "demo-project", "data", "penguins.csv")
+#> [1] "inst/demo-project/data/penguins.csv"
+write.csv(palmerpenguins::penguins, path)
+```
+Notice that `file.path` provides the relative path, while `here::here` provides the (full) absolute path.
+
+Of course, `{here}` is more powerful (has sophisticated project root resolving mechanisms, robust to in-session working dir changes (with setwd()), and [more](https://here.r-lib.org/articles/here.html)). But if you are using projects and work with (project) relative paths, `file.path` may do the job just fine. The project-relative path construction feature of `{here}` (i.e., with `here::here`) is the comparable part to `file.path`.
+
+
+### `file.stem` = `tools::file_path_sans_ext` + `tools::file_ext`
+
+These functions allow for the manipulation of file paths, with `file_path_sans_ext` returning the file path without the extension and `file_ext` returning the file extension.
+
+```{r}
+#| echo: true
+#| eval: false
+
+file_path = "~/data/mtcars.csv"
+
+# Extract the file path without the extension
+tools::file_path_sans_ext(file_path)
+#> [1] "~/data/mtcars"
+
+# Extract the file extension
+tools::file_ext(file_path)
+#> [1] "csv"
+```
+
+At times, I need the stem of the file path to save a file with a different extension or to use the file path as an id in data frames when reading multiple files.
+
+```{r}
+#| eval: false
+
+files = list.files("data", "*.csv", full.names = TRUE)
+names(files) = tools::file_path_sans_ext(files) |> basename()
+
+lapply(files, \(f) data.table::fread(f)) |>
+  data.table::rbindlist()
+```
+
+I use the `tools::file_path_sans_ext` and `base::basename` combo a lot, so I put it into a function `file.stem` to use as a util in my projects.
+
+
+### `base::sprintf`
+
+This function serves as a workhorse for creating formatted strings. According to the [doc](https://search.r-project.org/R/refmans/base/html/sprintf.html), it is a wrapper for the C `sprintf` function, which suggests it is a common operation. It is very useful for creating consistent output in reports or visualizations.
+
+You may have used `paste0` with some separators, and `round` to truncate numeric data, but `sprintf` is more powerful and flexible.
+
+If you have done `paste0("a", "-", "b", "-", "c")`, the equivalent would be `sprintf('%s - %s - %s', "a", "b", "c")`.
+
+The {glue} package is a popular and great alternative for formatting strings if you are not a dependency-averse person. FYI, glue has no dependencies.
+
+```{r}
+# create a string with placeholders for variables
+my_string = "The value of x is %d and the value of y is %f"
+
+# insert values into the placeholders
+sprintf(my_string, 1, 2.5)
+```
+
+
+### `base::lengths`
+
+This function returns the lengths of objects in a list, making it useful for quickly summarizing the structure of a data set.
+
+```{r}
+# create a list of vectors
+my_list = list(c(1, 2, 3), c("a", "b", "c"), c(TRUE, TRUE, FALSE))
+
+# calculate the lengths of each vector in the list
+lengths(my_list)
+```
+
+### `rle`
+
+This function computes the lengths and values of runs of equal values in a vector, making it useful for identifying patterns in data.
+
+```{r}
+# create a vector with repeated values
+my_vector = c(1, 1, 1, 2, 2, 3, 3, 3, 3)
+
+# calculate the lengths and values of runs of equal values in the vector
+rle(my_vector)
+```
+
+### `ave`
+
+This function calculates the mean of a vector, with the option to specify grouping variables for calculating means by group.
+
+```{r}
+# create a data frame with two variables
+my_data = data.frame(
+  x = c(1, 2, 3, 4, 5),
+  y = c("a", "b", "c", "d", "e")
+)
+
+# calculate the mean of variable "x"
+ave(my_data$x)
+
+# calculate the mean of variable "x" by the levels of variable "y"
+ave(my_data$x, my_data$y)
+```
+
+
+
+### `sweep`
+
+This function allows you to apply a function to a matrix or vector by a margin, making it useful for quickly performing calculations across rows or columns.
+
+```{r}
+# create a matrix
+my_matrix = matrix(1:9, nrow = 3)
+
+# apply the sum function across the rows of the matrix
+sweep(my_matrix, 1, colSums(my_matrix), "+")
+```
+
+### `Map`
+
+This function applies a function to each element of a list, returning a list of results.
+
+```{r}
+# create a list of vectors
+my_list = list(r=rnorm(10), y=runif(10))
+
+# apply the sum function to each vector in the list
+Map(sum, my_list)
+```
+
+### `replace`
+
+This function allows for the replacement of values in a vector or data frame, making it useful for data cleaning and manipulation.
+
+```{r}
+# create a vector with some missing values
+my_vector = c(1, NA, 2, NA, 3)
+
+# replace the missing values with 0
+replace(my_vector, is.na(my_vector), 0)
+```
+
+### `within`
+
+This function allows for the evaluation of an expression within a specified environment, making it useful for controlling variable scope and accessing objects in different environments.
+
+```{r}
+# create a data frame
+my_data = data.frame(
+  x = c(1, 2, 3, 4),
+  y = c("a", "b", "c", "d")
+)
+
+within(my_data, mean(x))
+```
+
+### `strrep`
+
+is used to repeat a string a specified number of times. Here is an example of how to use it:
+
+```{r}
+# Repeat the string "hello" 5 times
+strrep("hello", 5)
+```
+
+This function can be useful for creating strings of repeated characters or words, or for padding strings with a certain character or word. It can also be useful for creating strings of a certain length by repeating a given string until it reaches the desired length.
+
+```{r}
+# Pad the string "hello" with underscores until it is 10 characters long
+padded_string = paste("hello", strrep("_", 10 - nchar("hello")))
+```

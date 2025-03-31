@@ -1,0 +1,51 @@
+---
+css: about.css
+---
+
+
+```{=html}
+<img src="{{< var profile-img-about >}}" alt="Eyayaw Beze" class="about-image"/>
+````
+
+::: intro-text
+```{=html}
+<p>Hi there, this is Eyayaw. <span class="pronunciation">Pronounce my name like the <a href="https://www.youtube.com/watch?v=Wm4R8d0d8kU">Old McDonald</a> song: "E-I-E-I-O".</span>
+</p>
+```
+:::
+
+## Short Bio {.bio-section}
+
+::: bio-text
+I grew up in a small village called Shumshuha (ሹምሹሃ) (aka Lalibela
+Airport) about 10km southwest of the historic town [Lalibela,
+Ethiopia](https://en.wikipedia.org/wiki/Lalibela).
+
+```{=html}
+<!-- ![[Shumshuha --- Lalibela Airport, photo © [Raimund
+Stehmann]({{< var hometown-img-credit >}}),
+[Airliners](https://airliners.net)]{.location-caption}]({{< var hometown-img >}}){.location-image fig-alt="Shumshuha --- Lalibela Airport"} -->
+```
+
+```{=html}
+<div>
+<img src="{{< var hometown-img >}}" alt="Shumshuha — Lalibela Airport" class="location-image">
+<p class="location-caption">Shumshuha — Lalibela Airport, photo © <a href="{{< var hometown-img-credit >}}">Raimund Stehmann</a>, <a href="https://airliners.net">AirLiners</a></p>
+</div>
+```
+
+I went to Bahir Dar University for my undergrad, for my master's to [KDI
+School]({{< var kdis-url >}}) in South Korea, and to Budapest,
+Regensburg and Trento for a joint European master in comparative local
+development ([Master
+CoDe](https://www.unitn.it/ateneo/813/joint-european-master-of-local-development-code)).
+
+For more than three years, I worked for Jimma University, [department of
+Economics](https://ju.edu.et/college-of-business-and-conomics/), where I
+taught undergrad economics courses.
+
+I did my Ph.D. in Urban Economics at [RGS
+Econ](https://www.rgs-econ.org/), based at the [University of
+Duisburg-Essen]({{< var ude-url >}}).
+:::
+

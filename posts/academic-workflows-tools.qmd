@@ -1,0 +1,9 @@
+---
+title: "Academic Life Hacks"
+date: "2024-11-20"
+categories: [code, r, tips]
+image: "media/image.jpg"
+draft: true
+---
+
+Now my PhD is out of the way, I can finally blather about some of my stories.

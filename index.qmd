@@ -1,49 +1,130 @@
 ---
-# title: Welcome
-image: social-card.jpg
-about:
-  template: trestles
-  links:
-    - icon: github
-      href: https://github.com/eyayaw
-    - icon: twitter
-      href: https://twitter.com/eyayaw
-    - icon: mastodon
-      href: https://mastodon.social/@eyayaw
-      rel: me
-    - icon: linkedin
-      href: https://linkedin.com/in/eyayaw
-toc: false
+title: "Eyayaw Beze"
+page-layout: full
+listing:
+    - id: listing
+      contents: posts
+      type: default
+      sort: "date desc"
+      categories: false
+      sort-ui: false
+      filter-ui: false
+      max-items: 8
+      template: recent-posts.ejs
+css: index.css
+header-includes: >-
+  <link rel="stylesheet" href="_assets/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
 ---
 
-# Hi there, welcome!
+```{=html}
+<div class="profile-box">
+    <div class="avatar">
+      <img src="https://avatars.githubusercontent.com/u/49317723?s=400&u=e43bdf7335b5661d09337ea029cd7ddaabcda804&v=4" alt="Eyayaw">
+    </div>
+    <div class="content">
+      <p>I'm Eyayaw, a Ph.D. <a href="/research.html">urban/regional economist</a> by training and data scientist. You can poke at my dissertation <a href="https://github.com/eyayaw/dissertation">here</a>. I share thoughts and insights about academic life and programming{tutorials,deep dives,tips}, and cli tools on my <a href="/blog.html">blog</a>. I swing around 🇳🇱 & 🇩🇪.</p>
+      <p>An avid fan of oss, particularly of
+      <i class="fa-brands fa-r-project"></i>,
+      <i class="fa-brands fa-python"></i>, &
+      <img src="https://duckdb.org/images/logo-dl/DuckDB_Logo-stacked.svg" style="width: 2rem; height: 2rem; vertical-align: middle;">.</p>
+      <p><i class="fas fa-futbol mufc"></i> A Proud
+      <span style="color:red;">Manchester</span> United fan since 2005!</p>
+      <p><a href="about.html">More about me...</a></p>
+    </div>
+  </div>
+```
 
-My name is Eyayaw Beze, and I completed my Ph.D. in Urban/Regional Economics, focusing on housing supply and the empirical application of the monocentric city model (also known as the Alonso, Mills, and Muth model). Additionally, I am highly interested in data science with `R`
-and `Python`.
 
-<details>
+## Recent Posts {.section-heading}
 
-<summary>Short bio</summary>
+::::: {#recent-posts}
+:::: {#listing-container}
+::: {#listing}
+:::
+::::
+:::::
 
-I grew up in a small village called Shumshuha \[ሹምሹሃ\] (aka Lalibela
-Airport) about 10km southwest of the historic town [Lalibela,
-Ethiopia](https://en.wikipedia.org/wiki/Lalibela).
 
-![Shumshuha --- Lalibela Airport, photo © [Raimund
-Stehmann](https://www.airliners.net/photo/-/-/1618928/L?qsp=eJwtjEEKAjEMRe+StRsZcDE7vcC48AKx/Wgx2pIEtAxzd2Nx93gP3kqpvhwfv/QGmsnAmu60o8bKT6N5pQf6u2oOJmEpVwhHt6p+6uEyO44poTny3y+aob8ES2N1i/U+AHoeTNMhfC7WhMcDzkVo277Oky/R),
-[Airliners](https://airliners.net)](shumshuha.jpg){fig-alt="Shumshuha --- Lalibela Airport"
-fig-align="center"}
+## Hobby Projects {.section-heading}
 
-I went to Bahir Dar University for my undergrad, for my master's to [KDI
-School](https://www.kdischool.ac.kr/) in South Korea, and to Budapest,
-Regensburg and Trento for a joint European master in comparative local
-development ([Master
-CoDe](https://www.unitn.it/ateneo/813/joint-european-master-of-local-development-code)).
+```{=html}
+<ul class="projects">
+  <li>
+    <a href="https://github.com/eyayaw/cleaning-RWI-GEO-RED">eyayaw/cleaning-RWI-GEO-RED</a>: Scripts for cleaning, tidying, and hedonic model estimation for <a href="https://www.rwi-essen.de/en/research-advice/further/research-data-center-ruhr-fdz/data-sets/rwi-geo-red/x-real-estate-data-and-price-indices">Immoscout24/RWI-GEO-RED</a> real estate data
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/ethio-youtube-channels">eyayaw/ethio-youtube-channels</a>: Daily YouTube stats for selected Ethiopian channels
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns.
+  </li>
+</ul>
+```
 
-For more than three years, I worked for Jimma University, [department of
-Economics](https://ju.edu.et/college-of-business-and-conomics/), where I
-taught undergrad economics courses.
+## Research Projects {.section-heading}
 
-I completed my Ph.D. in Urban Economics at [RGS Econ](https://www.rgs-econ.org/), based at the [University of Duisburg-Essen](https://www.uni-due.de/en/index.php).
+```{=html}
+<div class="research-project">
+  <span class="research-title">Testing the Gradient Predictions of the Monocentric City Model in Addis Ababa</span>
+  <div class="research-links">
+    <a href="{{< var paper-addis >}}">SSRN</a>|
+    <a href="{{< var code-addis >}}">Code</a>
+  </div>
+  <p class="research-summary">
+    New empirical evidence confirming key predictions of the monocentric city model in a developing country context using real estate data from Addis Ababa.
+  </p>
+</div>
 
-</details>
+<div class="research-project">
+  <span class="research-title">The impact of COVID-19 on real estate markets in Germany</span>
+  <div class="research-links">
+    <a href="{{< var paper-covid >}}">German Economic Review</a>|
+    <a href="{{< var code-covid >}}">Code</a>
+  </div>
+  <p class="research-summary">
+    Examines the impact of the COVID-19 pandemic on the German housing market, finding minimal changes in house rents and prices in favor of suburban areas and attributing differences from the US "donut effect" to cultural and structural factors.
+  </p>
+</div>
+
+<div class="research-project">
+  <span class="research-title">Geographic Constraints and the Housing Supply Elasticity in Germany</span>
+  <div class="research-links">
+    <a href="{{< var paper-elasticy >}}">Ruhr Economic Papers #1003</a>|
+    <a href="{{< var code-elasticy >}}">Code</a>
+  </div>
+  <p class="research-summary">
+    Estimates the price elasticity of housing supply and the impact of geographic constraints in Germany from 2008-2019 using the Bartik instrument. The housing supply is, on average, inelastic, about 0.23 across counties, with highly (land) developed counties showing lower elasticity.
+  </p>
+</div>
+```
+
+
+## Quick Links {.section-heading}
+
+```{=html}
+<ul class="quick-links-list">
+  <li>
+    <i class="fab fa-github"></i>
+    <a href="{{< var github >}}">GitHub</a>
+  </li>
+  <li>
+    <i class="fab fa-twitter"></i>
+    <a href="{{< var twitter >}}">Twitter</a>
+  </li>
+  <li>
+    <i class="fab fa-mastodon"></i>
+    <a href="{{< var mastodon >}}">Mastodon</a>
+  </li>
+  <li>
+    <i class="fab fa-bluesky"></i>
+    <a href="{{< var bluesky >}}">Bluesky</a>
+  </li>
+  <li>
+    <i class="fab fa-linkedin"></i>
+    <a href="{{< var linkedin >}}">LinkedIn</a>
+  </li>
+</ul>
+```
