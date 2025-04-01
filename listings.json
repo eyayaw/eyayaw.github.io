@@ -2,7 +2,13 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/2022/welcome.html"
+      "/posts/welcome.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/welcome.html"
     ]
   }
 ]

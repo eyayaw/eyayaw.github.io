@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Eyayaw Beze’s personal website – Eyayaw Beze</title>
+<title>Eyayaw Beze</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,17 +31,17 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./{{< var profile-img >}}" rel="icon">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-0be10a02aa56032eb6fe331f79f59765.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-recent-posts .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-project','listing-website','listing-format','listing-execute','listing-editor','listing-_quarto-vars','listing-language','listing-freeze','listing-title-block-banner','listing-smooth-scroll','listing-author','listing-citation','listing-toc','listing-toc-title','listing-highlight-style','listing-code-copy','listing-code-overflow','listing-title','listing-date','listing-categories','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-project","listing-website","listing-format","listing-execute","listing-editor","listing-_quarto-vars","listing-language","listing-freeze","listing-title-block-banner","listing-smooth-scroll","listing-author","listing-citation","listing-toc","listing-toc-title","listing-highlight-style","listing-code-copy","listing-code-overflow","listing-title","listing-date","listing-categories","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-recent-posts'] = new List('listing-recent-posts', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0MBR68SHL8"></script>
 
 <script type="text/javascript">
@@ -79,15 +108,43 @@ gtag('js', new Date());
 gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="_assets/index.css">
+<link rel="stylesheet" href="_assets/index.css"> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Eyayaw Beze’s personal website – Eyayaw Beze">
-<meta property="og:description" content="Eyayaw Beze’s personal website">
+<link rel="stylesheet" href="index.css">
+<meta property="og:title" content="Eyayaw Beze">
 <meta property="og:site_name" content="Eyayaw Beze">
 <meta name="twitter:title" content="Eyayaw">
-<meta name="twitter:description" content="Eyayaw Beze’s personal website">
 <meta name="twitter:creator" content="@eyayaw">
 <meta name="twitter:site" content="@eyayaw">
 <meta name="twitter:card" content="summary_large_image">
@@ -109,45 +166,30 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./research.html"> 
-<span class="menu-text">research</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text">cv</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">blog</span></a>
   </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/eyayaw"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./research.html"> 
+<span class="menu-text">research</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/eyayaw"> <i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://github.com/eyayaw"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <div id="quarto-announcement" data-announcement-id="fb6d5006e4c5ef4c68a9636c93750e3c" class="alert alert-primary hidden"><i class="bi bi-info-circle quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Alert</strong> – this website is a work in progress.</p>
-</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
@@ -159,7 +201,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><em>Eyayaw Beze’s personal website</em></h1>
+<h1 class="title">Eyayaw Beze</h1>
 </div>
 
 
@@ -176,21 +218,112 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </header>
 
 
-<div class="social-links">
-<a href="https://linkedin.com/in/eyayaw" class="social-icon"><i class="fab fa-linkedin fa-2x"></i></a>
-<a href="https://github.com/eyayaw" class="social-icon"><i class="fab fa-github fa-2x"></i></a>
-<a href="https://twitter.com/eyayaw" class="social-icon"><i class="fab fa-twitter fa-2x"></i></a>
-<a href="https://mastodon.social/@eyayaw" class="social-icon"><i class="fab fa-mastodon fa-2x"></i></a>
-<a href="https://bsky.app/profile/eyayaw.bsky.social" class="social-icon"><i class="fa-brands fa-bluesky fa-2x"></i></a>
+<!-- <div class="quarto-title"> -->
+<!-- <h1 class="title">Eyayaw Beze</h1> -->
+<!-- </div> -->
+<div class="profile-box">
+    <div class="avatar">
+      <img src="https://avatars.githubusercontent.com/u/49317723?s=400&amp;u=e43bdf7335b5661d09337ea029cd7ddaabcda804&amp;v=4" alt="Eyayaw">
+    </div>
+    <div class="content">
+      <p>I'm Eyayaw, a Ph.D. <a href="./research.html">urban/regional economist</a> by training and data scientist. You can poke at my dissertation <a href="https://github.com/eyayaw/dissertation">here</a>. I share thoughts and insights about academic life and programming{tutorials,deep dives,tips}, and cli tools on my <a href="./blog.html">blog</a>. I swing around 🇳🇱 &amp; 🇩🇪.</p>
+      <p>An avid fan of oss, particularly of
+      <i class="fa-brands fa-r-project"></i>,
+      <i class="fa-brands fa-python"></i>, &amp;
+      <img src="https://duckdb.org/images/logo-dl/DuckDB_Logo-stacked.svg" style="width: 2rem; height: 2rem; vertical-align: middle;">.</p>
+      <p><i class="fas fa-futbol mufc"></i> A Proud
+      <span style="color:red;">Manchester</span> United fan since 2005!</p>
+      <p><a href="about.html">More about me...</a></p>
+    </div>
+  </div>
+<section id="recent-posts" class="level2">
+<h2 class="anchored" data-anchor-id="recent-posts">Recent Posts</h2>
+<div id="listing-recent-posts" class="quarto-listing quarto-listing-container-custom">
+<!-- Recent posts with ISO date format (YYYY-MM-DD) -->
+<ul class="list">
+<li data-index="0" data-categories="bmV3cw==" data-listing-date-sort="1659218400000" data-listing-file-modified-sort="1743378007365" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="23">
+2022-07-30 - <a href="./posts/welcome.html" class="listing-title">Welcome to my Blog</a>
+</li>
+</ul>
+<div class="listing-no-matching d-none">
+No matching items
 </div>
-<section id="hey-there" class="level1">
-<h1>Hey there! 👋🏽</h1>
-<p>Thank you for visiting my website!</p>
-<p>My name is Eyayaw Beze, and I did my Ph.D.&nbsp;in Urban/Regional Economics, focusing on housing supply and the empirical application of the monocentric city model, also known as the <strong>Alonso</strong>, <strong>Mills</strong>, and <strong>Muth</strong> (AMM) model. Additionally, I’m interested in data science with <i class="fa-brands fa-r-project"></i>, <i class="fa-brands fa-python"></i>, and <i class="fas fa-database"></i>.</p>
-<p><a href="#about.qmd">About me →</a></p>
-<p>
-<i class="fas fa-futbol mufc"></i> Proud <span style="color: #DA291C;"><strong>Manchester</strong></span> <strong>United</strong> fan since 2005!
-</p>
+</div>
+</section>
+<section id="hobby-projects" class="level2">
+<h2 class="anchored" data-anchor-id="hobby-projects">Hobby Projects</h2>
+<ul class="hobby-projects">
+  <li>
+    <a href="https://github.com/eyayaw/cleaning-RWI-GEO-RED">eyayaw/cleaning-RWI-GEO-RED</a>: Scripts for cleaning, tidying, and hedonic model estimation for <a href="https://www.rwi-essen.de/en/research-advice/further/research-data-center-ruhr-fdz/data-sets/rwi-geo-red/x-real-estate-data-and-price-indices">Immoscout24/RWI-GEO-RED</a> real estate data
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/ethio-youtube-channels">eyayaw/ethio-youtube-channels</a>: Daily YouTube stats for selected Ethiopian channels
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns.
+  </li>
+</ul>
+</section>
+<section id="research-projects" class="level2">
+<h2 class="anchored" data-anchor-id="research-projects">Research Projects</h2>
+<div class="research-project">
+  <span class="research-title">Testing the Gradient Predictions of the Monocentric City Model in Addis Ababa</span>
+  <div class="research-links">
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4803607">SSRN Pre-print</a>|
+    <a href="https://github.com/eyayaw/the-monocentric-city-gradients-addis-ababa">Code</a>
+  </div>
+  <p class="research-summary">
+    New empirical evidence confirming key predictions of the monocentric city model in a developing country context using real estate data from Addis Ababa.
+  </p>
+</div>
+
+<div class="research-project">
+  <span class="research-title">The impact of COVID-19 on real estate markets in Germany</span>
+  <div class="research-links">
+    <a href="https://www.degruyter.com/document/doi/10.1515/ger-2024-0049/html">German Economic Review</a>|
+    <a href="https://github.com/eyayaw/de-donut-effect">Code</a>
+  </div>
+  <p class="research-summary">
+    Examines the impact of the COVID-19 pandemic on the German housing market, finding minimal changes in house rents and prices in favor of suburban areas and attributing differences from the US "donut effect" to cultural and structural factors.
+  </p>
+</div>
+
+<div class="research-project">
+  <span class="research-title">Geographic Constraints and the Housing Supply Elasticity in Germany</span>
+  <div class="research-links">
+    <a href="https://www.rwi-essen.de/en/publications/scientific/ruhr-economic-papers/detail/geographic-constraints-and-the-housing-supply-elasticity-germany">Ruhr Economic Papers #1003</a>|
+    <a href="https://github.com/eyayaw/housing-supply-elasticity-in-germany">Code</a>
+  </div>
+  <p class="research-summary">
+    Estimates the price elasticity of housing supply and the impact of geographic constraints in Germany from 2008-2019 using the Bartik instrument. The housing supply is, on average, inelastic, about 0.23 across counties, with highly (land) developed counties showing lower elasticity.
+  </p>
+</div>
+</section>
+<section id="quick-links" class="level2">
+<h2 class="anchored" data-anchor-id="quick-links">Quick Links</h2>
+<ul class="quick-links-list">
+  <li>
+    <i class="fab fa-github"></i>
+    <a href="https://github.com/eyayaw">github.com/eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-linkedin"></i>
+    <a href="https://linkedin.com/in/eyayaw">linkedin.com/in/eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-twitter"></i>
+    <a href="https://twitter.com/eyayaw">twitter.com/eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-mastodon"></i>
+    <a href="https://mastodon.social/@eyayaw">mastodon.social/@eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-bluesky"></i>
+    <a href="https://bsky.app/profile/eyayaw.bsky.social">bsky.app/profile/eyayaw.bsky.social</a>
+  </li>
+</ul>
+
 
 
 </section>
@@ -216,150 +349,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -422,8 +411,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -432,7 +419,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https://eyayaw.github.io");
+      var filterRegex = new RegExp("https:\/\/eyayaw\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -534,7 +521,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -764,19 +750,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p><span><i class="fa-solid fa-copyright"></i> 2024 Eyayaw Beze | እያያው ተካ በዜ</span></p>
+<p><span><i class="fa-solid fa-copyright"></i> 2025 Eyayaw Beze | እያያው ተካ</span></p>
 </div>   
     <div class="nav-footer-center">
-<ul style="list-style: none;">
-<li>
-<span> <a href="https://github.com/eyayaw"><i class="fa-brands fa-github"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social"><i class="fa-brands fa-bluesky"></i></a> <a href="https://linkedin.com/in/eyayaw"><i class="fa-brands fa-linkedin"></i></a> <a href="https://mastodon.social/@eyayaw"><i class="fa-brands fa-mastodon"></i></a> <a href="https://twitter.com/eyayaw"><i class="fa-brands fa-twitter"></i></a> </span>
-</li>
-&nbsp; &nbsp; &nbsp;
-<li>
-<span> <a href="https://github.com/eyayaw/eyayaw.github.io"><i class="fa-brands fa-github"></i> View source</a> &nbsp; <a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/content"><i class="fa-regular fa-pen-to-square"></i> Edit this page</a> &nbsp; <a href="https://github.com/eyayaw/eyayaw.github.io/issues/new"><i class="fa-solid fa-triangle-exclamation"></i> Report an issue</a> </span>
-</li>
-</ul>
-</div>
+<p><a href="https://github.com/eyayaw"><i class="fa-brands fa-github"></i></a> <a href="https://linkedin.com/in/eyayaw"><i class="fa-brands fa-linkedin"></i></a> <a href="https://twitter.com/eyayaw"><i class="fa-brands fa-twitter"></i></a> <a href="https://mastodon.social/@eyayaw"><i class="fa-brands fa-mastodon"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social"><i class="fa-brands fa-bluesky"></i></a></p>
+<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><span>Made with ❤️ + <a href="https://r-project.org"><i class="fa-brands fa-r-project"></i></a> + <a href="https://quarto.org"><img src="https://quarto.org/favicon.png" width="16" height="16"> Quarto</a></span></p>
 </div>

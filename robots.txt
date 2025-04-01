@@ -1,1 +1,1 @@
-Sitemap: {{< var site-url >}}/sitemap.xml
+Sitemap: https://eyayaw.github.io/sitemap.xml

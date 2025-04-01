@@ -6,30 +6,29 @@
       version="2.0">
 <channel>
 <title>Eyayaw Beze</title>
-<link>{{&lt; var site-url &gt;}}/blog.html</link>
-<atom:link href="{{&lt; var site-url &gt;}}/blog.xml" rel="self" type="application/rss+xml"/>
+<link>https://eyayaw.github.io/blog.html</link>
+<atom:link href="https://eyayaw.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Eyayaw Beze&#39;s personal website</description>
-<generator>quarto-1.5.57</generator>
+<generator>quarto-1.6.42</generator>
 <lastBuildDate>Sat, 30 Jul 2022 22:00:00 GMT</lastBuildDate>
 <item>
   <title>Welcome to my Blog</title>
   <dc:creator>Eyayaw Beze</dc:creator>
-  <link>{{< var site-url >}}/posts/2022/welcome.html</link>
+  <link>https://eyayaw.github.io/posts/welcome.html</link>
   <description><![CDATA[ 
 
 
 
 
-
 <p>This is the first post in my blog. Welcome!</p>
-<p><img src="{{< var site-url >}}/posts/2022/thumbnail.jpg" class="img-fluid"></p>
+<p><img src="https://eyayaw.github.io/posts/media/thumbnail.jpg" class="img-fluid"></p>
 <p>I will blog about what I have learned in my <code>R</code>and <code>Python</code> journey. Stay tuned!</p>
 
 
 
  ]]></description>
   <category>news</category>
-  <guid>{{< var site-url >}}/posts/2022/welcome.html</guid>
+  <guid>https://eyayaw.github.io/posts/welcome.html</guid>
   <pubDate>Sat, 30 Jul 2022 22:00:00 GMT</pubDate>
 </item>
 </channel>
