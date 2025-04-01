@@ -1,7 +1,10 @@
-.section-heading {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 0.5rem;
-    margin: 2rem 0 1.5rem 0;
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+/* overwrite quarto listing style */
+.quarto-listing {
+    padding-bottom: 0rem;
 }
 
 /* Profile Summary Styling */
@@ -51,24 +54,31 @@ margin-top: 1rem;
 }
 
 /* Recent Posts Styling */
-.recent-posts {
+#recent-posts ul {
     list-style-type: disc;
-    padding-left: 20px;
+    padding-left: 1rem;
 }
 
-.recent-posts li {
-    margin-bottom: 8px;
+#recent-posts ul > li {
+    margin-bottom: 0.5rem;
 }
 
-/* Personal Projects */
+/* Hobby Projects */
 
+.hobby-projects {
+    padding-left: 1rem;
+}
+
+.hobby-projects li {
+    margin-bottom: 0.5rem;
+}
 
 /* Research Projects */
 
 .research-project {
     margin-bottom: 1.8rem;
     padding-left: 1rem;
-    border-left: 3px solid #26a69a;
+    border-left: 3px solid var(--color-clay);
 }
 
 .research-title {
@@ -102,12 +112,9 @@ margin-top: 1rem;
 
 .quick-links-list li {
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
 }
 
 .quick-links-list i,
 .quick-links-list svg {
-    width: 1.2rem;
     margin-right: 0.5rem;
 }

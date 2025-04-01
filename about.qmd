@@ -8,13 +8,14 @@ css: about.css
 ````
 
 ::: intro-text
-```{=html}
-<p>Hi there, this is Eyayaw. <span class="pronunciation">Pronounce my name like the <a href="https://www.youtube.com/watch?v=Wm4R8d0d8kU">Old McDonald</a> song: "E-I-E-I-O".</span>
-</p>
-```
+
+Hi there, this is Eyayaw Beze (እያያው ተካ).
+
+<span class="pronunciation">Help pronounce my name? Think of the <a href="https://www.youtube.com/watch?v=Wm4R8d0d8kU">Old McDonald song</a> --- "E-I-E-I-O".</span>
+
 :::
 
-## Short Bio {.bio-section}
+## About Me {.bio-section}
 
 ::: bio-text
 I grew up in a small village called Shumshuha (ሹምሹሃ) (aka Lalibela
@@ -47,5 +48,9 @@ taught undergrad economics courses.
 I did my Ph.D. in Urban Economics at [RGS
 Econ](https://www.rgs-econ.org/), based at the [University of
 Duisburg-Essen]({{< var ude-url >}}).
+
+If you come to the [Ruhrgebiet](https://en.wikipedia.org/wiki/Ruhr) (or generally NRW) or to [Randstad, the Netherlands](https://en.wikipedia.org/wiki/Randstad), drop me a message through one of the [socials](index.qmd#quick-links). I would be happy to grab a coffee or a beer (Pils oder Blonde?).
+
+I love data generation, through web scraping, api hacking, etc. If you want to collaborate on a project, feel free to reach out.
 :::
 

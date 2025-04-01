@@ -1,5 +1,5 @@
 ---
-title: "PrY-stats : R and Python"
+title: "PrY-stats: R and Python"
 date: "2023-01-14"
 categories: [code, r, python]
 draft: true

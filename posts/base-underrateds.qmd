@@ -46,7 +46,7 @@ write.csv(palmerpenguins::penguins, path)
 ```
 Notice that `file.path` provides the relative path, while `here::here` provides the (full) absolute path.
 
-Of course, `{here}` is more powerful (has sophisticated project root resolving mechanisms, robust to in-session working dir changes (with setwd()), and [more](https://here.r-lib.org/articles/here.html)). But if you are using projects and work with (project) relative paths, `file.path` may do the job just fine. The project-relative path construction feature of `{here}` (i.e., with `here::here`) is the comparable part to `file.path`.
+Of course, `{here}` is more powerful (has sophisticated project root resolving mechanisms, robust to in-session working dir changes (with setwd()), and [more](https://here.r-lib.org/articles/here.html)). But if you are using projects and work with (project) relative paths, `file.path` may do the job just fine. This feature of project-relative path construction of `{here}` (i.e., with `here::here`) is the comparable part to `file.path`.
 
 
 ### `file.stem` = `tools::file_path_sans_ext` + `tools::file_ext`

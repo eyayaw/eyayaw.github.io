@@ -4,12 +4,12 @@ project:
   render:
     - "*.qmd"
     - "posts/**/*.qmd"
-
 website:
   title: Eyayaw Beze
   description: "Eyayaw Beze's personal website"
   site-url: https://eyayaw.github.io/ #"{{< var site-url >}}"
   repo-url: https://github.com/eyayaw/eyayaw.github.io #"{{< var repo-url >}}"
+  repo-actions: [source, edit, issue]
   twitter-card:
     title: Eyayaw
     creator: "@eyayaw"
@@ -17,17 +17,10 @@ website:
     site: "@eyayaw"
   open-graph: true
   favicon: "{{< var profile-img >}}"
-  # announcement:
-  #   icon: info-circle
-  #   dismissable: true
-  #   content: "**Alert** -- This website is a WIP!"
-  #   type: primary
-  #   position: below-navbar
   google-analytics: "G-0MBR68SHL8"
-
   navbar:
     title: eyayaw
-    background: secondary
+    background: light
     right:
       - text: about
         href: about.qmd
@@ -37,50 +30,26 @@ website:
         href: research.qmd
       - icon: github
         href: "{{< var github >}}"
-
-
   page-footer:
-    left: |
-      <span><i class="fa-solid fa-copyright"></i> {{< var year >}} Eyayaw Beze | እያያው ተካ በዜ</span>
+    left: >-
+      <span><i class="fa-solid fa-copyright"></i> {{< var year >}} Eyayaw Beze | እያያው ተካ</span>
     center: >-
-      <ul style="list-style: none;">
-      <li>
-      <span>
       [<i class="fa-brands fa-github"></i>]({{< var github >}})
-      [<i class="fa-brands fa-bluesky"></i>]({{< var bluesky >}})
       [<i class="fa-brands fa-linkedin"></i>]({{< var linkedin >}})
-      [<i class="fa-brands fa-mastodon"></i>]({{< var mastodon >}})
       [<i class="fa-brands fa-twitter"></i>]({{< var twitter >}})
-      </span>
-      </li>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <li>
-      <span>
-      [<i class="fa-brands fa-github"></i> View source]({{< var repo-url >}})
-      &nbsp;
-      [<i class="fa-regular fa-pen-to-square"></i> Edit this page]({{< var edit-url >}})
-      &nbsp;
-      [<i class="fa-solid fa-triangle-exclamation"></i> Report an issue]({{< var issues-url >}})
-      </span>
-      </li>
-      </ul>
-
-    right: |
+      [<i class="fa-brands fa-mastodon"></i>]({{< var mastodon >}})
+      [<i class="fa-brands fa-bluesky"></i>]({{< var bluesky >}})
+    right: >-
       <span>Made with ❤️ + <a href="https://r-project.org"><i class="fa-brands fa-r-project"></i></a> + <a href="https://quarto.org"><img src="https://quarto.org/favicon.png" width="16" height="16"/> Quarto</a></span>
-
 
 format:
   html:
-    theme: default
+    theme:
+      light: [cosmo]
     css: styles.css
-    title-block-banner: false
     toc: false
-    code-copy: true
-    code-overflow: wrap
     include-in-header:
-      - text: |
+      - text: >-
           <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 
 execute:
