@@ -1,0 +1,58 @@
+/* About page styling */
+.about-container {
+    margin: 0 auto;
+}
+
+/* Mimic Jolla about theme */
+.about-image {
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5em;
+    width: 15em;
+    height: 15em;
+    border-radius: 50%; /* round */
+    /* border-radius: 10px; */ /* rounded */
+    display: block;
+}
+
+
+.intro-text {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.pronunciation {
+    color: #555;
+    font-size: 0.9em;
+}
+
+.bio-section {
+    margin: 2rem 0;
+}
+
+/* .bio-section h2 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+} */
+
+.bio-text {
+    line-height: 1.6;
+}
+
+.location-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+    border: 1px solid #e8e2bf;
+}
+
+.location-caption {
+    text-align: center;
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 0.5rem;
+}

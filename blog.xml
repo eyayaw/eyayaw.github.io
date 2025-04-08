@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Eyayaw Beze</title>
+<link>https://eyayaw.github.io/blog.html</link>
+<atom:link href="https://eyayaw.github.io/blog.xml" rel="self" type="application/rss+xml"/>
+<description>Eyayaw Beze&#39;s personal website</description>
+<generator>quarto-1.6.43</generator>
+<lastBuildDate>Sun, 06 Apr 2025 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>Base R</title>
+  <dc:creator>Eyayaw Beze</dc:creator>
+  <link>https://eyayaw.github.io/posts/base-r.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>You probably engaged in endless debates about {tidyverse} versus {base} R and/or {data.table}.<sup>1</sup> But what does “base R” actually mean? Clarifying this may unite the <a href="https://x.com/hadleywickham/status/903103150332280832">dichotomy</a> (or trichotomy), that we are all R. But, wait, we’re all R? What about “R or Python”? Oh no, don’t let the <a href="https://x.com/hadleywickham/status/1280340931657564160">holy war</a> escalate! Again, we’re all one . . . embrace both like me, like <a href="https://posit.co/blog/rstudio-is-becoming-posit/">RStudio</a> . . . in fact, become a polyglot.</p>
+<p>Back to base R, it is typically used to refer to the set of packages that come or distributed with R<sup>2</sup>. The name “base” might be confusing, because of {base}, the fundamental package that “contains the basic functions which let R function as a language”. However, base R encompasses more than {base}. Pause and count how many base R packages you can name. . . .</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">lib_path <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">normalizePath</span>(.Library)</span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library"</span></span>
+<span id="cb1-3">fields <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Title"</span>)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5">installed_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">installed.packages</span>(lib_path, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fields=</span>fields) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.frame</span>()</span>
+<span id="cb1-6"></span>
+<span id="cb1-7">base_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">subset</span>(installed_pkgs, Priority <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"base"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Package"</span>, fields))</span>
+<span id="cb1-8">high_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">subset</span>(installed_pkgs, Priority <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"high"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Package"</span>, fields))</span></code></pre></div>
+</details>
+</div>
+<p>There are 14 base R packages, in R 4.4.3. Below is a complete list.</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Base R Packages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sprintf</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"- %s --- %s"</span>, base_pkgs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>Package, base_pkgs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>Title) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+</details>
+<ul>
+<li>base — The R Base Package</li>
+<li>compiler — The R Compiler Package</li>
+<li>datasets — The R Datasets Package</li>
+<li>graphics — The R Graphics Package</li>
+<li>grDevices — The R Graphics Devices and Support for Colours and Fonts</li>
+<li>grid — The Grid Graphics Package</li>
+<li>methods — Formal Methods and Classes</li>
+<li>parallel — Support for Parallel Computation in R</li>
+<li>splines — Regression Spline Functions and Classes</li>
+<li>stats — The R Stats Package</li>
+<li>stats4 — Statistical Functions using S4 Classes</li>
+<li>tcltk — Tcl/Tk Interface</li>
+<li>tools — Tools for Package Development</li>
+<li>utils — The R Utils Package</li>
+</ul>
+<p>See <a href="https://search.r-project.org/R/refmans/utils/html/installed.packages.html">?installed.packages</a>.</p>
+</div>
+</div>
+<p>Some of these packages I did not know exist, let alone knowingly use. So the list shows that base R includes packages attached to your R session by default (i.e.&nbsp;default packages), and other few important packages used behind the scenes. Therefore, in short, base R = {{base}, {default}, {other}} packages.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">default_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">in_plain_r</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cat(getOption('defaultPackages'))"</span>)</span>
+<span id="cb3-2">default_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">strsplit</span>(default_pkgs, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>)[[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]]</span></code></pre></div>
+</details>
+</div>
+<p>The default packages are attached when R starts up. As of R 4.4.3 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">in_plain_r</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cat(search())"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ".GlobalEnv package:stats package:graphics package:grDevices package:utils package:datasets package:methods Autoloads package:base"</code></pre>
+</div>
+</div>
+<p>You can control the list of default packages by setting the environment variable <code>R_DEFAULT_PACKAGES</code> with a comma-separated list of packages. You may ask, why do we need to do that? Well:</p>
+<blockquote class="blockquote">
+<p>Changing the set of default packages is normally used to reduce the set for speed when scripting: in particular not using methods will reduce the start-up time by a factor of up to two. But it can also be used to customize R, e.g.&nbsp;for class use. Rscript also checks the environment variable R_SCRIPT_DEFAULT_PACKAGES; if set, this takes precedence over R_DEFAULT_PACKAGES.</p>
+<p>— <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Default-packages">R manuals #Default-packages</a></p>
+</blockquote>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To modify the list of default packages, set the env variable <code>R_DEFAULT_PACKAGES</code> in your <code>.Renviron</code>, or set the <code>defaultPackages</code> option in <code>.Rprofile</code> (see <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Default-packages">R manuals</a>). If you set <code>R_DEFAULT_PACKAGES=NULL</code>, then only {base} is loaded.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ~/.Renviron</span></span>
+<span id="cb6-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">R_DEFAULT_PACKAGES</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>base,utils,stats,methods</span></code></pre></div>
+<p>Or,</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ~/.Rprofile</span></span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">options</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">defaultPackages=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"base"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"utils"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stats"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"methods"</span>))</span></code></pre></div>
+<p>As you can see below, only {base} is loaded when no default packages are provided.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">system</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'export R_DEFAULT_PACKAGES=NULL;R --vanilla --no-echo --quiet -e "cat(search())"'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">intern=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ".GlobalEnv Autoloads package:base"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">other_base_pkgs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setdiff</span>(base_pkgs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>Package, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div>
+</details>
+</div>
+<p>The other base R packages are {compiler}, {grid}, {parallel}, {splines}, {stats4}, {tcltk}, and {tools}. These (or some) may not be familiar to you (myself included) if you’re not a package developer. I have used {tools} for example to check package dependencies (e.g., <code>tools::package_dependencies("data.table", recursive = TRUE)</code>), and work with file paths (see my <a href="https://x.com/eyayaw/status/1488568897334915081">tweet</a>). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?</p>
+<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.4.3), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
+
+
+<!-- -->
+
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>If you want to read some, see <a href="https://blog.ephorie.de/why-i-dont-use-the-tidyverse">here</a>, <a href="https://x.com/TimTeaFan/status/1754964772603216171">here</a>, <a href="https://x.com/prisonrodeo/status/1612396078913011713"><del>here</del></a>, <a href="https://x.com/tylermorganwall/status/1599238413580132354">“a poem about the battle”</a>, and <a href="https://x.com/search?q=%22base%22%20(tidyverse%20OR%20data.table)%20(%23rstats)&amp;src=typed_query&amp;f=top">many more</a> in the bird site. Sorry for the X links. Most of the debates occurred during the #rstats Twitter era.↩︎</p></li>
+<li id="fn2"><p>Packages that come built-in with R may include more than base R packages: <code>installed.packages(priority="high")</code> shows <code>base + recommended</code> packages.↩︎</p></li>
+<li id="fn3"><p>Most, if not all, base R-ers use {ggplot2}, lovingly.↩︎</p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{beze2025,
+  author = {Beze, Eyayaw},
+  title = {Base {R}},
+  date = {2025-04-07},
+  url = {https://eyayaw.github.io/posts/base-r.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-beze2025" class="csl-entry quarto-appendix-citeas">
+Beze, Eyayaw. 2025. <span>“Base R.”</span> April 7, 2025. <a href="https://eyayaw.github.io/posts/base-r.html">https://eyayaw.github.io/posts/base-r.html</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://eyayaw.github.io/posts/base-r.html</guid>
+  <pubDate>Sun, 06 Apr 2025 22:00:00 GMT</pubDate>
+  <media:content url="https://eyayaw.github.io/posts/media/base-r.svg" medium="image" type="image/svg+xml"/>
+</item>
+<item>
+  <title>Welcome to my Blog</title>
+  <dc:creator>Eyayaw Beze</dc:creator>
+  <link>https://eyayaw.github.io/posts/welcome.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>This is the first post in my blog. Welcome!</p>
+<p><img src="https://eyayaw.github.io/posts/media/thumbnail.jpg" class="img-fluid"></p>
+<p>I will blog about what I have learned in my <code>R</code>and <code>Python</code> journey. Stay tuned!</p>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>news</category>
+  <guid>https://eyayaw.github.io/posts/welcome.html</guid>
+  <pubDate>Sat, 30 Jul 2022 22:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

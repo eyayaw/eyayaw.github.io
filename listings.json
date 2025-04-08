@@ -1,0 +1,16 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/base-r.html",
+      "/posts/welcome.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/base-r.html",
+      "/posts/welcome.html"
+    ]
+  }
+]
