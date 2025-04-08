@@ -1,0 +1,43 @@
+
+## Research Projects
+
+-   Testing the Gradient Predictions of the Monocentric City Model in Addis Ababa [<i class="fa-solid fa-file-pdf"></i>]({{< var paper-addis >}}) [<i class="fa-brands fa-github"></i>]({{< var code-addis >}})
+
+    <details>
+    <summary>Abstract</summary>
+    This study presents new empirical evidence for the monocentric city model in a developing country, using unique real estate data for Addis Ababa. The study confirms two of the key predictions of the model: the negative rent and the negative structural density gradients. Both house prices and rents decrease as we move away from the center of Addis Ababa. Using building footprint datasets, the study also demonstrates that the structural density (measured by building height) strongly decreases with distance to the Central Business District (CBD). This study provides a comprehensive georeferenced real estate dataset for Addis Ababa, the first study to do so. The findings highlight the enduring relevance of the monocentric city model in cities in developed and developing countries.
+    </details>
+-   The impact of COVID-19 on real estate markets in Germany. --- German Economic Review [<i class="fas fa-file-pdf"></i>]({{< var paper-covid >}}) [<i class="fab fa-github"></i>]({{< var code-covid >}})
+
+    <details>
+    <summary>Abstract</summary>
+
+    The COVID-19 pandemic has disrupted established urban patterns. The literature on the impact of the pandemic on real estate markets in the US has shown a significant increase in the demand for suburban housing, resulting in a considerable increase in suburban prices compared to those in the city center (termed the "donut effect"). However, the German housing market did not experience such drastic changes. To examine price and rent adjustments during the pandemic, we analyze detailed housing data and find little evidence supporting the donut effect seen in the US. Apartment rents increase in suburban areas, while house prices do not change significantly. Examining the role of amenities, we find no explanation for price and rent differences between the central business district (CBD) and suburbs. The differences between the two markets may be attributed to cultural and structural distinctions. Our analysis, which includes data on population patterns and migration behavior, reveals that residents in Germany exhibit a slower-moving trend. Our findings remain robust across different settings and subsets of cities.
+    --- Coauthored with [Patrick Thiel](https://www.rwi-essen.de/rwi/team/person/patrick-thiel)
+    </details>
+
+-   Geographic Constraints and the Housing Supply Elasticity in Germany --- [*Ruhr Economic Papers #1003* <i class="fas fa-file-pdf"></i>]({{< var paper-elasticy >}}) --- latest version [<i class="fas fa-file-pdf"></i>]({{< var paper-elasticy-latest >}}) [<i class="fa-brands fa-github"></i>]({{< var code-elasticy >}})
+
+
+    <details>
+    <summary>Abstract</summary>
+
+    The study estimates the housing supply elasticity and the impact of geographic constraints in Germany from 2008-2019 using the Bartik instrument. The results show that the housing supply is, on average, inelastic, with a floorspace elasticity of 0.22 and a units elasticity of 0.25. The study also reveals that geographical constraints partially affect the housing supply elasticity across districts. Notably, high development intensity decreases the elasticity, while the unavailability of land for development due to restrictive geography has no significant impact on the housing supply elasticity. The housing supply elasticity estimates may prove useful for calibrating quantitative urban models in Germany.
+    </details>
+
+-   Trends in Contemporary International Migration of Ethiopia PanAfrican Journal of Governance and Development (PJGD), 1(2), 30-60. [<i class="fas fa-file-pdf"></i>]({{< var paper-migration >}})
+
+    <details>
+    <summary>Abstract</summary>
+    Ethiopia is found in the "Eastern Africa migration system" known for turbulent population mobility due to a host of social, economic, and political factors. The migration problem of East Africa, in which, a substantial exploration of the complexity and intensity of the migration pattern of Ethiopia has become necessary in the context of social transformation and development processes. To this end, this study is designed to provide migratory change and developmental patterns of international migration of Ethiopia in regional and sub-regional perspectives based on long-term macro statistics. The data obtained from the Reports of the United Nations Department for Economic and Social Affairs and World Bank's Development Indicators have been used to describe, analyze and explain long-term patterns of international migration of Ethiopia within the regional contexts. Results show the trend that Ethiopia experienced a continuous increase in its international migrant stock in the last five decades, from less than 400,000 in 1960 to over 1 million in 2015. Refugees and transit migrants constituted the largest number of immigrants, mostly from the neighboring countries, driven by continuous conflicts and political instability. Ethiopia, once dominant in refugee flows in the Horn of Africa due to political conflict, famine, and persecution, experienced a sharp decline in the share of refugees in the Horn of Africa in the last three decades. Economic motives have recently become the prime factors in migration decisions among the Ethiopians as observed with the fact that the USA and the Middle East are the major destinations. The findings revealed that Ethiopian emigration is characterized by the inter-continental flows unlike the Sub-Saharan migration pattern known to have an intra-continental migratory link. Feminization of Ethiopian migration is also evident particularly in core destination countries of the Global North, which indicates the increasing role of females in migration decisions but also disproves the widely held perception about Ethiopians emigration to the Arab World as female-specific. In the final analysis, Ethiopia could be regarded rather as a destination, with over 1.2 million migrants, than as an origin, with just over 800,000 as of 2017, which now make the country a regional migration hub in the Horn of Africa.
+    --- Coauthored with Fikadu Ayanie, Tihitina Fanta, and Dagnachew Melese
+
+<details>
+<summary>Essays</summary>
+
+-   Energy Consumption and Economic Growth in Selected East African Countries: 1990-2015.
+
+-   Sources of Growth in Sub-Saharan-African Countries: A Growth Accounting Analysis over 1980-2011 time period. [<i class="fas fa-file-pdf"></i>]({{< var paper-kdis >}})
+
+-   Determinants of Fertilizer Use in Bahir Dar Surroundings: Evidence from Some Selected Kebeles.
+</details>

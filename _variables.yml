@@ -1,0 +1,35 @@
+year: 2025
+profile-img: "/img/eyayaw-profile.jpg"
+profile-img-about: "/img/eyayaw-profile-london.jpg"
+hometown-img: "/img/shumshuha.jpg"
+hometown-img-credit: "https://www.airliners.net/photo/-/-/1618928/L?qsp=eJwtjEEKAjEMRe+StRsZcDE7vcC48AKx/Wgx2pIEtAxzd2Nx93gP3kqpvhwfv/QGmsnAmu60o8bKT6N5pQf6u2oOJmEpVwhHt6p+6uEyO44poTny3y+aob8ES2N1i/U+AHoeTNMhfC7WhMcDzkVo277Oky/R"
+site-url: https://eyayaw.github.io
+repo-url: https://github.com/eyayaw/eyayaw.github.io
+issues-url: https://github.com/eyayaw/eyayaw.github.io/issues/new
+edit-url: https://github.com/eyayaw/eyayaw.github.io/edit/main/content
+cv-url: https://rxresu.me/eyayaw/cv-public
+ude-url: "https://www.uni-due.de/en/index.php"
+ude-name: "University of Duisburg-Essen"
+kdis-url: "https://kdischool.ac.kr/"
+kdis-name: "KDI School of Public Policy and Management"
+
+# Paper links
+paper-elasticy: "https://www.rwi-essen.de/en/publications/scientific/ruhr-economic-papers/detail/geographic-constraints-and-the-housing-supply-elasticity-germany"
+paper-elasticy-latest: "https://uni-duisburg-essen.sciebo.de/s/km7tQzcygRQjwp6"
+paper-covid: "https://www.degruyter.com/document/doi/10.1515/ger-2024-0049/html"
+paper-addis: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4803607"
+paper-migration: "https://doi.org/10.46404/panjogov.v1i2.2342"
+paper-kdis: "https://archives.kdischool.ac.kr/handle/11125/30670"
+
+# Code repositories
+code-elasticy: "https://github.com/eyayaw/housing-supply-elasticity-in-germany"
+code-covid: "https://github.com/eyayaw/de-donut-effect"
+code-addis: "https://github.com/eyayaw/the-monocentric-city-gradients-addis-ababa"
+
+# Contact - Social links
+github: "https://github.com/eyayaw"
+linkedin: "https://linkedin.com/in/eyayaw"
+twitter: "https://twitter.com/eyayaw"
+mastodon: "https://mastodon.social/@eyayaw"
+bluesky: "https://bsky.app/profile/eyayaw.bsky.social"
+email: "mailto:eyayaw@eyayaw.com"

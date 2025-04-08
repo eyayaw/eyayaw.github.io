@@ -1,0 +1,43 @@
+
+### Summary
+
+**Eyayaw Beze** [<i class="fas fa-file-alt"></i> Full CV]({{< var cv-url >}}){.cv-link}\
+**Ph.D. in Economics**\
+**Urban Economics \| Housing Markets \| Data Science \|<i class="fa-brands fa-r-project"></i> and <i class="fa-brands fa-python"></i> enthusiast**
+
+::: callout
+I am interested in applying data science, statistics, econometrics, and machine learning to urban economics, with a focus on housing markets and geospatial analysis. My expertise includes handling large datasets, data cleaning, visualization, and analysis. I am proficient in R, Python, and SQL.
+:::
+
+------------------------------------------------------------------------
+
+### Work Experience
+
+-   Scientific researcher at the Chair of Economics, University of Duisburg-Essen
+-   Intern and RA at IOS Regensburg
+-   Lecturer at Jimma University
+
+### Education
+
+-   Ph.D. in Economics, Ruhr Graduate School in Economics
+-   MA in Comparative Local Development, University of {Corvinus, Regensburg, Trento, Lijubljana}
+-   MA in Development Policy, KDI School of Public Policy and Management
+-   BA in Economics, Bahir Dar University
+
+### Dissertation
+
+Title: **Essays on Housing Supply and the Monocentric City Model**\
+
+1.  [**Testing the Gradient Predictions of the Monocentric City Model in Addis Ababa**]({{< var paper-addis >}}) [<i class="fa-brands fa-github"></i>]({{< var code-addis >}})
+
+2.  [**The impact of COVID-19 on real estate markets in Germany.**]({{< var paper-covid >}}) [<i class="fa-brands fa-github"></i>]({{< var code-covid >}})
+
+3.  [**Geographic Constraints and the Housing Supply Elasticity in Germany**]({{< var paper-elasticy-latest >}}). [<i class="fa-brands fa-github"></i>]({{< var code-elasticy >}})
+
+### Skills
+
+-   R, Python, SQL, Stata, Zsh, Git, GIS, LaTeX/Quarto/Markdown, Shiny
+
+### Interests
+
+-   Data, web scraping, football

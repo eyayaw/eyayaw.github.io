@@ -1,0 +1,131 @@
+---
+title: "Base R"
+date: "2025-04-07"
+category: "[code, r, base-r]"
+engine: knitr
+execute:
+  echo: true
+image: media/base-r.svg
+---
+
+```{r}
+#| label: setup
+#| echo: false
+
+in_plain_r = function(rcode) {
+  result = system2(
+  "R",
+  args = c("--vanilla", "--quiet", "--no-echo", "-e", shQuote(rcode)),
+  stdout = TRUE
+)
+return(result)
+}
+
+pretty_pkg = function(pkg) {
+return(paste0('{', pkg, '}'))
+}
+
+r_version = sprintf("%1$s.%2$s", R.version$major, R.version$minor)
+```
+You probably engaged in endless debates about {tidyverse} versus {base} R and/or {data.table}.[^some-debates] But what does "base R" actually mean? Clarifying this may unite the [dichotomy](https://x.com/hadleywickham/status/903103150332280832) (or trichotomy), that we are all R. But, wait, we're all R? What about "R or Python"? Oh no, don't let the [holy war](https://x.com/hadleywickham/status/1280340931657564160) escalate! Again, we're all one . . . embrace both like me, like [RStudio](https://posit.co/blog/rstudio-is-becoming-posit/) . . . in fact, become a polyglot.
+
+[^some-debates]: If you want to read some, see [here](https://blog.ephorie.de/why-i-dont-use-the-tidyverse), [here](https://x.com/TimTeaFan/status/1754964772603216171), [~~here~~](https://x.com/prisonrodeo/status/1612396078913011713), ["a poem about the battle"](https://x.com/tylermorganwall/status/1599238413580132354), and [many more](https://x.com/search?q=%22base%22%20(tidyverse%20OR%20data.table)%20(%23rstats)&src=typed_query&f=top) in the bird site. Sorry for the X links. Most of the debates occurred during the #rstats Twitter era.
+
+Back to base R, it is typically used to refer to the set of packages that come or distributed with R[^almost]. The name "base" might be confusing, because of {base}, the fundamental package that "contains the basic functions which let R function as a language". However, base R encompasses more than {base}. Pause and count how many base R packages you can name. . . .
+
+[^almost]: Packages that come built-in with R may include more than base R packages: `installed.packages(priority="high")` shows `base + recommended` packages.
+
+```{r}
+#| label: base-r-pkgs
+
+lib_path = normalizePath(.Library)
+# [1] "/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library"
+fields = c("Title")
+
+installed_pkgs = installed.packages(lib_path, fields=fields) |> as.data.frame()
+
+base_pkgs = subset(installed_pkgs, Priority == "base", select =  c("Package", fields))
+high_pkgs = subset(installed_pkgs, Priority == "high", select = c("Package", fields))
+
+```
+
+There are `{r} nrow(base_pkgs)` base R packages, in R `{r} r_version`. Below is a complete list.
+
+
+::: {.callout-important icon=false}
+
+## Base R Packages
+
+```{r}
+#| label: base-r-pkgs-list
+#| results: asis
+
+sprintf("- %s --- %s", base_pkgs$Package, base_pkgs$Title) |>
+cat(sep = "\n")
+```
+
+See [?installed.packages](https://search.r-project.org/R/refmans/utils/html/installed.packages.html).
+:::
+
+
+Some of these packages I did not know exist, let alone knowingly use.
+So the list shows that base R includes packages attached to your R session by default (i.e. default packages), and other few important packages used behind the scenes. Therefore, in short, base R = {{base}, {default}, {other}} packages.
+
+
+```{r}
+#| label: default-packages
+
+default_pkgs = in_plain_r("cat(getOption('defaultPackages'))")
+default_pkgs = strsplit(default_pkgs, " ")[[1]]
+```
+
+
+The default packages are attached when R starts up.
+As of R `{r} r_version` these are: `{r} knitr::combine_words(pretty_pkg(default_pkgs))`. Obviously, add {base} to the list. You can also see them in the search path (prepended with `package:`):
+
+```{r}
+in_plain_r("cat(search())")
+```
+
+You can control the list of default packages by setting the environment variable `R_DEFAULT_PACKAGES` with a comma-separated list of packages. You may ask, why do we need to do that? Well:
+
+> Changing the set of default packages is normally used to reduce the set for speed when scripting: in particular not using methods will reduce the start-up time by a factor of up to two. But it can also be used to customize R, e.g. for class use. Rscript also checks the environment variable R_SCRIPT_DEFAULT_PACKAGES; if set, this takes precedence over R_DEFAULT_PACKAGES.
+>
+> --- [R manuals #Default-packages](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Default-packages)
+
+::: callout-tip
+
+To modify the list of default packages, set the env variable `R_DEFAULT_PACKAGES` in your `.Renviron`, or set the `defaultPackages` option in `.Rprofile` (see [R manuals](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Default-packages)). If you set `R_DEFAULT_PACKAGES=NULL`, then only {base} is loaded.
+
+
+```sh
+# ~/.Renviron
+R_DEFAULT_PACKAGES=base,utils,stats,methods
+```
+
+Or,
+
+```r
+# ~/.Rprofile
+options(defaultPackages=c("base", "utils", "stats", "methods"))
+```
+
+As you can see below, only {base} is loaded when no default packages are provided.
+
+```{r}
+#| label: load-only-base
+
+system('export R_DEFAULT_PACKAGES=NULL;R --vanilla --no-echo --quiet -e "cat(search())"', intern=TRUE)
+```
+:::
+
+
+```{r}
+#| label: other-base-r
+
+other_base_pkgs = setdiff(base_pkgs$Package, c("base", default_pkgs))
+```
+The other base R packages are `{r} knitr::combine_words(pretty_pkg(other_base_pkgs))`. These (or some) may not be familiar to you (myself included) if you're not a package developer. I have used {tools} for example to check package dependencies (e.g., `tools::package_dependencies("data.table", recursive = TRUE)`), and work with file paths (see my [tweet](https://x.com/eyayaw/status/1488568897334915081)). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?
+
+
+In sum, when people say "I use base R", they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.^[Most, if not all, base R-ers use {ggplot2}, lovingly.] [Not true](http://varianceexplained.org/r/teach_ggplot2_to_beginners/)? See examples [here](https://x.com/hadleywickham/status/1231252596712771585), [here](https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/). In other words, if you use `df[df$x > 1, ]` instead of say `dplyr::filter(df, x > 1)`, or `data.table::as.data.table(df)[x > 1, ]`, you're a base R-er. However, base R "should" refer to the suite of built-in packages in R (`{r} length(base_pkgs$Package)` as of R `{r} r_version`), like {tidyverse} which is a collection of diverse (but related) packages [from everyday data analyses to specialized packages](https://www.tidyverse.org/packages/).

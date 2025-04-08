@@ -1,0 +1,17 @@
+posts/_*.qmd
+_freeze/
+*_files/
+google*.html
+/.quarto/
+_site/
+.DS_Store
+*.Renviron
+.RData
+.Ruserdata
+*.Rproj
+.Rproj.user
+.Rhistory
+*cache/
+/env/
+/.venv/
+/.condaenv/

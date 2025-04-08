@@ -1,0 +1,21 @@
+# options specified here will apply to all posts in this folder
+title-block-banner: false
+smooth-scroll: true
+author:
+  - name: Eyayaw Beze
+    url: "{{< var github >}}"
+    # affiliation: "{{< var ude-name >}}"
+    # affiliation-url: "{{< var ude-url >}}"
+citation: true
+toc: true
+toc-title: Contents
+# highlight-style: atom-one
+code-tools:
+  source: true
+code-copy: true
+code-fold: true
+code-overflow: wrap
+#code-block-bg: false
+# freeze computational output
+# (see https://quarto.org/docs/projects/code-execution.html#freeze)
+freeze: auto

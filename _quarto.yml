@@ -1,0 +1,66 @@
+project:
+  type: website
+  output-dir: _site
+  preview:
+    port: 4243
+  render:
+    - "*.qmd"
+    - "posts/**/*.qmd"
+website:
+  title: Eyayaw Beze
+  description: "Eyayaw Beze's personal website"
+  site-url: https://eyayaw.github.io/ #"{{< var site-url >}}"
+  repo-url: https://github.com/eyayaw/eyayaw.github.io #"{{< var repo-url >}}"
+  repo-actions: [source, edit, issue]
+  twitter-card:
+    title: Eyayaw
+    creator: "@eyayaw"
+    card-style: summary_large_image
+    site: "@eyayaw"
+  open-graph: true
+  favicon: "{{< var profile-img >}}"
+  google-analytics: "G-0MBR68SHL8"
+  navbar:
+    title: eyayaw
+    background: light
+    right:
+      - text: about
+        href: about.qmd
+      - text: blog
+        href: blog.qmd
+      - text: research
+        href: research.qmd
+      - icon: github
+        href: "{{< var github >}}"
+  page-footer:
+    left: >-
+      <span><i class="fa-solid fa-copyright"></i> {{< var year >}} Eyayaw Beze | እያያው ተካ</span>
+    center: >-
+      [<i class="fa-brands fa-github"></i>]({{< var github >}})
+      [<i class="fa-brands fa-linkedin"></i>]({{< var linkedin >}})
+      [<i class="fa-brands fa-twitter"></i>]({{< var twitter >}})
+      [<i class="fa-brands fa-mastodon"></i>]({{< var mastodon >}})
+      [<i class="fa-brands fa-bluesky"></i>]({{< var bluesky >}})
+    right: >-
+      <span>Made with ❤️ + <a href="https://r-project.org"><i class="fa-brands fa-r-project"></i></a> + <a href="https://quarto.org"><img src="https://quarto.org/favicon.png" width="16" height="16"/> Quarto</a></span>
+
+format:
+  html:
+    theme:
+      light: [cosmo]
+    css: styles.css
+    toc: false
+    include-in-header:
+      - text: >-
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+
+
+execute:
+  freeze: auto
+editor: source

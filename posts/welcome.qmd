@@ -1,0 +1,12 @@
+---
+title: "Welcome to my Blog"
+date: "2022-07-31"
+categories: [news]
+citation: false
+---
+
+This is the first post in my blog. Welcome!
+
+![](media/thumbnail.jpg)
+
+I will blog about what I have learned in my `R`and `Python` journey. Stay tuned!

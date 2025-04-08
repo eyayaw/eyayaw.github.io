@@ -1,0 +1,127 @@
+---
+title: "Eyayaw Beze"
+page-layout: full
+listing:
+    - id: recent-posts
+      contents: posts
+      type: default
+      sort: "date desc"
+      categories: false
+      sort-ui: false
+      filter-ui: false
+      max-items: 8
+      template: recent-posts.ejs
+css: index.css
+---
+
+
+<!-- <div class="quarto-title"> -->
+<!-- <h1 class="title">Eyayaw Beze</h1> -->
+<!-- </div> -->
+
+
+```{=html}
+<div class="profile-box">
+    <div class="avatar">
+      <img src="https://avatars.githubusercontent.com/u/49317723?s=400&u=e43bdf7335b5661d09337ea029cd7ddaabcda804&v=4" alt="Eyayaw">
+    </div>
+    <div class="content">
+      <p>I'm Eyayaw, a Ph.D. <a href="/research.html">urban/regional economist</a> by training and data scientist. You can poke at my dissertation <a href="https://github.com/eyayaw/dissertation">here</a>. I share thoughts and insights about academic life and programming{tutorials,deep dives,tips}, and cli tools on my <a href="/blog.html">blog</a>. I swing around 🇳🇱 & 🇩🇪.</p>
+      <p>An avid fan of oss, particularly of
+      <i class="fa-brands fa-r-project"></i>,
+      <i class="fa-brands fa-python"></i>, &
+      <img src="https://duckdb.org/images/logo-dl/DuckDB_Logo-stacked.svg" style="width: 2rem; height: 2rem; vertical-align: middle;">.</p>
+      <p><i class="fas fa-futbol mufc"></i> A Proud
+      <span style="color:red;">Manchester</span> United fan since 2005!</p>
+      <p><a href="about.html">More about me...</a></p>
+    </div>
+  </div>
+```
+
+
+## Recent Posts
+
+::: {#recent-posts}
+:::
+
+
+## Hobby Projects
+
+```{=html}
+<ul class="hobby-projects">
+  <li>
+    <a href="https://github.com/eyayaw/cleaning-RWI-GEO-RED">eyayaw/cleaning-RWI-GEO-RED</a>: Scripts for cleaning, tidying, and hedonic model estimation for <a href="https://www.rwi-essen.de/en/research-advice/further/research-data-center-ruhr-fdz/data-sets/rwi-geo-red/x-real-estate-data-and-price-indices">Immoscout24/RWI-GEO-RED</a> real estate data
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/ethio-youtube-channels">eyayaw/ethio-youtube-channels</a>: Daily YouTube stats for selected Ethiopian channels
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns.
+  </li>
+</ul>
+```
+
+## Research Projects
+
+```{=html}
+<div class="research-project">
+  <span class="research-title">Testing the Gradient Predictions of the Monocentric City Model in Addis Ababa</span>
+  <div class="research-links">
+    <a href="{{< var paper-addis >}}">SSRN Pre-print</a>|
+    <a href="{{< var code-addis >}}">Code</a>
+  </div>
+  <p class="research-summary">
+    New empirical evidence confirming key predictions of the monocentric city model in a developing country context using real estate data from Addis Ababa.
+  </p>
+</div>
+
+<div class="research-project">
+  <span class="research-title">The impact of COVID-19 on real estate markets in Germany</span>
+  <div class="research-links">
+    <a href="{{< var paper-covid >}}">German Economic Review</a>|
+    <a href="{{< var code-covid >}}">Code</a>
+  </div>
+  <p class="research-summary">
+    Examines the impact of the COVID-19 pandemic on the German housing market, finding minimal changes in house rents and prices in favor of suburban areas and attributing differences from the US "donut effect" to cultural and structural factors.
+  </p>
+</div>
+
+<div class="research-project">
+  <span class="research-title">Geographic Constraints and the Housing Supply Elasticity in Germany</span>
+  <div class="research-links">
+    <a href="{{< var paper-elasticy >}}">Ruhr Economic Papers #1003</a>|
+    <a href="{{< var code-elasticy >}}">Code</a>
+  </div>
+  <p class="research-summary">
+    Estimates the price elasticity of housing supply and the impact of geographic constraints in Germany from 2008-2019 using the Bartik instrument. The housing supply is, on average, inelastic, about 0.23 across counties, with highly (land) developed counties showing lower elasticity.
+  </p>
+</div>
+```
+
+
+## Quick Links
+
+```{=html}
+<ul class="quick-links-list">
+  <li>
+    <i class="fab fa-github"></i>
+    <a href="{{< var github >}}">github.com/eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-linkedin"></i>
+    <a href="{{< var linkedin >}}">linkedin.com/in/eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-twitter"></i>
+    <a href="{{< var twitter >}}">twitter.com/eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-mastodon"></i>
+    <a href="{{< var mastodon >}}">mastodon.social/@eyayaw</a>
+  </li>
+  <li>
+    <i class="fab fa-bluesky"></i>
+    <a href="{{< var bluesky >}}">bsky.app/profile/eyayaw.bsky.social</a>
+  </li>
+</ul>
+```
