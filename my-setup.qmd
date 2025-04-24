@@ -1,0 +1,128 @@
+---
+title: "My Setup"
+description: "_Apps and tools I lovingly use!_"
+format:
+  html:
+    toc: true
+---
+
+This page documents my dev/academic setup. For the apps and tools I currently use, I also provide alternatives that I've used previously or am familiar with.
+
+## Fonts and Themes
+
+-   [MonoLisa](https://monolisa.dev), [Berkeley Mono](https://usgraphics.com/products/berkeley-mono)
+    -   *Alternatives*: [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono), [Monaspace](https://github.com/githubnext/monaspace)
+-   [Tomorrow Night Eights](https://github.com/chriskempson/tomorrow-theme), [Solarized Light](https://ethanschoonover.com/solarized/)
+
+## Must-haves
+
+-   **Password Manager:** [1Password](https://1password.com/) \$
+    -   *Alternatives*: [Bitwarden](https://bitwarden.com/), [Proton Pass](https://proton.me/pass), [Dashlane](https://www.dashlane.com/)
+-   **Launcher:** [Raycast](https://www.raycast.com/) \$, [Alfred](https://www.alfredapp.com/) \$
+    -   *Alternatives*: [LeaderKey](https://github.com/mikker/LeaderKey.app)
+-   **Browser:** [Arc](https://arc.net/)
+    -   *Alternatives*: [Zen Browser](https://github.com/zen-browser/desktop)
+-   **Keyboard Customization:** [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
+    -   *Alternatives*: [Kanata](https://github.com/jtroo/kanata)
+-   **Clipboard History**: [Pastebot](https://tapbots.com/pastebot/) \$
+    -   *Alternatives*: Raycast/Alfred clipboard history features
+-   **Window Management**: [Magnet](https://magnet.crowdcafe.com), [Raycast Windom Management](https://www.raycast.com/core-features/window-management)
+-   **System Cleaning:** [CleanMyMac](https://macpaw.com/cleanmymac) \$
+-   **Screenshots/Recording:** [CleanShot](https://cleanshot.com/) \$
+    -   *Alternatives*: [Shottr](https://shottr.cc/)
+-   **Reference Management:** [Zotero](https://www.zotero.org/) + [Better BibTex](https://github.com/retorquere/zotero-better-bibtex)
+    -   *Alternatives*: Mendeley, EndNote
+-   **RSS Feed Reader**: [Inoreader](https://www.inoreader.com) \$
+    -   *Alternatives*: [Feedly](https://feedly.com/)
+
+## Productivity/Utilities
+
+-   **System Monitoring:** [iStat Menus](https://bjango.com/mac/istatmenus/) \$
+    -   *Alternatives*: [Stats](https://bjango.com/mac/stats/)
+-   **Menu Bar Organization:** [Bartender](https://bjango.com/mac/bartender/) \$
+    -   *Alternatives*: [Ice](https://github.com/jordanbaird/Ice), [Hidden](https://github.com/Hidden), [Dozer](https://github.com/Mortennn/Dozer)
+-   **App Switcher:** [AltTab](https://github.com/lwouis/alt-tab-macos)
+    -   *Alternatives*: Use CMD+Tab
+-   **Note Taking:** [Bear Notes](https://bear.app) \$
+    -   *Alternatives*: Obsidian, Notion, Apple Notes, [Joplin](https://github.com/laurent22/joplin)
+-   **PDF Handling:** [PDF Expert](https://pdfexpert.com/) \$, Preview
+-   **Bookmark Management:** [Raindrop.io](https://raindrop.io/)
+    -   *Alternatives*: Pocket, Instapaper
+-   **Media Downloader**: [Downie](https://software.charliemonroe.net/downie/) \$
+    - *Alternatives*: [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+
+## Development & CLI
+
+### Shell & CLI Tools
+
+-   **Terminal Emulator:** [Ghostty](https://github.com/ghostty-org/ghostty)
+    -   *Alternatives*: [iTerm2](https://github.com/gnachman/iTerm2), [Kitty](https://github.com/kovidgoyal/kitty), [Alacritty](https://github.com/alacritty/alacritty)
+-   **Shell Prompt:** [Starship](https://starship.rs/)
+    -   *Alternatives*: [Powerlevel10k](https://github.com/romkatv/powerlevel10k), [Oh My Zsh prompts](https://ohmyz.sh/)
+-   **Terminal Multiplexer:** [tmux](https://github.com/tmux/tmux)
+    -   *Alternatives*: [Screen](https://www.gnu.org/software/screen/), [Zellij](https://zellij.dev/)
+-   **Dotfile Manager:** [GNU Stow](https://www.gnu.org/software/stow/)
+-   **CLI Utilities:**
+    -   [gh](https://cli.github.com/): GitHub CLI
+    -   [git-lfs](https://github.com/git-lfs/git-lfs): Git Large File System
+    -   [bat](https://github.com/sharkdp/bat): `cat` with syntax highlighting
+    -   [fzf](https://github.com/junegunn/fzf): Fuzzy finder
+        -   *Alternatives* (for shell history): [mcfly](https://github.com/carljm/mcfly), [atuin](https://github.com/atuinsh/atuin), [skim](https://github.com/skim-rs/skim)
+    -   [ripgrep](https://github.com/BurntSushi/ripgrep): Fast `grep` alternative
+    -   [fd](https://github.com/sharkdp/fd): `find` alternative
+    -   [glow](https://github.com/charmbracelet/glow): Terminal Markdown viewer
+    -   [act](https://github.com/nektos/act): Run github actions locally
+
+### Editors & IDEs
+
+-   [Zed](https://zed.dev) (+ Preview)
+    -   *Alternatives*: [Helix](https://helix-editor.com), [Sublime Text](https://sublimetext.com)
+-   [Visual Studio Code](https://code.visualstudio.com/) (+ Insiders)
+-   [Neovim](https://neovim.io/)
+    -   *Alternatives*: [Vim](https://www.vim.org/)
+-   [RStudio](https://posit.co/rstudio/)
+    -   *Alternatives*: [Positron](https://posit.co/positron), [Radian](https://github.com/randy3k/radian), VS Code
+
+### Programming Languages & Data Tools
+
+-   [Python](https://python.org)
+    -   Package/Env Management: [uv](https://github.com/astral-sh/uv) (*Alternatives*: pip, conda)
+    -   Linter/Formatter: [ruff](https://github.com/astral-sh/ruff)
+-   [R](https://www.r-project.org/)
+    -   Formatter: [air](https://github.com/posit-dev/air) (*Alternatives*: styler, formatR)
+-   SQL & Big Data: [DuckDB](https://duckdb.org), [PostgreSQL](https://www.postgresql.org)
+    -   *Alternatives*: [SQLite](https://sqlite.org), [MySQL](https://mysql.com), [ClickHouse](https://clickhouse.com), [Polars](https://pola.rs)
+
+### Web & API Hacking
+
+-   [Bruno](https://github.com/usebruno/bruno): API client
+    -   *Alternatives*: Insomnia, Postman
+-   [Mitmproxy](https://github.com/mitmproxy/mitmproxy): HTTP inspection
+    -   *Alternatives*: [Burp Suite](https://portswigger.net/burp)
+-   [Android Emulator](https://developer.android.com/studio/run/emulator)
+
+### Documentation & Literate Programming
+
+-   [Quarto](https://quarto.org)
+    -   *Alternatives*: R Markdown, [Litedown](https://github.com/yihui/litedown), Jupyter Notebooks
+-   [Pandoc](https://pandoc.org): Document converter
+-   [Typst](https://github.com/typst/typst): LaTeX alternative
+
+## Security & Cloud
+
+-   **Ad Blocking:** [AdGuard](https://adguard.com/) \$, [uBlock Origin](https://github.com/gorhill/uBlock)
+-   **Firewall/Network monitoring:** [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) \$
+-   **VPN:** [Hotspot Shield](https://www.hotspotshield.com/) \$
+    -   *Alternatives*: [Mullvad VPN](https://mullvad.net/en), ProtonVPN, AdGuard VPN, Tailscale
+-   **Cloud Storage:** [iCloud Drive](https://icloud.com) \$
+    -   *Alternatives*: Google Drive, Dropbox, pCloud
+-   **File Encryption:** [Cryptomator](https://cryptomator.org/)
+
+## AI Tools
+
+-   **Chat/Assistants:** [Claude](https://claude.ai), [ChatGPT](https://openai.com/), [Gemini](https://gemini.google.com), [Raycast AI](https://www.raycast.com/core-features/ai)
+-   **Local LLMs:** [Ollama](https://github.com/ollama/ollama), [LM Studio](https://lmstudio.ai/)
+-   **CLI**: [Aider](https://github.com/Aider-AI/aider)
+    - *Alternatives*: [Claude Code](https://github.com/anthropics/claude-code), [OpenAI Codex](https://github.com/openai/codex), [Open Interpreter](https://github.com/OpenInterpreter/open-interpreter)
+-   **Transcription:** [SuperWhisper](https://superwhisper.com/)
+    -   *Alternatives*: [MacWhisper](https://goodsnooze.gumroad.com/l/macwhisper)

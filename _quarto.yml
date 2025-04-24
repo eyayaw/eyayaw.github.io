@@ -23,13 +23,16 @@ website:
   navbar:
     title: eyayaw
     background: light
-    right:
+    left:
       - text: about
         href: about.qmd
-      - text: blog
-        href: blog.qmd
       - text: research
         href: research.qmd
+    right:
+      - text: blog
+        href: blog.qmd
+      - text: my setup
+        href: my-setup.qmd
       - icon: github
         href: "{{< var github >}}"
   page-footer:
