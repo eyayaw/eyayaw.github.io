@@ -20,4 +20,6 @@ code-overflow: wrap
 freeze: auto
 comments:
   giscus:
-    repo: eyayaw/eyayaw.github.io
+    repo: "eyayaw/eyayaw.github.io"
+    mapping: pathname
+    category: Comments
