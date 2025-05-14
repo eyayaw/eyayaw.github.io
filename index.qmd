@@ -45,22 +45,6 @@ css: index.css
 :::
 
 
-## Hobby Projects
-
-```{=html}
-<ul class="hobby-projects">
-  <li>
-    <a href="https://github.com/eyayaw/cleaning-RWI-GEO-RED">eyayaw/cleaning-RWI-GEO-RED</a>: Scripts for cleaning, tidying, and hedonic model estimation for <a href="https://www.rwi-essen.de/en/research-advice/further/research-data-center-ruhr-fdz/data-sets/rwi-geo-red/x-real-estate-data-and-price-indices">Immoscout24/RWI-GEO-RED</a> real estate data
-  </li>
-  <li>
-    <a href="https://github.com/eyayaw/ethio-youtube-channels">eyayaw/ethio-youtube-channels</a>: Daily YouTube stats for selected Ethiopian channels
-  </li>
-  <li>
-    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns.
-  </li>
-</ul>
-```
-
 ## Research Projects
 
 ```{=html}
@@ -96,6 +80,36 @@ css: index.css
     Estimates the price elasticity of housing supply and the impact of geographic constraints in Germany from 2008-2019 using the Bartik instrument. The housing supply is, on average, inelastic, about 0.23 across counties, with highly (land) developed counties showing lower elasticity.
   </p>
 </div>
+```
+
+
+## Hobby Projects
+
+```{=html}
+<ul class="hobby-projects">
+  <li>
+    <a href="https://github.com/eyayaw/cleaning-RWI-GEO-RED">eyayaw/cleaning-RWI-GEO-RED</a>: Scripts for cleaning, tidying, and hedonic model estimation for <a href="https://www.rwi-essen.de/en/research-advice/further/research-data-center-ruhr-fdz/data-sets/rwi-geo-red/x-real-estate-data-and-price-indices">Immoscout24/RWI-GEO-RED</a> real estate data
+  </li>
+  <li> Social Media Data
+  <ul>
+  <li>
+    <a href="https://github.com/eyayaw/ethio-youtube-channels">eyayaw/ethio-youtube-channels</a>: Daily YouTube stats for selected Ethiopian channels
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/facebook-data">eyayaw/facebook-data</a>: Extracting data from facebook using an Apify actor
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/twitter-data">eyayaw/twitter-data</a>: Extracting Twitter data using an Apify actor
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/telegram-data">eyayaw/telegram-data</a>: Extracting Telegram data using the telegram API
+  </li>
+  </ul>
+  </li>
+  <li>
+    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns.
+  </li>
+</ul>
 ```
 
 
