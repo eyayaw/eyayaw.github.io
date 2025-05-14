@@ -1,0 +1,120 @@
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+/* overwrite quarto listing style */
+.quarto-listing {
+    padding-bottom: 0rem;
+}
+
+/* Profile Summary Styling */
+
+.profile-box {
+    display: flex;
+    gap: 16px;
+    background-color: var(--color-ivory-medium);
+    border: 1px solid var(--color-ivory-dark);
+    border-radius: 6px;
+    padding: 12px;
+    margin: 16px 0;
+    max-width: 100%;
+    min-height: fit-content;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    max-height: 6rem;
+}
+
+.avatar img {
+    max-height: 6rem;
+    /* display: block;
+    object-fit: contain; */
+}
+
+.profile-content {
+    align-self: center;
+    min-width: 0;
+}
+
+/* .profile-content p {
+    margin: 0;
+} */
+
+.profile-content p:first-of-type {
+    margin-top: 0px;
+    /* display: inline; */
+}
+
+.profile-content p + p {
+margin-top: 1rem;
+}
+
+/* Recent Posts Styling */
+#recent-posts ul {
+    list-style-type: disc;
+    padding-left: 1rem;
+}
+
+#recent-posts ul > li {
+    margin-bottom: 0.5rem;
+}
+
+/* Hobby Projects */
+
+.hobby-projects {
+    padding-left: 1rem;
+}
+
+.hobby-projects li {
+    margin-bottom: 0.5rem;
+}
+
+/* Research Projects */
+
+.research-project {
+    margin-bottom: 1.8rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-clay);
+}
+
+.research-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.research-links {
+    margin-bottom: 0.5rem;
+}
+
+.research-links a {
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.research-summary {
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    color: #555;
+}
+
+/* Quick Links */
+.quick-links-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.quick-links-list li {
+    margin-bottom: 0.5rem;
+}
+
+.quick-links-list i,
+.quick-links-list svg {
+    margin-right: 0.5rem;
+}

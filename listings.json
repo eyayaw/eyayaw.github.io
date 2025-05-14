@@ -1,0 +1,18 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/setting-up-a-new-mac.html",
+      "/posts/base-r.html",
+      "/posts/welcome.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/setting-up-a-new-mac.html",
+      "/posts/base-r.html",
+      "/posts/welcome.html"
+    ]
+  }
+]

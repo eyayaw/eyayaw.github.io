@@ -1,0 +1,97 @@
+/* css styles */
+
+body {
+  font-family: Inter, "Open Sans", sans-serif;
+  background-color: var(--color-ivory-light);
+  padding: 20px;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+pre, code, .sourceCode{
+  font-family: "IBM Plex Mono";
+}
+
+#quarto-header > nav, .nav-footer,  #quarto-appendix.default {
+  background-color: var(--color-ivory-medium);
+}
+
+/* i {
+  margin: 0 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+i:hover {
+  opacity: 0.7;
+} */
+
+
+.mufc {
+  color: #DA291C;
+}
+
+
+
+.cv-link {
+  display: inline-block;
+  padding: 1px 10px;
+  background-color: #2c3e50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+}
+
+.cv-link:hover {
+  background-color: #34495e;
+  color: white;
+  text-decoration: none;
+}
+
+:root {
+    --color-book-cloth: #cc785c;
+    --color-cactus: #bcd1ca;
+    --color-clay: #d97757;
+    --color-cloud-dark: #87867f;
+    --color-cloud-light: #d1cfc5;
+    --color-cloud-medium: #b0aea5;
+    --color-coral: #ebcece;
+    --color-dark: #0f0f0e;
+    --color-fig: #c46686;
+    --color-heather: #cbcadb;
+    --color-ivory-dark: #e8e6dc;
+    --color-ivory-light: #faf9f5;
+    --color-ivory-medium: #f0eee6;
+    --color-kraft: #d4a27f;
+    --color-lilac: #8989de;
+    --color-light: #fff;
+    --color-manilla: #ebdbbc;
+    --color-manilla-light: #f1e6d0;
+    --color-oat: #e3dacc;
+    --color-olive: #788c5d;
+    --color-sky: #6a98bc;
+    --color-slate-dark: #141413;
+    --color-slate-light: #5e5d59;
+    --color-slate-medium: #3d3d3a;
+    --spacer-01: 4px;
+    --spacer-02: 8px;
+    --spacer-03: 12px;
+    --spacer-04: 16px;
+    --spacer-05: 24px;
+    --spacer-06: 32px;
+    --spacer-07: 40px;
+    --spacer-08: 48px;
+    --spacer-09: 64px;
+    --spacer-10: 80px;
+    --spacer-11: 96px;
+    --spacer-12: 160px
+}
