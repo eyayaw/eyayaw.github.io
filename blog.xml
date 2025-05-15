@@ -821,7 +821,7 @@ background-color: null;
 font-style: inherit;">"Package"</span>, fields))</span></code></pre></div>
 </details>
 </div>
-<p>There are 14 base R packages, in R 4.4.3. Below is a complete list.</p>
+<p>There are 14 base R packages, in R 4.5.0. Below is a complete list.</p>
 <div class="callout callout-style-default callout-important no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -898,7 +898,7 @@ background-color: null;
 font-style: inherit;">1</span>]]</span></code></pre></div>
 </details>
 </div>
-<p>The default packages are attached when R starts up. As of R 4.4.3 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
+<p>The default packages are attached when R starts up. As of R 4.5.0 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -992,7 +992,7 @@ font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div>
 </details>
 </div>
 <p>The other base R packages are {compiler}, {grid}, {parallel}, {splines}, {stats4}, {tcltk}, and {tools}. These (or some) may not be familiar to you (myself included) if you’re not a package developer. I have used {tools} for example to check package dependencies (e.g., <code>tools::package_dependencies("data.table", recursive = TRUE)</code>), and work with file paths (see my <a href="https://x.com/eyayaw/status/1488568897334915081">tweet</a>). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?</p>
-<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.4.3), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
+<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.5.0), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
 
 
 
