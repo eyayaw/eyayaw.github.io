@@ -49,8 +49,7 @@ website:
 
 format:
   html:
-    theme:
-      light: [cosmo]
+    theme: cosmo
     css: styles.css
     toc: false
     include-in-header:
@@ -63,7 +62,4 @@ format:
 
           <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 
-
-execute:
-  freeze: auto
 editor: source
