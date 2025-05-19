@@ -12,7 +12,11 @@ This page documents my dev/academic setup. For the apps and tools I currently us
 
 -   [MonoLisa](https://monolisa.dev), [Berkeley Mono](https://usgraphics.com/products/berkeley-mono)
     -   *Alternatives*: [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono), [Monaspace](https://github.com/githubnext/monaspace)
--   [Tomorrow Night Eights](https://github.com/chriskempson/tomorrow-theme), [Solarized Light](https://ethanschoonover.com/solarized/)
+-   Themes:
+    -   [Tomorrow](https://github.com/chriskempson/tomorrow-theme)
+    -   [Solarized](https://ethanschoonover.com/solarized/)
+    -   [Rose Pine](https://rosepinetheme.com/themes/)
+    -   [gruvbox](https://github.com/morhetz/gruvbox)
 
 ## Must-haves
 
@@ -70,6 +74,7 @@ This page documents my dev/academic setup. For the apps and tools I currently us
         -   *Alternatives* (for shell history): [mcfly](https://github.com/carljm/mcfly), [atuin](https://github.com/atuinsh/atuin), [skim](https://github.com/skim-rs/skim)
     -   [ripgrep](https://github.com/BurntSushi/ripgrep): Fast `grep` alternative
     -   [fd](https://github.com/sharkdp/fd): `find` alternative
+    -   [jq](https://jqlang.org/): JSON processor
     -   [glow](https://github.com/charmbracelet/glow): Terminal Markdown viewer
     -   [act](https://github.com/nektos/act): Run github actions locally
 
