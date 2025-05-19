@@ -88,7 +88,7 @@
     "href": "my-setup.html#fonts-and-themes",
     "title": "My Setup",
     "section": "Fonts and Themes",
-    "text": "Fonts and Themes\n\nMonoLisa, Berkeley Mono\n\nAlternatives: JetBrains Mono, Monaspace\n\nTomorrow Night Eights, Solarized Light"
+    "text": "Fonts and Themes\n\nMonoLisa, Berkeley Mono\n\nAlternatives: JetBrains Mono, Monaspace\n\nThemes:\n\nTomorrow\nSolarized\nRose Pine\ngruvbox"
   },
   {
     "objectID": "my-setup.html#must-haves",
@@ -109,7 +109,7 @@
     "href": "my-setup.html#development-cli",
     "title": "My Setup",
     "section": "Development & CLI",
-    "text": "Development & CLI\n\nShell & CLI Tools\n\nTerminal Emulator: Ghostty\n\nAlternatives: iTerm2, Kitty, Alacritty\n\nShell Prompt: Starship\n\nAlternatives: Powerlevel10k, Oh My Zsh prompts\n\nTerminal Multiplexer: tmux\n\nAlternatives: Screen, Zellij\n\nDotfile Manager: GNU Stow\nCLI Utilities:\n\ngh: GitHub CLI\ngit-lfs: Git Large File System\nbat: cat with syntax highlighting\nfzf: Fuzzy finder\n\nAlternatives (for shell history): mcfly, atuin, skim\n\nripgrep: Fast grep alternative\nfd: find alternative\nglow: Terminal Markdown viewer\nact: Run github actions locally\n\n\n\n\nEditors & IDEs\n\nZed (+ Preview)\n\nAlternatives: Helix, Sublime Text\n\nVisual Studio Code (+ Insiders)\nNeovim\n\nAlternatives: Vim\n\nRStudio\n\nAlternatives: Positron, Radian, VS Code\n\n\n\n\nProgramming Languages & Data Tools\n\nPython\n\nPackage/Env Management: uv (Alternatives: pip, conda)\nLinter/Formatter: ruff\n\nR\n\nFormatter: air (Alternatives: styler, formatR)\n\nSQL & Big Data: DuckDB, PostgreSQL\n\nAlternatives: SQLite, MySQL, ClickHouse, Polars\n\n\n\n\nWeb & API Hacking\n\nBruno: API client\n\nAlternatives: Insomnia, Postman\n\nMitmproxy: HTTP inspection\n\nAlternatives: Burp Suite\n\nAndroid Emulator\n\n\n\nDocumentation & Literate Programming\n\nQuarto\n\nAlternatives: R Markdown, Litedown, Jupyter Notebooks\n\nPandoc: Document converter\nTypst: LaTeX alternative"
+    "text": "Development & CLI\n\nShell & CLI Tools\n\nTerminal Emulator: Ghostty\n\nAlternatives: iTerm2, Kitty, Alacritty\n\nShell Prompt: Starship\n\nAlternatives: Powerlevel10k, Oh My Zsh prompts\n\nTerminal Multiplexer: tmux\n\nAlternatives: Screen, Zellij\n\nDotfile Manager: GNU Stow\nCLI Utilities:\n\ngh: GitHub CLI\ngit-lfs: Git Large File System\nbat: cat with syntax highlighting\nfzf: Fuzzy finder\n\nAlternatives (for shell history): mcfly, atuin, skim\n\nripgrep: Fast grep alternative\nfd: find alternative\njq: JSON processor\nglow: Terminal Markdown viewer\nact: Run github actions locally\n\n\n\n\nEditors & IDEs\n\nZed (+ Preview)\n\nAlternatives: Helix, Sublime Text\n\nVisual Studio Code (+ Insiders)\nNeovim\n\nAlternatives: Vim\n\nRStudio\n\nAlternatives: Positron, Radian, VS Code\n\n\n\n\nProgramming Languages & Data Tools\n\nPython\n\nPackage/Env Management: uv (Alternatives: pip, conda)\nLinter/Formatter: ruff\n\nR\n\nFormatter: air (Alternatives: styler, formatR)\n\nSQL & Big Data: DuckDB, PostgreSQL\n\nAlternatives: SQLite, MySQL, ClickHouse, Polars\n\n\n\n\nWeb & API Hacking\n\nBruno: API client\n\nAlternatives: Insomnia, Postman\n\nMitmproxy: HTTP inspection\n\nAlternatives: Burp Suite\n\nAndroid Emulator\n\n\n\nDocumentation & Literate Programming\n\nQuarto\n\nAlternatives: R Markdown, Litedown, Jupyter Notebooks\n\nPandoc: Document converter\nTypst: LaTeX alternative"
   },
   {
     "objectID": "my-setup.html#security-cloud",
@@ -172,7 +172,7 @@
     "href": "index.html#hobby-projects",
     "title": "Eyayaw Beze",
     "section": "Hobby Projects",
-    "text": "Hobby Projects\n\n  \n    eyayaw/cleaning-RWI-GEO-RED: Scripts for cleaning, tidying, and hedonic model estimation for Immoscout24/RWI-GEO-RED real estate data\n  \n   Social Media Data\n  \n  \n    eyayaw/ethio-youtube-channels: Daily YouTube stats for selected Ethiopian channels\n  \n  \n    eyayaw/facebook-data: Extracting data from facebook using an Apify actor\n  \n  \n    eyayaw/twitter-data: Extracting Twitter data using an Apify actor\n  \n  \n    eyayaw/telegram-data: Extracting Telegram data using the telegram API\n  \n  \n  \n  \n    eyayaw/random-viz: A visualization project to explore trends and patterns."
+    "text": "Hobby Projects\n\n  \n    eyayaw/cleaning-RWI-GEO-RED: Scripts for cleaning, tidying, and hedonic model estimation for Immoscout24/RWI-GEO-RED real estate data\n  \n   Social Media Data\n  \n  \n    eyayaw/ethio-youtube-channels: Daily YouTube stats for selected Ethiopian channels\n  \n  \n    eyayaw/facebook-data: Extracting data from facebook using an Apify actor | Shiny App\n  \n  \n    eyayaw/twitter-data: Extracting Twitter data using an Apify actor\n  \n  \n    eyayaw/telegram-data: Extracting Telegram data using the telegram API\n  \n  \n  \n  \n    eyayaw/random-viz: A visualization project to explore trends and patterns."
   },
   {
     "objectID": "index.html#quick-links",
