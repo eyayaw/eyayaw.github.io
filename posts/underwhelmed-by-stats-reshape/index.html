@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eyayaw Beze">
+<meta name="dcterms.date" content="2025-08-11">
+
+<title>Underwhelmed by stats::reshape – Eyayaw Beze</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../{{< var profile-img >}}" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f07a380226b71dccd824dee245407231.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0MBR68SHL8"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Underwhelmed by stats::reshape – Eyayaw Beze">
+<meta property="og:description" content="Eyayaw Beze’s personal website">
+<meta property="og:site_name" content="Eyayaw Beze">
+<meta name="twitter:title" content="Eyayaw">
+<meta name="twitter:description" content="Eyayaw Beze’s personal website">
+<meta name="twitter:creator" content="@eyayaw">
+<meta name="twitter:site" content="@eyayaw">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">eyayaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../research.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../my-setup.html"> 
+<span class="menu-text">my setup</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/eyayaw"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#reshaping-with-statsreshape" id="toc-reshaping-with-statsreshape" class="nav-link active" data-scroll-target="#reshaping-with-statsreshape">Reshaping with <code>stats::reshape</code></a>
+  <ul class="collapse">
+  <li><a href="#reshape-to-long-reshape...-direction-long" id="toc-reshape-to-long-reshape...-direction-long" class="nav-link" data-scroll-target="#reshape-to-long-reshape...-direction-long">Reshape to long: <code>reshape(..., direction = "long")</code></a></li>
+  <li><a href="#reshape-to-wide-reshape...-direction-wide" id="toc-reshape-to-wide-reshape...-direction-wide" class="nav-link" data-scroll-target="#reshape-to-wide-reshape...-direction-wide">Reshape to wide: <code>reshape(..., direction = "wide")</code></a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/posts/underwhelmed-by-stats-reshape/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/posts/underwhelmed-by-stats-reshape/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Underwhelmed by <code>stats::reshape</code></h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">r</div>
+    <div class="quarto-category">base-r</div>
+    <div class="quarto-category">tutorial</div>
+    <div class="quarto-category">programming</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://github.com/eyayaw">Eyayaw Beze</a> </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>When was the last time you used <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html"><code>stats::reshape</code></a>? Probably never, in the presence of {tidyr}’s <a href="https://tidyr.tidyverse.org/articles/pivot.html"><code>pivot_*</code></a> and {data.table}’s <a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html"><code>melt</code>/<code>dcast</code></a> reshaping (aka pivoting) functions.</p>
+<p>A while ago, while perusing through the {data.table} <a href="https://rdatatable.gitlab.io/data.table/articles/">vignettes</a>, I learned about the <code>reshape</code> function. The {data.table} core team described it as “<a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html#limitations-in-previous-meltdcast-approaches">It is an extremely useful and often underrated function.</a>”. As a member of the “dependency-frets” (as <code>reshape</code> is part of <a href="../base-r.html">base R</a>), I’ve been using it fairly since. However, it has some annoyances that might lead you to think that the function isn’t yet quite “fully ripe”, which could explain its “underratting”.</p>
+<p>First, it’s very slow; no further comment is needed, but that could be a deal breaker for some.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Args of the <code>reshape</code> function are also a bit cryptic. I have to hit <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html"><code>?reshape</code></a> time and again because it is not easy to remember what is what. What (or not) to pass to <code>varying</code> (a vector or a list (or a matrix)) and how to order its values? Like <code>varying=c("gdp_2020", "gdp_2021", "pop_2020", "pop_2021")</code>, or <code>c("gdp_2020", "pop_2020", "gdp_2021", "pop_2021")</code>? What does <code>v.names</code> (and frankly most args) do in <code>reshape</code> to wide vs.&nbsp;long? Would not it be helpful if <code>reshape</code> was broken down into two separate functions (<code>reshape_{long,wide}</code>)?<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Also it is hard to tell which args are optional and which get ignored silently even when you explicitly provide them.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Futhermore, you have to “nicely” format your column names to unlock reshape to long’s potential: that is use a <code>sep</code> (defaults to <code>.</code>) between the time <code>varying</code> variables and the <code>timevar</code> (like <code>gdp.2020</code>, <code>pop.2020</code>).</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do you really think about renaming your columns when reshaping? Don’t! 🙃</p>
+</div>
+</div>
+<p>Even if you “nicely” format your column names say with <code>sep="_"</code>, your’re doomed if you have “_” somewhere in the column names as you can’t use perl-compatible regex to force the location of the <code>sep</code> (e.g., you have <code>gdp_ppp_2020</code> and you’re not allowed to use <code>sep="_(?=\\d{4})"</code> or <code>split(regexp = "_(?=\\d{4})", include = FALSE, fixed = FALSE)</code>). If you look at the <a href="https://github.com/wch/r-source/blob/trunk/src/library/stats/R/reshape.R">source</a>, this could have been done as <code>split</code> and <code>regexpr</code> (where <code>sep</code> and <code>split</code> are used) can handle perl-compatible regex with <code>perl = TRUE</code>.</p>
+<p>While <code>reshape</code> is fundamentally built to deal with panel data, it does not handle “unbalanced” (panel) data. A special case that traps reshape (to long) is when a variable (say population size) is available for 2019 but missing for 2020 (for all units), while another variable (GDP) is measured for both 2019 and 2020 (for some or all units).<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> You may think this is a useless edge scenario, but both {data.table} and {tidyr} support it. This rare edge case may frequently <a href="https://stackoverflow.com/q/76167864">creep into</a> typical use cases, doesn’t it?</p>
+<section id="reshaping-with-statsreshape" class="level1">
+<h1>Reshaping with <code>stats::reshape</code></h1>
+<p>Let’s quickly look at how we can use <code>reshape</code> to convert data from wide to long format and vice versa and touch on some of the issues along the way, with sample datasets from the World Development Indicators (WDI) database. The WDI datasets provide a perfect use case for reshaping because you can download the data in wide or long format.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The official <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html">documentation</a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf">vignette</a> for <code>reshape</code> are great. I also find this <a href="https://jozef.io/r001-reshape/">blog post</a> by Jozef Hajnala excellent.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import data (source WBG WDI)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>wdi_data_wide <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"wdi_data_wide.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>wdi_data_long <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"wdi_data_long.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># constants</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data_url <span class="ot">=</span> <span class="st">"https://databank.worldbank.org/id/8dfced2d"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>varying_patt <span class="ot">=</span> <span class="st">"^((?:pop|gdp).*)[_](</span><span class="sc">\\</span><span class="st">d{4})$"</span> <span class="co"># regex for measure vars</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>varying_patt_vec <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"^pop"</span>, <span class="st">"^gdp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the sample WDI datasets
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>I downloaded the data in two formats: “table” and “list”, which roughly correspond to wide and long formats, respectively. The data contains information on 2 indicators (“Population, total” and “GDP per capita, PPP (constant 2021 international $)”), for countries Korea, Rep., Ethiopia, and Germany for the years 2019-2020. Here is a direct <a href="https://databank.worldbank.org/id/8dfced2d">link</a> to the original dataset.</p>
+<div class="cell" data-layout-nrow="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"sample_wdi_data_table.csv"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"sample_wdi_data_list.csv"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-original-data" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-original-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Sample Dataset from WDI Database (Raw)
+</figcaption>
+<div aria-describedby="tbl-original-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-original-data" style="flex-basis: 100.0%;justify-content: center;">
+<div id="tbl-original-data-1" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-original-data-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Head of the data in table (wide) format
+</figcaption>
+<div aria-describedby="tbl-original-data-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-original-data-1" class="do-not-create-environment caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 57%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country Name</th>
+<th style="text-align: left;">Series Name</th>
+<th style="text-align: right;">2019</th>
+<th style="text-align: right;">2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">51764822.00</td>
+<td style="text-align: right;">5.183624e+07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">46757.26</td>
+<td style="text-align: right;">4.636160e+04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">115737383.00</td>
+<td style="text-align: right;">1.189177e+08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">2437.97</td>
+<td style="text-align: right;">2.516549e+03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">83092962.00</td>
+<td style="text-align: right;">8.316087e+07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">62970.72</td>
+<td style="text-align: right;">6.034266e+04</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-original-data" style="flex-basis: 100.0%;justify-content: center;">
+<div id="tbl-original-data-2" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-original-data-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Head of the data in list (long) format
+</figcaption>
+<div aria-describedby="tbl-original-data-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-original-data-2" class="do-not-create-environment caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 62%">
+<col style="width: 6%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country Name</th>
+<th style="text-align: left;">Series Name</th>
+<th style="text-align: right;">Time</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">51764822.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">51836239.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">46757.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">46361.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">115737383.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">118917671.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="reshape-to-long-reshape...-direction-long" class="level2">
+<h2 class="anchored" data-anchor-id="reshape-to-long-reshape...-direction-long">Reshape to long: <code>reshape(..., direction = "long")</code></h2>
+<p>The dataset in wide format looks like:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<div class="cell">
+<div id="tbl-true-wide" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-true-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The data in true wide format (cleaned)
+</figcaption>
+<div aria-describedby="tbl-true-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">pop_total_2019</th>
+<th style="text-align: right;">pop_total_2020</th>
+<th style="text-align: right;">gdp_pc_ppp_2019</th>
+<th style="text-align: right;">gdp_pc_ppp_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: right;">51764822</td>
+<td style="text-align: right;">51836239</td>
+<td style="text-align: right;">46757.26</td>
+<td style="text-align: right;">46361.596</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: right;">115737383</td>
+<td style="text-align: right;">118917671</td>
+<td style="text-align: right;">2437.97</td>
+<td style="text-align: right;">2516.549</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: right;">83092962</td>
+<td style="text-align: right;">83160871</td>
+<td style="text-align: right;">62970.72</td>
+<td style="text-align: right;">60342.663</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>To pivot this into a long format, we just collect the suffixed years in the (series) columns into a single column “year”, and each series makes (or gets collapsed into) a single column.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Reshape to long with other packages">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reshape to long with other packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>IMO, all three solutions are straighforward. We get a proper long format, a row represents a record for a country at a point-in-time, that is, this is in a typical panel (<a href="https://en.wikipedia.org/wiki/Panel_data">repeated-crossection or longitudinal</a>) data format.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true"><code>data.table::melt</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><code>tidyr::pivot_longer</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false"><code>duckdb::unpivot</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wdi_data_wide <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.table</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">melt</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">measure.vars =</span> <span class="fu">measure</span>(value.name, year, <span class="at">pattern =</span> <span class="st">"^([a-z_]+)_(</span><span class="sc">\\</span><span class="st">d{4})$"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id.vars =</span> <span class="st">"country"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country   year pop_total gdp_pc_ppp
+        &lt;char&gt; &lt;char&gt;     &lt;int&gt;      &lt;num&gt;
+1: Korea, Rep.   2019  51764822  46757.261
+2:    Ethiopia   2019 115737383   2437.970
+3:     Germany   2019  83092962  62970.716
+4: Korea, Rep.   2020  51836239  46361.596
+5:    Ethiopia   2020 118917671   2516.549
+6:     Germany   2020  83160871  60342.663</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wdi_data_wide <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>country,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^([a-z_]+)_(</span><span class="sc">\\</span><span class="st">d{4})$"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"year"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country     year  pop_total gdp_pc_ppp
+  &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;
+1 Korea, Rep. 2019   51764822     46757.
+2 Korea, Rep. 2020   51836239     46362.
+3 Ethiopia    2019  115737383      2438.
+4 Ethiopia    2020  118917671      2517.
+5 Germany     2019   83092962     62971.
+6 Germany     2020   83160871     60343.</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">duckdb</span> <span class="op">&lt;&lt; EOF</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">create or replace table wdi_data_wide as</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">from read_csv('wdi_data_wide.csv');</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">set variable measure_patt = '^([a-z_]+)_(</span><span class="dt">\d</span><span class="st">{4})$';</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">.mode markdown</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">with unpivoted as (</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">  select</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">    country,</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">    column_value as value</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">  from (</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">    unpivot wdi_data_wide</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">    on COLUMNS(getvariable('measure_patt'))</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">    into</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">      name column_name</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">      value column_value</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">  )</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="st">pivot unpivoted</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">on measure</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="st">using first(value)</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">order by country, year;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>|   country   | year |    gdp_pc_ppp    |  pop_total  |
+|-------------|------|-----------------:|------------:|
+| Ethiopia    | 2019 | 2437.97046055952 | 115737383.0 |
+| Ethiopia    | 2020 | 2516.54907642544 | 118917671.0 |
+| Germany     | 2019 | 62970.7160913279 | 83092962.0  |
+| Germany     | 2020 | 60342.6627037391 | 83160871.0  |
+| Korea, Rep. | 2019 | 46757.2614496182 | 51764822.0  |
+| Korea, Rep. | 2020 | 46361.5957811718 | 51836239.0  |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>According to the <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html">doc</a>, the easiest way to reshape to long with <code>reshape</code> is by using “nicely” formatted column names: that is, use a <code>sep</code> (which defaults to <code>.</code>) between the time <code>varying</code> variables and the <code>timevar</code>, like <code>gdp_pc_ppp.2020</code> and <code>pop_total.2020</code>. This nice formatting has the added benefit that <code>v.names</code> (<code>gdp_pc_ppp</code>, <code>pop_total</code>) and <code>times</code> (i.e., the values for <code>timevar</code>) (2020), will be auto-guessed; otherwise, we need to supply them ourselves (which is error prone).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Typical usage for converting from wide to long format:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">### If names of wide-format variables are in a 'nice' format</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># reshape(data, direction = "long",</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         varying = c(___), # vector</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#         sep)              # to help guess 'v.names' and 'times'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So let’s rename our <code>varying</code> columns using a special <code>sep</code> and try reshaping to long as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sep <span class="ot">=</span> <span class="st">"."</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># let's replace "_" (just before the year) with the sep to "nicely" format the column names</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>nicely_format_names <span class="ot">=</span> <span class="cf">function</span>(nms) {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sub</span>(<span class="st">"_(?=</span><span class="sc">\\</span><span class="st">d)"</span>, sep, nms, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>nice_nms <span class="ot">=</span> <span class="fu">nicely_format_names</span>(<span class="fu">names</span>(wdi_data_wide))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_long1 <span class="ot">=</span> <span class="fu">reshape</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(wdi_data_wide, nice_nms),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"long"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">varying =</span> <span class="fu">grepv</span>(<span class="fu">sprintf</span>(<span class="st">"^[a-z_]+%s</span><span class="sc">\\</span><span class="st">d{4}$"</span>, sep), nice_nms),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">idvar =</span> <span class="st">"country"</span>, <span class="co"># if ommitted, an `id` column will be added `seq_along(data)`</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">timevar =</span> <span class="st">"year"</span>, <span class="co"># otherwise `time`</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> sep <span class="co"># the default is `.`</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_long1 <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     country year pop_total gdp_pc_ppp
+Korea, Rep..2019 Korea, Rep. 2019  51764822  46757.261
+Ethiopia.2019       Ethiopia 2019 115737383   2437.970
+Germany.2019         Germany 2019  83092962  62970.716
+Korea, Rep..2020 Korea, Rep. 2020  51836239  46361.596
+Ethiopia.2020       Ethiopia 2020 118917671   2516.549
+Germany.2020         Germany 2020  83160871  60342.663</code></pre>
+</div>
+</div>
+<p>That is a hell of unnatural detour for reshaping. What if we want to go along with our column names? Enter explicit-specification:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Typical usage for converting from wide to long format:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">### To specify long-format variable names explicitly</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># reshape(data, direction = "long",</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#         varying = ___,  # list / matrix / vector (use with care)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#         v.names = ___,  # vector of variable names in long format</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#         timevar, times, # name / values of constructed time variable</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#         idvar, ids)     # name / values of constructed id variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_long2 <span class="ot">=</span> wdi_data_wide <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reshape</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">direction =</span> <span class="st">"long"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># varying = lapply(c("^pop", "^gdp"), \(p) grepv(p, names(wdi_data_wide))),</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">varying =</span> <span class="fu">list</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"pop_total_2019"</span>, <span class="st">"pop_total_2020"</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"gdp_pc_ppp_2019"</span>, <span class="st">"gdp_pc_ppp_2020"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">v.names =</span> <span class="fu">c</span>(<span class="st">"pop"</span>, <span class="st">"gdp_pc_ppp"</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">idvar =</span> <span class="st">"country"</span>, <span class="co"># otherwise column `ids` will be created</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">timevar =</span> <span class="st">"year"</span>, <span class="co"># otherwise "time"</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">times =</span> <span class="fu">c</span>(<span class="st">"2019"</span>, <span class="st">"2020"</span>) <span class="co"># otherwise auto-generated</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_long2 <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     country year       pop gdp_pc_ppp
+Korea, Rep..2019 Korea, Rep. 2019  51764822  46757.261
+Ethiopia.2019       Ethiopia 2019 115737383   2437.970
+Germany.2019         Germany 2019  83092962  62970.716
+Korea, Rep..2020 Korea, Rep. 2020  51836239  46361.596
+Ethiopia.2020       Ethiopia 2020 118917671   2516.549
+Germany.2020         Germany 2020  83160871  60342.663</code></pre>
+</div>
+</div>
+<p>That is very verbose and error prone: (1) we need to specify <code>varying</code> “with care” (choosing the list form), as urged by the doc, (2) the values of <code>timevar</code> (named as <code>year</code>) which are controlled by <code>times</code> will be auto-generated instead of the actual values we see from the data, had we not provided them like so <code>times = c("2019", "2020")</code>, (3) not only do we need to know the unique values of <code>timevar</code>, but also their correct order.</p>
+<p>Importantly, were we should note that we provided a list to <code>varying</code>. What if you accidentially gave a vector like <code>c(c("pop_total_2019", "pop_total_2020"), c("gdp_pc_ppp_2019", "gdp_pc_ppp_2020"))</code>? Well, that would be wrong because if <code>varying</code> takes on a vector, we should rather provide it in this order <code>c("pop_total_2019", "gdp_pc_ppp_2019", "pop_total_2020", "gdp_pc_ppp_2020")</code>.</p>
+<blockquote class="blockquote">
+<p>The correct order requires all columns corresponding to the same time to be contiguous; this is the same intrinsic column-major ordering in the matrix [ or list] […] form. It is best to avoid the atomic vector form of varying unless <code>v.names</code> is being omitted.<br>
+— <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf">Using the reshape function</a> (The R Core Team, April 2025)</p>
+</blockquote>
+<p>Looks like passing a list to <code>varying</code> is safe and straighforward when it comes to the order of the time-varying variables. But as we saw we need to manually define the names/values of several variables (<code>v.names</code>, <code>timevar</code>, <code>times</code>). Before abandoning passing a vector for <code>varying</code>, since we actually want names/values auto-guessed, what if we tell <code>reshape</code> to split at <code>sep = "_"</code>? However, since our <code>varying</code> variables have <code>_</code>, this would be impossible to do without a perl-compatible regex option, which <code>reshape</code> hides from us. If you edit the function definition of <code>reshape</code> to allow for this (i.e, add <code>perl = TRUE</code>), we can use <code>sep = "_(?=\\d{4})"</code> and get the same result as the nicely formatted naming option above.</p>
+<p>We can also play with <code>split</code> to provide a custom <code>sep</code> (<code>regexp</code>) as shown below but the names will have trailing <code>_</code>s (because <code>include = FALSE</code> fails), but we need to pass a vector of names for <code>varying</code> (to take advantage of auto-guessing, so much complication!).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_long3 <span class="ot">=</span> wdi_data_wide <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reshape</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">direction =</span> <span class="st">"long"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">varying =</span> <span class="fu">c</span>(<span class="st">"pop_total_2019"</span>, <span class="st">"gdp_pc_ppp_2019"</span>, <span class="st">"pop_total_2020"</span>,  <span class="st">"gdp_pc_ppp_2020"</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">timevar =</span> <span class="st">"year"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">idvar =</span> <span class="st">"country"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">split =</span> <span class="fu">list</span>(<span class="at">regexp =</span> <span class="st">"_</span><span class="sc">\\</span><span class="st">d{4}$"</span>, <span class="at">include =</span> <span class="cn">TRUE</span>, <span class="at">fixed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_long3 <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     country year pop_total_ gdp_pc_ppp_
+Korea, Rep..2019 Korea, Rep. 2019   51764822   46757.261
+Ethiopia.2019       Ethiopia 2019  115737383    2437.970
+Germany.2019         Germany 2019   83092962   62970.716
+Korea, Rep..2020 Korea, Rep. 2020   51836239   46361.596
+Ethiopia.2020       Ethiopia 2020  118917671    2516.549
+Germany.2020         Germany 2020   83160871   60342.663</code></pre>
+</div>
+</div>
+<p>I would argue that this is a better approach (than the nicely renaming columns we saw above) and is more flexible and usable: we can force the location of the split without perl-compatible regex, and have auto-guessing of names/values.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_unbalanced <span class="ot">=</span> wdi_data_wide[, <span class="fu">setdiff</span>(<span class="fu">names</span>(wdi_data_wide), <span class="st">"gdp_pc_ppp_2020"</span>)]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_unbalanced <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reshape</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">direction =</span> <span class="st">"long"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">varying =</span> <span class="fu">grepv</span>(<span class="st">"^[a-z_]+_</span><span class="sc">\\</span><span class="st">d{4}$"</span>, <span class="fu">names</span>(wdi_data_wide_unbalanced)),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">timevar =</span> <span class="st">"year"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">idvar =</span> <span class="st">"country"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">split =</span> <span class="fu">list</span>(<span class="at">regexp =</span> <span class="st">"_</span><span class="sc">\\</span><span class="st">d{4}$"</span>, <span class="at">include =</span> <span class="cn">TRUE</span>, <span class="at">fixed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error in reshapeLong(data, idvar = idvar, timevar = timevar, varying = varying, : 'varying' arguments must be the same length</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Unbalanced data handled by other packages">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Unbalanced data handled by other packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><code>data.table:melt</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><code>tidyr::pivot_longer</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false"><code>duckdb::unpivot</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.table solution</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_unbalanced <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.table</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id.vars =</span> <span class="st">"country"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">measure.vars =</span> <span class="fu">measure</span>(value.name, year, <span class="at">pattern =</span> <span class="st">"^([a-z_]+)_(</span><span class="sc">\\</span><span class="st">d{4})$"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country   year pop_total gdp_pc_ppp
+        &lt;char&gt; &lt;char&gt;     &lt;int&gt;      &lt;num&gt;
+1: Korea, Rep.   2019  51764822   46757.26
+2:    Ethiopia   2019 115737383    2437.97
+3:     Germany   2019  83092962   62970.72
+4: Korea, Rep.   2020  51836239         NA
+5:    Ethiopia   2020 118917671         NA
+6:     Germany   2020  83160871         NA</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tidyr solution</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>wdi_data_wide_unbalanced <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>country,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^([a-z_]+)_(</span><span class="sc">\\</span><span class="st">d{4})$"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"year"</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country     year  pop_total gdp_pc_ppp
+  &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;
+1 Korea, Rep. 2019   51764822     46757.
+2 Korea, Rep. 2020   51836239        NA 
+3 Ethiopia    2019  115737383      2438.
+4 Ethiopia    2020  118917671        NA 
+5 Germany     2019   83092962     62971.
+6 Germany     2020   83160871        NA </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># duckdb solution</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>duck_cmd <span class="ot">=</span> r<span class="st">"{</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">duckdb &lt;&lt; EOF</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="st">  create or replace table wdi_data_wide as</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="st">  from read_csv('wdi_data_wide.csv');</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="st">  set variable measure_patt = '^([a-z_]+)_(\d{4})$';</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="st">  pivot (</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="st">    select</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="st">    country,</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="st">    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="st">    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="st">    column_value as value</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="st">    from (</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="st">      unpivot wdi_data_wide</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="st">      on COLUMNS( * exclude(country, gdp_pc_ppp_2020))</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="st">      into</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="st">        name column_name</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="st">        value column_value</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="st">  )</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="st">  on measure</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="st">  using first(value)</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="st">  order by country, year;</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a><span class="st">EOF</span></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">system</span>(duck_cmd, <span class="at">intern =</span> <span class="cn">TRUE</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>┌─────────────┬─────────┬──────────────────┬─────────────┐
+│   country   │  year   │    gdp_pc_ppp    │  pop_total  │
+│   varchar   │ varchar │      double      │   double    │
+├─────────────┼─────────┼──────────────────┼─────────────┤
+│ Ethiopia    │ 2019    │ 2437.97046055952 │ 115737383.0 │
+│ Ethiopia    │ 2020    │             NULL │ 118917671.0 │
+│ Germany     │ 2019    │ 62970.7160913279 │  83092962.0 │
+│ Germany     │ 2020    │             NULL │  83160871.0 │
+│ Korea, Rep. │ 2019    │ 46757.2614496182 │  51764822.0 │
+│ Korea, Rep. │ 2020    │             NULL │  51836239.0 │
+└─────────────┴─────────┴──────────────────┴─────────────┘</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reshape-to-wide-reshape...-direction-wide" class="level2">
+<h2 class="anchored" data-anchor-id="reshape-to-wide-reshape...-direction-wide">Reshape to wide: <code>reshape(..., direction = "wide")</code></h2>
+<p>Reshaping from long to wide is supposed to be straightforward. However, <code>reshape</code> handles one <code>timevar</code> at a time. This is because <code>reshape</code> is designed to fundamentally deal with longitudinal data. However, the sample long dataset (see <a href="#tbl-original-data-2" class="quarto-xref">Table&nbsp;1 (b)</a>) is not quite in that form as we have <code>series</code> and <code>year</code> as <code>timevar</code>s. So we need to transform the dataset into a longitudinal form (<code>country</code>, <code>year</code>, <code>pop_total</code>, <code>gdp_pc_ppp</code>), which means we reshape to wide with <code>timevar="series"</code>. Then, we reshape this again with <code>timevar="year"</code>. Thus, the solution involves reshaping twice along the two dimensions (<code>series</code>, <code>year</code>). However, <code>data.table::dcast</code>, <code>tidyr::pivot_wider</code>, and <code>duckdb::pivot</code> handle this in one step.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><code>reshapeWide</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><code>data.table::dcast</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false"><code>tidyr::pivot_wider</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false"><code>duckdb::pivot</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step 1 -&gt; reshape into longitudinal</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>(<span class="at">wdi_data_longitudinal =</span> <span class="fu">reshape</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  wdi_data_long,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="st">"wide"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">idvar =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">timevar =</span> <span class="st">"series"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">v.names =</span> <span class="st">"value"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country year value_pop_total value_gdp_pc_ppp
+1  Korea, Rep. 2019        51764822        46757.261
+2  Korea, Rep. 2020        51836239        46361.596
+5     Ethiopia 2019       115737383         2437.970
+6     Ethiopia 2020       118917671         2516.549
+9      Germany 2019        83092962        62970.716
+10     Germany 2020        83160871        60342.663</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step 2 -&gt; wide format</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>wdi_data_longitudinal <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reshape</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">direction =</span> <span class="st">"wide"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">idvar =</span> <span class="st">"country"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">timevar =</span> <span class="st">"year"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"_"</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> wdi_data_long_wide</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>wdi_data_long_wide <span class="co"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wide)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      country value_pop_total_2019 value_gdp_pc_ppp_2019 value_pop_total_2020
+1 Korea, Rep.             51764822              46757.26             51836239
+5    Ethiopia            115737383               2437.97            118917671
+9     Germany             83092962              62970.72             83160871
+  value_gdp_pc_ppp_2020
+1             46361.596
+5              2516.549
+9             60342.663</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>wdi_data_long <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.table</span>() <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dcast</span>(country <span class="sc">~</span> series <span class="sc">+</span> year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Key: &lt;country&gt;
+       country gdp_pc_ppp_2019 gdp_pc_ppp_2020 pop_total_2019 pop_total_2020
+        &lt;char&gt;           &lt;num&gt;           &lt;num&gt;          &lt;num&gt;          &lt;num&gt;
+1:    Ethiopia         2437.97        2516.549      115737383      118917671
+2:     Germany        62970.72       60342.663       83092962       83160871
+3: Korea, Rep.        46757.26       46361.596       51764822       51836239</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>wdi_data_long <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="fu">c</span>(series, year), <span class="at">values_from =</span> value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  country     pop_total_2019 pop_total_2020 gdp_pc_ppp_2019 gdp_pc_ppp_2020
+  &lt;chr&gt;                &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;
+1 Korea, Rep.       51764822       51836239          46757.          46362.
+2 Ethiopia         115737383      118917671           2438.           2517.
+3 Germany           83092962       83160871          62971.          60343.</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<p>See https://duckdb.org/docs/stable/sql/statements/pivot</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">duckdb</span> <span class="op">&lt;&lt; EOF</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">create or replace table wdi_data_long as</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">from read_csv('wdi_data_long.csv');</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">.mode markdown</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">pivot wdi_data_long</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st">-- with a custom sep</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="st">-- on series || '.' || year</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="st">on series, year</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="st">using first(value);</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>|   country   | gdp_pc_ppp_2019  | gdp_pc_ppp_2020  | pop_total_2019 | pop_total_2020 |
+|-------------|-----------------:|-----------------:|---------------:|---------------:|
+| Korea, Rep. | 46757.2614496182 | 46361.5957811718 | 51764822.0     | 51836239.0     |
+| Germany     | 62970.7160913279 | 60342.6627037391 | 83092962.0     | 83160871.0     |
+| Ethiopia    | 2437.97046055952 | 2516.54907642544 | 115737383.0    | 118917671.0    |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>To conclude, this is not a diss at <code>reshape</code>. In fact, it is great even with the abovementioned idiosyncriasies, if we use it with care. But, I hope it gets better and more usable in future versions of R.</p>
+<hr>
+<p>—— <strong>Thank you for stopping by!</strong> 💚💛❤️ ——</p>
+<hr>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Consider using <a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html">data.table</a>!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Oh wait, that was the case but <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/stats-defunct.html">removed</a> at some point.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For example, <code>times</code> is ignored if <code>v.names</code> is not provided in reshape to long (see <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf">here</a>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://en.wikipedia.org/wiki/Panel_data#Example">Panel data is unbalanced</a> when some units are not measured for at least one time period.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>When you download the data in “table” format, it is kinda in wide format (because the indicators are stacked in the <code>Series Name</code> column), as shown in <a href="#tbl-original-data" class="quarto-xref">Table&nbsp;1</a>. However, I cleaned (including shortening the names of the series) the original dataset to transform it into “true” wide format shown in <a href="#tbl-true-wide" class="quarto-xref">Table&nbsp;2</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/eyayaw\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "eyayaw/eyayaw.github.io";
+    script.dataset.repoId = "R_kgDOOV4-gw";
+    script.dataset.category = "Comments";
+    script.dataset.categoryId = "DIC_kwDOOV4-g84CpcO9";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span><i class="fa-solid fa-copyright"></i> 2025 Eyayaw Beze | እያያው ተካ</span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://github.com/eyayaw"><i class="fa-brands fa-github"></i></a> <a href="https://linkedin.com/in/eyayaw"><i class="fa-brands fa-linkedin"></i></a> <a href="https://twitter.com/eyayaw"><i class="fa-brands fa-twitter"></i></a> <a href="https://mastodon.social/@eyayaw"><i class="fa-brands fa-mastodon"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social"><i class="fa-brands fa-bluesky"></i></a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/posts/underwhelmed-by-stats-reshape/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/posts/underwhelmed-by-stats-reshape/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><span>Made with ❤️ + <a href="https://r-project.org"><i class="fa-brands fa-r-project"></i></a> + <a href="https://quarto.org"><img src="https://quarto.org/favicon.png" width="16" height="16"> Quarto</a></span></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

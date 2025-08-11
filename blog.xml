@@ -9,12 +9,1481 @@
 <link>https://eyayaw.github.io/blog.html</link>
 <atom:link href="https://eyayaw.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Eyayaw Beze&#39;s personal website</description>
-<generator>quarto-1.8.5</generator>
-<lastBuildDate>Thu, 15 May 2025 11:10:48 GMT</lastBuildDate>
+<generator>quarto-1.7.33</generator>
+<lastBuildDate>Mon, 11 Aug 2025 21:35:42 GMT</lastBuildDate>
+<item>
+  <title>Underwhelmed by stats::reshape</title>
+  <dc:creator>Eyayaw Beze</dc:creator>
+  <link>https://eyayaw.github.io/posts/underwhelmed-by-stats-reshape/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>When was the last time you used <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html"><code>stats::reshape</code></a>? Probably never, in the presence of {tidyr}’s <a href="https://tidyr.tidyverse.org/articles/pivot.html"><code>pivot_*</code></a> and {data.table}’s <a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html"><code>melt</code>/<code>dcast</code></a> reshaping (aka pivoting) functions.</p>
+<p>A while ago, while perusing through the {data.table} <a href="https://rdatatable.gitlab.io/data.table/articles/">vignettes</a>, I learned about the <code>reshape</code> function. The {data.table} core team described it as “<a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html#limitations-in-previous-meltdcast-approaches">It is an extremely useful and often underrated function.</a>”. As a member of the “dependency-frets” (as <code>reshape</code> is part of <a href="../base-r.html">base R</a>), I’ve been using it fairly since. However, it has some annoyances that might lead you to think that the function isn’t yet quite “fully ripe”, which could explain its “underratting”.</p>
+<p>First, it’s very slow; no further comment is needed, but that could be a deal breaker for some.<sup>1</sup></p>
+<p>Args of the <code>reshape</code> function are also a bit cryptic. I have to hit <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html"><code>?reshape</code></a> time and again because it is not easy to remember what is what. What (or not) to pass to <code>varying</code> (a vector or a list (or a matrix)) and how to order its values? Like <code>varying=c("gdp_2020", "gdp_2021", "pop_2020", "pop_2021")</code>, or <code>c("gdp_2020", "pop_2020", "gdp_2021", "pop_2021")</code>? What does <code>v.names</code> (and frankly most args) do in <code>reshape</code> to wide vs.&nbsp;long? Would not it be helpful if <code>reshape</code> was broken down into two separate functions (<code>reshape_{long,wide}</code>)?<sup>2</sup> Also it is hard to tell which args are optional and which get ignored silently even when you explicitly provide them.<sup>3</sup></p>
+<p>Futhermore, you have to “nicely” format your column names to unlock reshape to long’s potential: that is use a <code>sep</code> (defaults to <code>.</code>) between the time <code>varying</code> variables and the <code>timevar</code> (like <code>gdp.2020</code>, <code>pop.2020</code>).</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do you really think about renaming your columns when reshaping? Don’t! 🙃</p>
+</div>
+</div>
+<p>Even if you “nicely” format your column names say with <code>sep="_"</code>, your’re doomed if you have “_” somewhere in the column names as you can’t use perl-compatible regex to force the location of the <code>sep</code> (e.g., you have <code>gdp_ppp_2020</code> and you’re not allowed to use <code>sep="_(?=\\d{4})"</code> or <code>split(regexp = "_(?=\\d{4})", include = FALSE, fixed = FALSE)</code>). If you look at the <a href="https://github.com/wch/r-source/blob/trunk/src/library/stats/R/reshape.R">source</a>, this could have been done as <code>split</code> and <code>regexpr</code> (where <code>sep</code> and <code>split</code> are used) can handle perl-compatible regex with <code>perl = TRUE</code>.</p>
+<p>While <code>reshape</code> is fundamentally built to deal with panel data, it does not handle “unbalanced” (panel) data. A special case that traps reshape (to long) is when a variable (say population size) is available for 2019 but missing for 2020 (for all units), while another variable (GDP) is measured for both 2019 and 2020 (for some or all units).<sup>4</sup> You may think this is a useless edge scenario, but both {data.table} and {tidyr} support it. This rare edge case may frequently <a href="https://stackoverflow.com/q/76167864">creep into</a> typical use cases, doesn’t it?</p>
+<section id="reshaping-with-statsreshape" class="level1">
+<h1>Reshaping with <code>stats::reshape</code></h1>
+<p>Let’s quickly look at how we can use <code>reshape</code> to convert data from wide to long format and vice versa and touch on some of the issues along the way, with sample datasets from the World Development Indicators (WDI) database. The WDI datasets provide a perfect use case for reshaping because you can download the data in wide or long format.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The official <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html">documentation</a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf">vignette</a> for <code>reshape</code> are great. I also find this <a href="https://jozef.io/r001-reshape/">blog post</a> by Jozef Hajnala excellent.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># import data (source WBG WDI)</span></span>
+<span id="cb1-2">wdi_data_wide <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wdi_data_wide.csv"</span>)</span>
+<span id="cb1-3">wdi_data_long <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wdi_data_long.csv"</span>)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># constants</span></span>
+<span id="cb1-6">data_url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://databank.worldbank.org/id/8dfced2d"</span></span>
+<span id="cb1-7">varying_patt <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^((?:pop|gdp).*)[_](</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4})$"</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># regex for measure vars</span></span>
+<span id="cb1-8">varying_patt_vec <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^pop"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^gdp"</span>)</span></code></pre></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the sample WDI datasets
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>I downloaded the data in two formats: “table” and “list”, which roughly correspond to wide and long formats, respectively. The data contains information on 2 indicators (“Population, total” and “GDP per capita, PPP (constant 2021 international $)”), for countries Korea, Rep., Ethiopia, and Germany for the years 2019-2020. Here is a direct <a href="https://databank.worldbank.org/id/8dfced2d">link</a> to the original dataset.</p>
+<div class="cell" data-layout-nrow="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sample_wdi_data_table.csv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">check.names =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-3">  knitr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>()</span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sample_wdi_data_list.csv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">check.names =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-6">  knitr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>()</span></code></pre></div>
+</details>
+<div id="tbl-original-data" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-original-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Sample Dataset from WDI Database (Raw)
+</figcaption>
+<div aria-describedby="tbl-original-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-original-data" style="flex-basis: 100.0%;justify-content: center;">
+<div id="tbl-original-data-1" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-original-data-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Head of the data in table (wide) format
+</figcaption>
+<div aria-describedby="tbl-original-data-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-original-data-1" class="do-not-create-environment caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 57%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country Name</th>
+<th style="text-align: left;">Series Name</th>
+<th style="text-align: right;">2019</th>
+<th style="text-align: right;">2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">51764822.00</td>
+<td style="text-align: right;">5.183624e+07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">46757.26</td>
+<td style="text-align: right;">4.636160e+04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">115737383.00</td>
+<td style="text-align: right;">1.189177e+08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">2437.97</td>
+<td style="text-align: right;">2.516549e+03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">83092962.00</td>
+<td style="text-align: right;">8.316087e+07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">62970.72</td>
+<td style="text-align: right;">6.034266e+04</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-original-data" style="flex-basis: 100.0%;justify-content: center;">
+<div id="tbl-original-data-2" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-original-data-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Head of the data in list (long) format
+</figcaption>
+<div aria-describedby="tbl-original-data-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-original-data-2" class="do-not-create-environment caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 62%">
+<col style="width: 6%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country Name</th>
+<th style="text-align: left;">Series Name</th>
+<th style="text-align: right;">Time</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">51764822.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">51836239.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">46757.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: left;">GDP per capita, PPP (constant 2021 international $)</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">46361.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">115737383.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: left;">Population, total</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">118917671.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="reshape-to-long-reshape...-direction-long" class="level2">
+<h2 class="anchored" data-anchor-id="reshape-to-long-reshape...-direction-long">Reshape to long: <code>reshape(..., direction = "long")</code></h2>
+<p>The dataset in wide format looks like:<sup>5</sup></p>
+<div class="cell">
+<div id="tbl-true-wide" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-true-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The data in true wide format (cleaned)
+</figcaption>
+<div aria-describedby="tbl-true-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">pop_total_2019</th>
+<th style="text-align: right;">pop_total_2020</th>
+<th style="text-align: right;">gdp_pc_ppp_2019</th>
+<th style="text-align: right;">gdp_pc_ppp_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Korea, Rep.</td>
+<td style="text-align: right;">51764822</td>
+<td style="text-align: right;">51836239</td>
+<td style="text-align: right;">46757.26</td>
+<td style="text-align: right;">46361.596</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethiopia</td>
+<td style="text-align: right;">115737383</td>
+<td style="text-align: right;">118917671</td>
+<td style="text-align: right;">2437.97</td>
+<td style="text-align: right;">2516.549</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: right;">83092962</td>
+<td style="text-align: right;">83160871</td>
+<td style="text-align: right;">62970.72</td>
+<td style="text-align: right;">60342.663</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>To pivot this into a long format, we just collect the suffixed years in the (series) columns into a single column “year”, and each series makes (or gets collapsed into) a single column.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Reshape to long with other packages">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reshape to long with other packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>IMO, all three solutions are straighforward. We get a proper long format, a row represents a record for a country at a point-in-time, that is, this is in a typical panel (<a href="https://en.wikipedia.org/wiki/Panel_data">repeated-crossection or longitudinal</a>) data format.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true"><code>data.table::melt</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false"><code>tidyr::pivot_longer</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" aria-controls="tabset-1-3" aria-selected="false"><code>duckdb::unpivot</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.table</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">melt</span>(</span>
+<span id="cb3-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">measure.vars =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">measure</span>(value.name, year, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^([a-z_]+)_(</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4})$"</span>),</span>
+<span id="cb3-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">id.vars =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span></span>
+<span id="cb3-6">)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country   year pop_total gdp_pc_ppp
+        &lt;char&gt; &lt;char&gt;     &lt;int&gt;      &lt;num&gt;
+1: Korea, Rep.   2019  51764822  46757.261
+2:    Ethiopia   2019 115737383   2437.970
+3:     Germany   2019  83092962  62970.716
+4: Korea, Rep.   2020  51836239  46361.596
+5:    Ethiopia   2020 118917671   2516.549
+6:     Germany   2020  83160871  60342.663</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-2">  tidyr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pivot_longer</span>(</span>
+<span id="cb5-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cols =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>country,</span>
+<span id="cb5-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^([a-z_]+)_(</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4})$"</span>,</span>
+<span id="cb5-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_to =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".value"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>)</span>
+<span id="cb5-6">  )</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country     year  pop_total gdp_pc_ppp
+  &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;
+1 Korea, Rep. 2019   51764822     46757.
+2 Korea, Rep. 2020   51836239     46362.
+3 Ethiopia    2019  115737383      2438.
+4 Ethiopia    2020  118917671      2517.
+5 Germany     2019   83092962     62971.
+6 Germany     2020   83160871     60343.</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">duckdb</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt; EOF</span></span>
+<span id="cb7-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">create or replace table wdi_data_wide as</span></span>
+<span id="cb7-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">from read_csv('wdi_data_wide.csv');</span></span>
+<span id="cb7-4"></span>
+<span id="cb7-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">set variable measure_patt = '^([a-z_]+)_(</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\d</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">{4})$';</span></span>
+<span id="cb7-6"></span>
+<span id="cb7-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.mode markdown</span></span>
+<span id="cb7-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">with unpivoted as (</span></span>
+<span id="cb7-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  select</span></span>
+<span id="cb7-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    country,</span></span>
+<span id="cb7-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,</span></span>
+<span id="cb7-12"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,</span></span>
+<span id="cb7-13"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    column_value as value</span></span>
+<span id="cb7-14"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  from (</span></span>
+<span id="cb7-15"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    unpivot wdi_data_wide</span></span>
+<span id="cb7-16"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    on COLUMNS(getvariable('measure_patt'))</span></span>
+<span id="cb7-17"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    into</span></span>
+<span id="cb7-18"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      name column_name</span></span>
+<span id="cb7-19"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      value column_value</span></span>
+<span id="cb7-20"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  )</span></span>
+<span id="cb7-21"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb7-22"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">pivot unpivoted</span></span>
+<span id="cb7-23"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">on measure</span></span>
+<span id="cb7-24"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">using first(value)</span></span>
+<span id="cb7-25"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">order by country, year;</span></span>
+<span id="cb7-26"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>|   country   | year |    gdp_pc_ppp    |  pop_total  |
+|-------------|------|-----------------:|------------:|
+| Ethiopia    | 2019 | 2437.97046055952 | 115737383.0 |
+| Ethiopia    | 2020 | 2516.54907642544 | 118917671.0 |
+| Germany     | 2019 | 62970.7160913279 | 83092962.0  |
+| Germany     | 2020 | 60342.6627037391 | 83160871.0  |
+| Korea, Rep. | 2019 | 46757.2614496182 | 51764822.0  |
+| Korea, Rep. | 2020 | 46361.5957811718 | 51836239.0  |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>According to the <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html">doc</a>, the easiest way to reshape to long with <code>reshape</code> is by using “nicely” formatted column names: that is, use a <code>sep</code> (which defaults to <code>.</code>) between the time <code>varying</code> variables and the <code>timevar</code>, like <code>gdp_pc_ppp.2020</code> and <code>pop_total.2020</code>. This nice formatting has the added benefit that <code>v.names</code> (<code>gdp_pc_ppp</code>, <code>pop_total</code>) and <code>times</code> (i.e., the values for <code>timevar</code>) (2020), will be auto-guessed; otherwise, we need to supply them ourselves (which is error prone).</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">### Typical usage for converting from wide to long format:</span></span>
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">### If names of wide-format variables are in a 'nice' format</span></span>
+<span id="cb9-4"></span>
+<span id="cb9-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># reshape(data, direction = "long",</span></span>
+<span id="cb9-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         varying = c(___), # vector</span></span>
+<span id="cb9-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         sep)              # to help guess 'v.names' and 'times'</span></span></code></pre></div>
+<p>So let’s rename our <code>varying</code> columns using a special <code>sep</code> and try reshaping to long as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">sep <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"."</span></span>
+<span id="cb10-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># let's replace "_" (just before the year) with the sep to "nicely" format the column names</span></span>
+<span id="cb10-3">nicely_format_names <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(nms) {</span>
+<span id="cb10-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sub</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_(?=</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d)"</span>, sep, nms, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">perl =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb10-5">}</span>
+<span id="cb10-6"></span>
+<span id="cb10-7">nice_nms <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">nicely_format_names</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">names</span>(wdi_data_wide))</span>
+<span id="cb10-8"></span>
+<span id="cb10-9">wdi_data_wide_long1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reshape</span>(</span>
+<span id="cb10-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setNames</span>(wdi_data_wide, nice_nms),</span>
+<span id="cb10-11">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"long"</span>,</span>
+<span id="cb10-12">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grepv</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sprintf</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^[a-z_]+%s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4}$"</span>, sep), nice_nms),</span>
+<span id="cb10-13">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># if ommitted, an `id` column will be added `seq_along(data)`</span></span>
+<span id="cb10-14">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># otherwise `time`</span></span>
+<span id="cb10-15">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> sep <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the default is `.`</span></span>
+<span id="cb10-16">)</span>
+<span id="cb10-17"></span>
+<span id="cb10-18">wdi_data_wide_long1 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     country year pop_total gdp_pc_ppp
+Korea, Rep..2019 Korea, Rep. 2019  51764822  46757.261
+Ethiopia.2019       Ethiopia 2019 115737383   2437.970
+Germany.2019         Germany 2019  83092962  62970.716
+Korea, Rep..2020 Korea, Rep. 2020  51836239  46361.596
+Ethiopia.2020       Ethiopia 2020 118917671   2516.549
+Germany.2020         Germany 2020  83160871  60342.663</code></pre>
+</div>
+</div>
+<p>That is a hell of unnatural detour for reshaping. What if we want to go along with our column names? Enter explicit-specification:</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">### Typical usage for converting from wide to long format:</span></span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ...</span></span>
+<span id="cb12-4"></span>
+<span id="cb12-5"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">### To specify long-format variable names explicitly</span></span>
+<span id="cb12-6"></span>
+<span id="cb12-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># reshape(data, direction = "long",</span></span>
+<span id="cb12-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         varying = ___,  # list / matrix / vector (use with care)</span></span>
+<span id="cb12-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         v.names = ___,  # vector of variable names in long format</span></span>
+<span id="cb12-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         timevar, times, # name / values of constructed time variable</span></span>
+<span id="cb12-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         idvar, ids)     # name / values of constructed id variable</span></span></code></pre></div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">wdi_data_wide_long2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> wdi_data_wide <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reshape</span>(</span>
+<span id="cb13-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"long"</span>,</span>
+<span id="cb13-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># varying = lapply(c("^pop", "^gdp"), \(p) grepv(p, names(wdi_data_wide))),</span></span>
+<span id="cb13-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(</span>
+<span id="cb13-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pop_total_2019"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pop_total_2020"</span>),</span>
+<span id="cb13-7">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gdp_pc_ppp_2019"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gdp_pc_ppp_2020"</span>)</span>
+<span id="cb13-8">    ),</span>
+<span id="cb13-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">v.names =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pop"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gdp_pc_ppp"</span>),</span>
+<span id="cb13-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># otherwise column `ids` will be created</span></span>
+<span id="cb13-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># otherwise "time"</span></span>
+<span id="cb13-12">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">times =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2019"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2020"</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># otherwise auto-generated</span></span>
+<span id="cb13-13">  )</span>
+<span id="cb13-14"></span>
+<span id="cb13-15">wdi_data_wide_long2 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     country year       pop gdp_pc_ppp
+Korea, Rep..2019 Korea, Rep. 2019  51764822  46757.261
+Ethiopia.2019       Ethiopia 2019 115737383   2437.970
+Germany.2019         Germany 2019  83092962  62970.716
+Korea, Rep..2020 Korea, Rep. 2020  51836239  46361.596
+Ethiopia.2020       Ethiopia 2020 118917671   2516.549
+Germany.2020         Germany 2020  83160871  60342.663</code></pre>
+</div>
+</div>
+<p>That is very verbose and error prone: (1) we need to specify <code>varying</code> “with care” (choosing the list form), as urged by the doc, (2) the values of <code>timevar</code> (named as <code>year</code>) which are controlled by <code>times</code> will be auto-generated instead of the actual values we see from the data, had we not provided them like so <code>times = c("2019", "2020")</code>, (3) not only do we need to know the unique values of <code>timevar</code>, but also their correct order.</p>
+<p>Importantly, were we should note that we provided a list to <code>varying</code>. What if you accidentially gave a vector like <code>c(c("pop_total_2019", "pop_total_2020"), c("gdp_pc_ppp_2019", "gdp_pc_ppp_2020"))</code>? Well, that would be wrong because if <code>varying</code> takes on a vector, we should rather provide it in this order <code>c("pop_total_2019", "gdp_pc_ppp_2019", "pop_total_2020", "gdp_pc_ppp_2020")</code>.</p>
+<blockquote class="blockquote">
+<p>The correct order requires all columns corresponding to the same time to be contiguous; this is the same intrinsic column-major ordering in the matrix [ or list] […] form. It is best to avoid the atomic vector form of varying unless <code>v.names</code> is being omitted.<br>
+— <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf">Using the reshape function</a> (The R Core Team, April 2025)</p>
+</blockquote>
+<p>Looks like passing a list to <code>varying</code> is safe and straighforward when it comes to the order of the time-varying variables. But as we saw we need to manually define the names/values of several variables (<code>v.names</code>, <code>timevar</code>, <code>times</code>). Before abandoning passing a vector for <code>varying</code>, since we actually want names/values auto-guessed, what if we tell <code>reshape</code> to split at <code>sep = "_"</code>? However, since our <code>varying</code> variables have <code>_</code>, this would be impossible to do without a perl-compatible regex option, which <code>reshape</code> hides from us. If you edit the function definition of <code>reshape</code> to allow for this (i.e, add <code>perl = TRUE</code>), we can use <code>sep = "_(?=\\d{4})"</code> and get the same result as the nicely formatted naming option above.</p>
+<p>We can also play with <code>split</code> to provide a custom <code>sep</code> (<code>regexp</code>) as shown below but the names will have trailing <code>_</code>s (because <code>include = FALSE</code> fails), but we need to pass a vector of names for <code>varying</code> (to take advantage of auto-guessing, so much complication!).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">wdi_data_wide_long3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> wdi_data_wide <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb15-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reshape</span>(</span>
+<span id="cb15-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"long"</span>,</span>
+<span id="cb15-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pop_total_2019"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gdp_pc_ppp_2019"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pop_total_2020"</span>,  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gdp_pc_ppp_2020"</span>),</span>
+<span id="cb15-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>,</span>
+<span id="cb15-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>,</span>
+<span id="cb15-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">split =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">regexp =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4}$"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">include =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fixed =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb15-8">  )</span>
+<span id="cb15-9"></span>
+<span id="cb15-10">wdi_data_wide_long3 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     country year pop_total_ gdp_pc_ppp_
+Korea, Rep..2019 Korea, Rep. 2019   51764822   46757.261
+Ethiopia.2019       Ethiopia 2019  115737383    2437.970
+Germany.2019         Germany 2019   83092962   62970.716
+Korea, Rep..2020 Korea, Rep. 2020   51836239   46361.596
+Ethiopia.2020       Ethiopia 2020  118917671    2516.549
+Germany.2020         Germany 2020   83160871   60342.663</code></pre>
+</div>
+</div>
+<p>I would argue that this is a better approach (than the nicely renaming columns we saw above) and is more flexible and usable: we can force the location of the split without perl-compatible regex, and have auto-guessing of names/values.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">wdi_data_wide_unbalanced <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> wdi_data_wide[, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setdiff</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">names</span>(wdi_data_wide), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gdp_pc_ppp_2020"</span>)]</span>
+<span id="cb17-2"></span>
+<span id="cb17-3">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb17-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reshape</span>(</span>
+<span id="cb17-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"long"</span>,</span>
+<span id="cb17-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grepv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^[a-z_]+_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4}$"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">names</span>(wdi_data_wide_unbalanced)),</span>
+<span id="cb17-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>,</span>
+<span id="cb17-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>,</span>
+<span id="cb17-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">split =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">regexp =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4}$"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">include =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fixed =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb17-10">  )</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>Error in reshapeLong(data, idvar = idvar, timevar = timevar, varying = varying, : 'varying' arguments must be the same length</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Unbalanced data handled by other packages">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Unbalanced data handled by other packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true"><code>data.table:melt</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false"><code>tidyr::pivot_longer</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" aria-controls="tabset-2-3" aria-selected="false"><code>duckdb::unpivot</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># data.table solution</span></span>
+<span id="cb19-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb19-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.table</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb19-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">melt</span>(</span>
+<span id="cb19-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">id.vars =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>,</span>
+<span id="cb19-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">measure.vars =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">measure</span>(value.name, year, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^([a-z_]+)_(</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4})$"</span>)</span>
+<span id="cb19-7">  )</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country   year pop_total gdp_pc_ppp
+        &lt;char&gt; &lt;char&gt;     &lt;int&gt;      &lt;num&gt;
+1: Korea, Rep.   2019  51764822   46757.26
+2:    Ethiopia   2019 115737383    2437.97
+3:     Germany   2019  83092962   62970.72
+4: Korea, Rep.   2020  51836239         NA
+5:    Ethiopia   2020 118917671         NA
+6:     Germany   2020  83160871         NA</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tidyr solution</span></span>
+<span id="cb21-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb21-3">  tidyr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pivot_longer</span>(</span>
+<span id="cb21-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cols =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>country,</span>
+<span id="cb21-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_pattern =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^([a-z_]+)_(</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d{4})$"</span>,</span>
+<span id="cb21-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_to =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".value"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>)</span>
+<span id="cb21-7">  )</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country     year  pop_total gdp_pc_ppp
+  &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;
+1 Korea, Rep. 2019   51764822     46757.
+2 Korea, Rep. 2020   51836239        NA 
+3 Ethiopia    2019  115737383      2438.
+4 Ethiopia    2020  118917671        NA 
+5 Germany     2019   83092962     62971.
+6 Germany     2020   83160871        NA </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># duckdb solution</span></span>
+<span id="cb23-2"></span>
+<span id="cb23-3">duck_cmd <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> r<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"{</span></span>
+<span id="cb23-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">duckdb &lt;&lt; EOF</span></span>
+<span id="cb23-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  create or replace table wdi_data_wide as</span></span>
+<span id="cb23-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  from read_csv('wdi_data_wide.csv');</span></span>
+<span id="cb23-7"></span>
+<span id="cb23-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  set variable measure_patt = '^([a-z_]+)_(\d{4})$';</span></span>
+<span id="cb23-9"></span>
+<span id="cb23-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  pivot (</span></span>
+<span id="cb23-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    select</span></span>
+<span id="cb23-12"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    country,</span></span>
+<span id="cb23-13"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,</span></span>
+<span id="cb23-14"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,</span></span>
+<span id="cb23-15"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    column_value as value</span></span>
+<span id="cb23-16"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    from (</span></span>
+<span id="cb23-17"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      unpivot wdi_data_wide</span></span>
+<span id="cb23-18"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      on COLUMNS( * exclude(country, gdp_pc_ppp_2020))</span></span>
+<span id="cb23-19"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      into</span></span>
+<span id="cb23-20"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">        name column_name</span></span>
+<span id="cb23-21"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">        value column_value</span></span>
+<span id="cb23-22"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    )</span></span>
+<span id="cb23-23"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  )</span></span>
+<span id="cb23-24"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  on measure</span></span>
+<span id="cb23-25"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  using first(value)</span></span>
+<span id="cb23-26"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  order by country, year;</span></span>
+<span id="cb23-27"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">EOF</span></span>
+<span id="cb23-28"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">}"</span></span>
+<span id="cb23-29"></span>
+<span id="cb23-30"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">system</span>(duck_cmd, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">intern =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>┌─────────────┬─────────┬──────────────────┬─────────────┐
+│   country   │  year   │    gdp_pc_ppp    │  pop_total  │
+│   varchar   │ varchar │      double      │   double    │
+├─────────────┼─────────┼──────────────────┼─────────────┤
+│ Ethiopia    │ 2019    │ 2437.97046055952 │ 115737383.0 │
+│ Ethiopia    │ 2020    │             NULL │ 118917671.0 │
+│ Germany     │ 2019    │ 62970.7160913279 │  83092962.0 │
+│ Germany     │ 2020    │             NULL │  83160871.0 │
+│ Korea, Rep. │ 2019    │ 46757.2614496182 │  51764822.0 │
+│ Korea, Rep. │ 2020    │             NULL │  51836239.0 │
+└─────────────┴─────────┴──────────────────┴─────────────┘</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reshape-to-wide-reshape...-direction-wide" class="level2">
+<h2 class="anchored" data-anchor-id="reshape-to-wide-reshape...-direction-wide">Reshape to wide: <code>reshape(..., direction = "wide")</code></h2>
+<p>Reshaping from long to wide is supposed to be straightforward. However, <code>reshape</code> handles one <code>timevar</code> at a time. This is because <code>reshape</code> is designed to fundamentally deal with longitudinal data. However, the sample long dataset (see Table&nbsp;1 (b)) is not quite in that form as we have <code>series</code> and <code>year</code> as <code>timevar</code>s. So we need to transform the dataset into a longitudinal form (<code>country</code>, <code>year</code>, <code>pop_total</code>, <code>gdp_pc_ppp</code>), which means we reshape to wide with <code>timevar="series"</code>. Then, we reshape this again with <code>timevar="year"</code>. Thus, the solution involves reshaping twice along the two dimensions (<code>series</code>, <code>year</code>). However, <code>data.table::dcast</code>, <code>tidyr::pivot_wider</code>, and <code>duckdb::pivot</code> handle this in one step.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true"><code>reshapeWide</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false"><code>data.table::dcast</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" aria-controls="tabset-3-3" aria-selected="false"><code>tidyr::pivot_wider</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" aria-controls="tabset-3-4" aria-selected="false"><code>duckdb::pivot</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># step 1 -&gt; reshape into longitudinal</span></span>
+<span id="cb25-2">(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">wdi_data_longitudinal =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reshape</span>(</span>
+<span id="cb25-3">  wdi_data_long,</span>
+<span id="cb25-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wide"</span>,</span>
+<span id="cb25-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">idvar =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>),</span>
+<span id="cb25-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"series"</span>,</span>
+<span id="cb25-7">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">v.names =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"value"</span>,</span>
+<span id="cb25-8">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_"</span></span>
+<span id="cb25-9">))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       country year value_pop_total value_gdp_pc_ppp
+1  Korea, Rep. 2019        51764822        46757.261
+2  Korea, Rep. 2020        51836239        46361.596
+5     Ethiopia 2019       115737383         2437.970
+6     Ethiopia 2020       118917671         2516.549
+9      Germany 2019        83092962        62970.716
+10     Germany 2020        83160871        60342.663</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># step 2 -&gt; wide format</span></span>
+<span id="cb27-2">wdi_data_longitudinal <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb27-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reshape</span>(</span>
+<span id="cb27-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wide"</span>,</span>
+<span id="cb27-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"country"</span>,</span>
+<span id="cb27-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"year"</span>,</span>
+<span id="cb27-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_"</span></span>
+<span id="cb27-8">  ) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-&gt;</span> wdi_data_long_wide</span>
+<span id="cb27-9"></span>
+<span id="cb27-10">wdi_data_long_wide <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wide)))</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      country value_pop_total_2019 value_gdp_pc_ppp_2019 value_pop_total_2020
+1 Korea, Rep.             51764822              46757.26             51836239
+5    Ethiopia            115737383               2437.97            118917671
+9     Germany             83092962              62970.72             83160871
+  value_gdp_pc_ppp_2020
+1             46361.596
+5              2516.549
+9             60342.663</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb29-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.table</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb29-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dcast</span>(country <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> series <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> year)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Key: &lt;country&gt;
+       country gdp_pc_ppp_2019 gdp_pc_ppp_2020 pop_total_2019 pop_total_2020
+        &lt;char&gt;           &lt;num&gt;           &lt;num&gt;          &lt;num&gt;          &lt;num&gt;
+1:    Ethiopia         2437.97        2516.549      115737383      118917671
+2:     Germany        62970.72       60342.663       83092962       83160871
+3: Korea, Rep.        46757.26       46361.596       51764822       51836239</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" aria-labelledby="tabset-3-3-tab">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb31-2">  tidyr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pivot_wider</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_from =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(series, year), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values_from =</span> value)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  country     pop_total_2019 pop_total_2020 gdp_pc_ppp_2019 gdp_pc_ppp_2020
+  &lt;chr&gt;                &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;
+1 Korea, Rep.       51764822       51836239          46757.          46362.
+2 Ethiopia         115737383      118917671           2438.           2517.
+3 Germany           83092962       83160871          62971.          60343.</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-4" class="tab-pane" aria-labelledby="tabset-3-4-tab">
+<p>See https://duckdb.org/docs/stable/sql/statements/pivot</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">duckdb</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt; EOF</span></span>
+<span id="cb33-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">create or replace table wdi_data_long as</span></span>
+<span id="cb33-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">from read_csv('wdi_data_long.csv');</span></span>
+<span id="cb33-4"></span>
+<span id="cb33-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.mode markdown</span></span>
+<span id="cb33-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">pivot wdi_data_long</span></span>
+<span id="cb33-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-- with a custom sep</span></span>
+<span id="cb33-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-- on series || '.' || year</span></span>
+<span id="cb33-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">on series, year</span></span>
+<span id="cb33-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">using first(value);</span></span>
+<span id="cb33-11"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">EOF</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>|   country   | gdp_pc_ppp_2019  | gdp_pc_ppp_2020  | pop_total_2019 | pop_total_2020 |
+|-------------|-----------------:|-----------------:|---------------:|---------------:|
+| Korea, Rep. | 46757.2614496182 | 46361.5957811718 | 51764822.0     | 51836239.0     |
+| Germany     | 62970.7160913279 | 60342.6627037391 | 83092962.0     | 83160871.0     |
+| Ethiopia    | 2437.97046055952 | 2516.54907642544 | 115737383.0    | 118917671.0    |</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>To conclude, this is not a diss at <code>reshape</code>. In fact, it is great even with the abovementioned idiosyncriasies, if we use it with care. But, I hope it gets better and more usable in future versions of R.</p>
+<hr>
+<p>—— <strong>Thank you for stopping by!</strong> 💚💛❤️ ——</p>
+<hr>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Consider using <a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html">data.table</a>!↩︎</p></li>
+<li id="fn2"><p>Oh wait, that was the case but <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/stats-defunct.html">removed</a> at some point.↩︎</p></li>
+<li id="fn3"><p>For example, <code>times</code> is ignored if <code>v.names</code> is not provided in reshape to long (see <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf">here</a>).↩︎</p></li>
+<li id="fn4"><p><a href="https://en.wikipedia.org/wiki/Panel_data#Example">Panel data is unbalanced</a> when some units are not measured for at least one time period.↩︎</p></li>
+<li id="fn5"><p>When you download the data in “table” format, it is kinda in wide format (because the indicators are stacked in the <code>Series Name</code> column), as shown in Table&nbsp;1. However, I cleaned (including shortening the names of the series) the original dataset to transform it into “true” wide format shown in Table&nbsp;2.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>r</category>
+  <category>base-r</category>
+  <category>tutorial</category>
+  <category>programming</category>
+  <guid>https://eyayaw.github.io/posts/underwhelmed-by-stats-reshape/</guid>
+  <pubDate>Mon, 11 Aug 2025 21:35:42 GMT</pubDate>
+</item>
 <item>
   <title>Setting up a new Mac</title>
   <dc:creator>Eyayaw Beze</dc:creator>
-  <link>https://eyayaw.github.io/posts/setting-up-a-new-mac.html</link>
+  <link>https://eyayaw.github.io/posts/setting-up-a-new-mac/</link>
   <description><![CDATA[ 
 
 
@@ -27,7 +1496,7 @@
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://eyayaw.github.io/posts/media/mac-mini-closeup2.png" class="img-fluid figure-img"></p>
+<p><img src="https://eyayaw.github.io/posts/setting-up-a-new-mac/mac-mini-closeup2.png" class="img-fluid figure-img"></p>
 <figcaption>The new Mac Mini</figcaption>
 </figure>
 </div>
@@ -35,7 +1504,7 @@
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://eyayaw.github.io/posts/media/welcome-to-mac.png" class="img-fluid figure-img"></p>
+<p><img src="https://eyayaw.github.io/posts/setting-up-a-new-mac/welcome-to-mac.png" class="img-fluid figure-img"></p>
 <figcaption>Initial setup process completed, ready to hit <code>./bootstrap.sh</code></figcaption>
 </figure>
 </div>
@@ -320,7 +1789,7 @@ Tip
 </div>
 </div>
 <p>Lastly, I wrote a script that installs <a href="https://github.com/tmux-plugins/tpm">tpm</a>, a plugin manager for <a href="https://github.com/tmux/tmux">tmux</a>, inspired by typecraft-dev’s <a href="https://github.com/typecraft-dev/crucible/blob/main/install-tpm.sh">crucible</a>.</p>
-<p>All of these installations are automated in a single script <a href="https://github.com/eyayaw/dotfiles/blob/main/scripts/install/install.sh"><code>scripts/install/install.sh</code></a>, which sources the relevant scripts. If you’re curious about in the full list of my favorite tools, see <a href="../my-setup.html">here</a>.</p>
+<p>All of these installations are automated in a single script <a href="https://github.com/eyayaw/dotfiles/blob/main/scripts/install/install.sh"><code>scripts/install/install.sh</code></a>, which sources the relevant scripts. If you’re curious about in the full list of my favorite tools, see <a href="../../my-setup.html">here</a>.</p>
 </section>
 </section>
 <section id="component-2-configuration-management-with-dotfiles" class="level2">
@@ -368,7 +1837,7 @@ background-color: null;
 font-style: inherit;">${HOME}</span> zsh ghostty karabiner git tmux zed R rstudio</span></code></pre></div>
 <div id="screenshot-stow-in-action" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://eyayaw.github.io/posts/media/screenshot-dotfiles-symlinks-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://eyayaw.github.io/posts/setting-up-a-new-mac/media/screenshot-dotfiles-symlinks-1.png" class="img-fluid figure-img"></p>
 <figcaption>Symlinked dotfiles<br><em>This screenshot shows Stow in action, where configs in my home directory (left side) are pointing to their actual location in my dotfiles directory (right side)</em>.</figcaption>
 </figure>
 </div>
@@ -591,15 +2060,14 @@ Note
 </div>
 </div>
 <p>The entire process takes less than an hour, most of which is just waiting for downloads to complete. When I return to the computer, all my tools are installed and configured exactly the way I like them.</p>
-<p>While saving time is the most obvious benefit, this approach offers other advantages. My dev environment is familiar across machines, the scripts serve as documentation of <a href="../my-setup.html">my setup</a>. I can easily add new tools or update configs. If something goes wrong, I can quickly restore my environment because my dotfiles are version-controlled.</p>
+<p>While saving time is the most obvious benefit, this approach offers other advantages. My dev environment is familiar across machines, the scripts serve as documentation of <a href="../../my-setup.html">my setup</a>. I can easily add new tools or update configs. If something goes wrong, I can quickly restore my environment because my dotfiles are version-controlled.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Setting up a new machine used to be a gruelling, unproductive task. Now it’s a matter of running a single script and taking a coffee break. This automation has dramatically reduced the friction of moving to new machine and ensures I immediately have access to my dev tools on a fresh system.</p>
 <p>The tools outlined here—Homebrew, GNU Stowed dotfiles, and defaults scripts—form a powerful trio for Mac setup automation. If you’re still setting up machines manually, I encourage you to explore automation. There are hundreds of <a href="https://github.com/search?q=dotfiles&amp;type=repositories">amazing dotfiles</a> on GitHub.</p>
 <p>How do you set up your dev environment? I would love to hear about your approach and favorite tools in the comments!</p>
-<p>Thank you for stopping by!<br>
-<em>Eyayaw</em></p>
+<p>—— <strong>Thank you for stopping by!</strong> 💚💛❤️ ——</p>
 <hr>
 <p>Expand the appendix if you want to skim through simplified versions of some of my configs.</p>
 <details>
@@ -743,14 +2211,18 @@ font-style: inherit;">"UTF-8"</span></span></code></pre></div>
 <li id="fn2"><p>You may need to the change its permission with <code>chmod +x bootstrap.sh</code> or use <code>source bootstrap.sh</code>↩︎</p></li>
 </ol>
 </section></div> ]]></description>
-  <guid>https://eyayaw.github.io/posts/setting-up-a-new-mac.html</guid>
-  <pubDate>Thu, 15 May 2025 11:10:48 GMT</pubDate>
-  <media:content url="https://eyayaw.github.io/posts/media/welcome-to-mac.png" medium="image" type="image/png" height="108" width="144"/>
+  <category>config</category>
+  <category>cli</category>
+  <category>macos</category>
+  <category>programming</category>
+  <guid>https://eyayaw.github.io/posts/setting-up-a-new-mac/</guid>
+  <pubDate>Thu, 24 Apr 2025 22:00:00 GMT</pubDate>
+  <media:content url="https://eyayaw.github.io/posts/setting-up-a-new-mac/welcome-to-mac.png" medium="image" type="image/png" height="108" width="144"/>
 </item>
 <item>
   <title>Base R</title>
   <dc:creator>Eyayaw Beze</dc:creator>
-  <link>https://eyayaw.github.io/posts/base-r.html</link>
+  <link>https://eyayaw.github.io/posts/base-r/</link>
   <description><![CDATA[ 
 
 
@@ -821,7 +2293,7 @@ background-color: null;
 font-style: inherit;">"Package"</span>, fields))</span></code></pre></div>
 </details>
 </div>
-<p>There are 14 base R packages, in R 4.5.0. Below is a complete list.</p>
+<p>There are 14 base R packages, in R 4.5.1. Below is a complete list.</p>
 <div class="callout callout-style-default callout-important no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -898,7 +2370,7 @@ background-color: null;
 font-style: inherit;">1</span>]]</span></code></pre></div>
 </details>
 </div>
-<p>The default packages are attached when R starts up. As of R 4.5.0 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
+<p>The default packages are attached when R starts up. As of R 4.5.1 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -992,7 +2464,7 @@ font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div>
 </details>
 </div>
 <p>The other base R packages are {compiler}, {grid}, {parallel}, {splines}, {stats4}, {tcltk}, and {tools}. These (or some) may not be familiar to you (myself included) if you’re not a package developer. I have used {tools} for example to check package dependencies (e.g., <code>tools::package_dependencies("data.table", recursive = TRUE)</code>), and work with file paths (see my <a href="https://x.com/eyayaw/status/1488568897334915081">tweet</a>). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?</p>
-<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.5.0), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
+<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.5.1), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
 
 
 
@@ -1005,28 +2477,31 @@ font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div>
 <li id="fn3"><p>Most, if not all, base R-ers use {ggplot2}, lovingly.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
-  <guid>https://eyayaw.github.io/posts/base-r.html</guid>
+  <category>programming</category>
+  <category>r</category>
+  <category>base-r</category>
+  <guid>https://eyayaw.github.io/posts/base-r/</guid>
   <pubDate>Sun, 06 Apr 2025 22:00:00 GMT</pubDate>
-  <media:content url="https://eyayaw.github.io/posts/media/base-r.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://eyayaw.github.io/posts/base-r/base-r.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>Welcome to my Blog</title>
   <dc:creator>Eyayaw Beze</dc:creator>
-  <link>https://eyayaw.github.io/posts/welcome.html</link>
+  <link>https://eyayaw.github.io/posts/welcome-to-my-blog/</link>
   <description><![CDATA[ 
 
 
 
 
 <p>This is the first post in my blog. Welcome!</p>
-<p><img src="https://eyayaw.github.io/posts/media/thumbnail.jpg" class="img-fluid"></p>
-<p>I will blog about what I have learned in my <code>R</code>and <code>Python</code> journey. Stay tuned!</p>
+<p><img src="https://eyayaw.github.io/posts/welcome-to-my-blog/media/thumbnail.jpg" class="img-fluid"></p>
+<p>I will blog about what I have learned in my <code>R</code> and <code>Python</code> journey. Stay tuned!</p>
 
 
 
  ]]></description>
   <category>news</category>
-  <guid>https://eyayaw.github.io/posts/welcome.html</guid>
+  <guid>https://eyayaw.github.io/posts/welcome-to-my-blog/</guid>
   <pubDate>Sat, 30 Jul 2022 22:00:00 GMT</pubDate>
 </item>
 </channel>
