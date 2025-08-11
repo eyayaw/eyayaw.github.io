@@ -90,6 +90,9 @@ css: index.css
   <li>
     <a href="https://github.com/eyayaw/cleaning-RWI-GEO-RED">eyayaw/cleaning-RWI-GEO-RED</a>: Scripts for cleaning, tidying, and hedonic model estimation for <a href="https://www.rwi-essen.de/en/research-advice/further/research-data-center-ruhr-fdz/data-sets/rwi-geo-red/x-real-estate-data-and-price-indices">Immoscout24/RWI-GEO-RED</a> real estate data
   </li>
+  <li>
+    <a href="https://github.com/eyayaw/ethio-data-archive">eyayaw/ethio-data-archive</a>: Data collection efforts on a myriad of topics in Ethiopia
+  </li>
   <li> Social Media Data
   <ul>
   <li>
@@ -107,7 +110,7 @@ css: index.css
   </ul>
   </li>
   <li>
-    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns.
+    <a href="https://github.com/eyayaw/random-viz">eyayaw/random-viz</a>: A visualization project to explore trends and patterns
   </li>
 </ul>
 ```

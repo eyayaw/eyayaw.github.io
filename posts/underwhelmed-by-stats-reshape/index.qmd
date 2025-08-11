@@ -1,0 +1,505 @@
+---
+title: Underwhelmed by `stats::reshape`
+date: last-modified
+categories: [r, base-r, tutorial, programming]
+engine: knitr
+execute:
+  echo: true
+code-fold: true
+---
+
+
+```{r}
+#| label: setup
+#| echo: false
+
+library(data.table)
+
+num_countries = 3
+num_years = 2
+na_strings = "#N/A" # set during download in the advanced options
+num_rows_skip_empty_commentary_bottom = 5 # num of rows to skip in the footer
+indicators = c(
+  "Population, total" = "pop_total",
+  "GDP per capita, PPP (constant 2021 international $)" = "gdp_pc_ppp"
+)
+num_indicators = length(indicators)
+
+# To skip empty rows and comments at the end
+# Alternatively, skip the five rows at the end. See the preprocessing chunk below
+nrows_wide = num_countries * num_indicators
+nrows_long = num_countries * num_indicators * num_years
+```
+
+
+```{r}
+#| label: preprocess-data
+#| eval: !expr 'length(dir(pattern = "^wdi_data_(wide|long).csv$")) != 2'
+#| echo: false
+
+read_wdi_data = function(type = c("table", "list")) {
+  type = match.arg(type)
+  path = sprintf("sample_wdi_data_%s.csv", type)
+
+  data = read.csv(path, header = TRUE, na.strings = na_strings, check.names = FALSE)
+
+  names(data) = sub("(?i) name$", "", names(data), perl = TRUE) |> tolower()
+  data = data[1:(nrow(data)-num_rows_skip_empty_commentary_bottom), ] # skip empty and commentary rows at the bottom
+
+  data$series = indicators[data[["series"]]] # the names of the series are long
+
+  try({ names(data)[names(data) == "time"] = "year" }, silent = TRUE)
+
+  return(data)
+}
+
+# Wide data (data format = "table")
+wdi_data_table = read_wdi_data("table")
+# Long data (data format = "list")
+wdi_data_list = read_wdi_data("list")
+
+reshape(wdi_data_table, direction = "wide", timevar = "series", idvar = "country") -> wdi_true_wide
+wdi_true_wide = setNames(wdi_true_wide, sub("(\\d{4})\\.(.+)", "\\2_\\1", names(wdi_true_wide)))
+
+data.table::fwrite(wdi_true_wide, "wdi_data_wide.csv")
+data.table::fwrite(wdi_data_list, "wdi_data_long.csv")
+rm(wdi_data_table, wdi_data_list, wdi_true_wide)
+```
+
+
+When was the last time you used [`stats::reshape`](https://search.r-project.org/R/refmans/stats/html/reshape.html)? Probably never, in the presence of {tidyr}'s [`pivot_*`](https://tidyr.tidyverse.org/articles/pivot.html) and {data.table}'s [`melt`/`dcast`](https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html) reshaping (aka pivoting) functions.
+
+A while ago, while perusing through the {data.table} [vignettes](https://rdatatable.gitlab.io/data.table/articles/), I learned about the `reshape` function. The {data.table} core team described it as "[It is an extremely useful and often underrated function.](https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html#limitations-in-previous-meltdcast-approaches)". As a member of the "dependency-frets" (as `reshape` is part of [base R](../base-r.html)), I've been using it fairly since. However, it has some annoyances that might lead you to think that the function isn't yet quite "fully ripe", which could explain its "underratting".
+
+First, it's very slow; no further comment is needed, but that could be a deal breaker for some.^[Consider using [data.table](https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html)!]
+
+
+Args of the `reshape` function are also a bit cryptic. I have to hit [`?reshape`](https://search.r-project.org/R/refmans/stats/html/reshape.html) time and again because it is not easy to remember what is what. What (or not) to pass to `varying` (a vector or a list (or a matrix)) and how to order its values? Like `varying=c("gdp_2020", "gdp_2021", "pop_2020", "pop_2021")`, or `c("gdp_2020", "pop_2020", "gdp_2021", "pop_2021")`? What does `v.names` (and frankly most args) do in `reshape` to wide vs. long? Would not it be helpful if `reshape` was broken down into two separate functions (`reshape_{long,wide}`)?^[Oh wait, that was the case but [removed](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/stats-defunct.html) at some point.]
+Also it is hard to tell which args are optional and which get ignored silently even when you explicitly provide them.^[For example, `times` is ignored if `v.names` is not provided in reshape to long (see [here](https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf)).]
+
+Futhermore, you have to "nicely" format your column names to unlock reshape to long's potential: that is use a `sep` (defaults to `.`) between the time `varying` variables and the `timevar` (like `gdp.2020`, `pop.2020`).
+
+::: {.callout-warning}
+Do you really think about renaming your columns when reshaping? Don't! 🙃
+:::
+
+Even if you "nicely" format your column names say with `sep="_"`, your're doomed if you have "_" somewhere in the column names as you can't use perl-compatible regex to force the location of the `sep` (e.g., you have `gdp_ppp_2020` and you're not allowed to use `sep="_(?=\\d{4})"` or `split(regexp = "_(?=\\d{4})", include = FALSE, fixed = FALSE)`). If you look at the [source](https://github.com/wch/r-source/blob/trunk/src/library/stats/R/reshape.R), this could have been done as `split` and `regexpr` (where `sep` and `split` are used) can handle perl-compatible regex with `perl = TRUE`.
+
+
+While `reshape` is fundamentally built to deal with panel data, it does not handle "unbalanced" (panel) data. A special case that traps reshape (to long) is when a variable (say population size) is available for 2019 but missing for 2020 (for all units), while another variable (GDP) is measured for both 2019 and 2020 (for some or all units).^[[Panel data is unbalanced](https://en.wikipedia.org/wiki/Panel_data#Example) when some units are not measured for at least one time period.] You may think this is a useless edge scenario, but both {data.table} and {tidyr} support it. This rare edge case may frequently [creep into](https://stackoverflow.com/q/76167864) typical use cases, doesn’t it?
+
+
+# Reshaping with `stats::reshape`
+
+Let's quickly look at how we can use `reshape` to convert data from wide to long format and vice versa and touch on some of the issues along the way, with sample datasets from the World Development Indicators (WDI) database. The WDI datasets provide a perfect use case for reshaping because you can download the data in wide or long format.
+
+::: {.callout-tip}
+
+The official [documentation](https://search.r-project.org/R/refmans/stats/html/reshape.html) and [vignette](https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf) for `reshape` are great. I also find this [blog post](https://jozef.io/r001-reshape/) by Jozef Hajnala excellent.
+
+:::
+
+
+```{r}
+#| label: load-data
+
+# import data (source WBG WDI)
+wdi_data_wide = read.csv("wdi_data_wide.csv")
+wdi_data_long = read.csv("wdi_data_long.csv")
+
+# constants
+data_url = "https://databank.worldbank.org/id/8dfced2d"
+varying_patt = "^((?:pop|gdp).*)[_](\\d{4})$" # regex for measure vars
+varying_patt_vec = c("^pop", "^gdp")
+```
+
+::: {.callout-note collapse=true}
+## About the sample WDI datasets
+
+I downloaded the data in two formats: "table" and "list", which roughly correspond to wide and long formats, respectively. The data contains information on `{r} length(indicators)` indicators (`{r} xfun::join_words(names(indicators), before='"')`), for countries `{r} xfun::join_words(unique(wdi_data_wide[["country"]]))` for the years `{r} paste(range(wdi_data_long$year), collapse="-")`. Here is a direct [link](`{r} data_url`) to the original dataset.
+
+
+```{r}
+#| label: tbl-original-data
+#| tbl-cap: Sample Dataset from WDI Database (Raw)
+#| tbl-subcap:
+#|    - "Head of the data in table (wide) format"
+#|    - "Head of the data in list (long) format"
+#| layout-nrow: 2
+
+read.csv("sample_wdi_data_table.csv", check.names = FALSE) |>
+  head() |>
+  knitr::kable()
+
+read.csv("sample_wdi_data_list.csv", check.names = FALSE) |>
+  head() |>
+  knitr::kable()
+```
+
+:::
+
+## Reshape to long: `reshape(..., direction = "long")`
+
+The dataset in wide format looks like:[^minor-cleaning]
+
+[^minor-cleaning]: When you download the data in "table" format, it is kinda in wide format (because the indicators are stacked in the `Series Name` column), as shown in @tbl-original-data. However, I cleaned (including shortening the names of the series) the original dataset to transform it into "true" wide format shown in @tbl-true-wide.
+
+
+```{r}
+#| label: tbl-true-wide
+#| tbl-cap: The data in true wide format (cleaned)
+#| echo: false
+
+wdi_data_wide |> knitr::kable()
+```
+
+To pivot this into a long format, we just collect the suffixed years in the (series) columns into a single column "year", and each series makes (or gets collapsed into) a single column.
+
+:::: {.callout-tip title="Reshape to long with other packages" collapse="true"}
+
+IMO, all three solutions are straighforward. We get a proper long format, a row represents a record for a country at a point-in-time, that is, this is in a typical panel ([repeated-crossection or longitudinal](https://en.wikipedia.org/wiki/Panel_data)) data format.
+
+::: panel-tabset
+
+### `data.table::melt`
+
+```{r}
+#| label: using-data.table-melt
+#| code-fold: show
+
+wdi_data_wide |>
+as.data.table() |>
+melt(
+  measure.vars = measure(value.name, year, pattern = "^([a-z_]+)_(\\d{4})$"),
+  id.vars = "country"
+)
+```
+
+### `tidyr::pivot_longer`
+
+```{r}
+#| label: using-tidyr-pivot-longer
+#| echo: true
+#| code-fold: show
+
+wdi_data_wide |>
+  tidyr::pivot_longer(
+    cols = -country,
+    names_pattern = "^([a-z_]+)_(\\d{4})$",
+    names_to = c(".value", "year")
+  )
+```
+
+
+### `duckdb::unpivot`
+
+```{bash}
+#| echo: true
+#| code-fold: show
+
+duckdb << EOF
+create or replace table wdi_data_wide as
+from read_csv('wdi_data_wide.csv');
+
+set variable measure_patt = '^([a-z_]+)_(\d{4})$';
+
+.mode markdown
+with unpivoted as (
+  select
+    country,
+    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,
+    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,
+    column_value as value
+  from (
+    unpivot wdi_data_wide
+    on COLUMNS(getvariable('measure_patt'))
+    into
+      name column_name
+      value column_value
+  )
+)
+pivot unpivoted
+on measure
+using first(value)
+order by country, year;
+EOF
+```
+:::
+
+::::
+
+According to the [doc](https://search.r-project.org/R/refmans/stats/html/reshape.html), the easiest way to reshape to long with `reshape` is by using "nicely" formatted column names: that is, use a `sep` (which defaults to `.`) between the time `varying` variables and the `timevar`, like `gdp_pc_ppp.2020` and `pop_total.2020`. This nice formatting has the added benefit that `v.names` (`gdp_pc_ppp`, `pop_total`) and `times` (i.e., the values for `timevar`) (2020), will be auto-guessed; otherwise, we need to supply them ourselves (which is error prone).
+
+
+```r
+### Typical usage for converting from wide to long format:
+
+### If names of wide-format variables are in a 'nice' format
+
+# reshape(data, direction = "long",
+#         varying = c(___), # vector
+#         sep)              # to help guess 'v.names' and 'times'
+```
+
+So let's rename our `varying` columns using a special `sep` and try reshaping to long as follows:
+
+```{r}
+#| label: reshape-to-long-1
+#| echo: true
+#| code-fold: show
+
+sep = "."
+# let's replace "_" (just before the year) with the sep to "nicely" format the column names
+nicely_format_names = function(nms) {
+  sub("_(?=\\d)", sep, nms, perl = TRUE)
+}
+
+nice_nms = nicely_format_names(names(wdi_data_wide))
+
+wdi_data_wide_long1 = reshape(
+  setNames(wdi_data_wide, nice_nms),
+  direction = "long",
+  varying = grepv(sprintf("^[a-z_]+%s\\d{4}$", sep), nice_nms),
+  idvar = "country", # if ommitted, an `id` column will be added `seq_along(data)`
+  timevar = "year", # otherwise `time`
+  sep = sep # the default is `.`
+)
+
+wdi_data_wide_long1 |> head()
+```
+
+That is a hell of unnatural detour for reshaping. What if we want to go along with our column names? Enter explicit-specification:
+
+```r
+### Typical usage for converting from wide to long format:
+
+# ...
+
+### To specify long-format variable names explicitly
+
+# reshape(data, direction = "long",
+#         varying = ___,  # list / matrix / vector (use with care)
+#         v.names = ___,  # vector of variable names in long format
+#         timevar, times, # name / values of constructed time variable
+#         idvar, ids)     # name / values of constructed id variable
+```
+
+```{r}
+#| label: reshape-to-long-2
+#| echo: true
+
+wdi_data_wide_long2 = wdi_data_wide |>
+  reshape(
+    direction = "long",
+    # varying = lapply(c("^pop", "^gdp"), \(p) grepv(p, names(wdi_data_wide))),
+    varying = list(
+      c("pop_total_2019", "pop_total_2020"),
+      c("gdp_pc_ppp_2019", "gdp_pc_ppp_2020")
+    ),
+    v.names = c("pop", "gdp_pc_ppp"),
+    idvar = "country", # otherwise column `ids` will be created
+    timevar = "year", # otherwise "time"
+    times = c("2019", "2020") # otherwise auto-generated
+  )
+
+wdi_data_wide_long2 |> head(10)
+```
+
+That is very verbose and error prone: (1) we need to specify `varying` "with care" (choosing the list form), as urged by the doc, (2) the values of `timevar` (named as `year`) which are controlled by `times` will be auto-generated instead of the actual values we see from the data, had we not provided them like so `times = c("2019", "2020")`, (3) not only do we need to know the unique values of `timevar`, but also their correct order.
+
+Importantly, were we should note that we provided a list to `varying`. What if you accidentially gave a vector like `c(c("pop_total_2019", "pop_total_2020"), c("gdp_pc_ppp_2019", "gdp_pc_ppp_2020"))`? Well, that would be wrong because if `varying` takes on a vector, we should rather provide it in this order `c("pop_total_2019", "gdp_pc_ppp_2019", "pop_total_2020", "gdp_pc_ppp_2020")`.
+
+> The correct order requires all columns corresponding to the same time to be contiguous; this
+is the same intrinsic column-major ordering in the matrix [ or list] [...] form. It is best to avoid
+the atomic vector form of varying unless `v.names` is being omitted.\
+> --- [Using the reshape function](https://stat.ethz.ch/R-manual/R-devel/library/stats/doc/reshape.pdf) (The R Core Team, April 2025)
+
+Looks like passing a list to `varying` is safe and straighforward when it comes to the order of the time-varying variables. But as we saw we need to manually define the names/values of several variables (`v.names`, `timevar`, `times`). Before abandoning passing a vector for `varying`, since we actually want names/values auto-guessed, what if we tell `reshape` to split at `sep = "_"`? However, since our `varying` variables have `_`, this would be impossible to do without a perl-compatible regex option, which `reshape` hides from us. If you edit the function definition of `reshape` to allow for this (i.e, add `perl = TRUE`), we can use `sep = "_(?=\\d{4})"` and get the same result as the nicely formatted naming option above.
+
+
+We can also play with `split` to provide a custom `sep` (`regexp`) as shown below but the names will have trailing `_`s (because `include = FALSE` fails), but we need to pass a vector of names for `varying` (to take advantage of auto-guessing, so much complication!).
+
+```{r}
+#| label: reshape-to-long-3
+#| echo: true
+
+wdi_data_wide_long3 = wdi_data_wide |>
+  reshape(
+    direction = "long",
+    varying = c("pop_total_2019", "gdp_pc_ppp_2019", "pop_total_2020",  "gdp_pc_ppp_2020"),
+    timevar = "year",
+    idvar = "country",
+    split = list(regexp = "_\\d{4}$", include = TRUE, fixed = FALSE)
+  )
+
+wdi_data_wide_long3 |> head(10)
+```
+
+I would argue that this is a better approach (than the nicely renaming columns we saw above) and is more flexible and usable: we can force the location of the split without perl-compatible regex, and have auto-guessing of names/values.
+
+
+```{r}
+#| label: reshape-to-long-unbalanced
+#| echo: true
+#| error: true
+
+wdi_data_wide_unbalanced = wdi_data_wide[, setdiff(names(wdi_data_wide), "gdp_pc_ppp_2020")]
+
+wdi_data_wide_unbalanced |>
+  reshape(
+    direction = "long",
+    varying = grepv("^[a-z_]+_\\d{4}$", names(wdi_data_wide_unbalanced)),
+    timevar = "year",
+    idvar = "country",
+    split = list(regexp = "_\\d{4}$", include = TRUE, fixed = FALSE)
+  )
+```
+
+::: {.callout-tip title="Unbalanced data handled by other packages" collapse="true"}
+
+::: panel-tabset
+
+### `data.table:melt`
+
+```{r}
+
+# data.table solution
+wdi_data_wide_unbalanced |>
+  as.data.table() |>
+  melt(
+    id.vars = "country",
+    measure.vars = measure(value.name, year, pattern = "^([a-z_]+)_(\\d{4})$")
+  )
+```
+
+### `tidyr::pivot_longer`
+```{r}
+# tidyr solution
+wdi_data_wide_unbalanced |>
+  tidyr::pivot_longer(
+    cols = -country,
+    names_pattern = "^([a-z_]+)_(\\d{4})$",
+    names_to = c(".value", "year")
+  )
+```
+
+### `duckdb::unpivot`
+```{r}
+# duckdb solution
+
+duck_cmd = r"{
+duckdb << EOF
+  create or replace table wdi_data_wide as
+  from read_csv('wdi_data_wide.csv');
+
+  set variable measure_patt = '^([a-z_]+)_(\d{4})$';
+
+  pivot (
+    select
+    country,
+    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,
+    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,
+    column_value as value
+    from (
+      unpivot wdi_data_wide
+      on COLUMNS( * exclude(country, gdp_pc_ppp_2020))
+      into
+        name column_name
+        value column_value
+    )
+  )
+  on measure
+  using first(value)
+  order by country, year;
+EOF
+}"
+
+cat(system(duck_cmd, intern = TRUE), sep = "\n")
+```
+:::
+
+:::
+
+
+## Reshape to wide: `reshape(..., direction = "wide")`
+
+Reshaping from long to wide is supposed to be straightforward. However, `reshape` handles one `timevar` at a time. This is because `reshape` is designed to fundamentally deal with longitudinal data. However, the sample long dataset (see @tbl-original-data-2) is not quite in that form as we have `series` and `year` as `timevar`s. So we need to transform the dataset into a longitudinal form (`country`, `year`, `pop_total`, `gdp_pc_ppp`), which means we reshape to wide with `timevar="series"`. Then, we reshape this again with `timevar="year"`. Thus, the solution involves reshaping twice along the two dimensions (`series`, `year`). However, `data.table::dcast`, `tidyr::pivot_wider`, and `duckdb::pivot` handle this in one step.
+
+::: panel-tabset
+
+### `reshapeWide`
+
+```{r}
+#| label: reshape-to-wide
+
+# step 1 -> reshape into longitudinal
+(wdi_data_longitudinal = reshape(
+  wdi_data_long,
+  direction = "wide",
+  idvar = c("country", "year"),
+  timevar = "series",
+  v.names = "value",
+  sep = "_"
+))
+
+# step 2 -> wide format
+wdi_data_longitudinal |>
+  reshape(
+    direction = "wide",
+    idvar = "country",
+    timevar = "year",
+    sep = "_"
+  ) -> wdi_data_long_wide
+
+wdi_data_long_wide # |> setNames(sub("^value_", "", names(wdi_data_long_wide)))
+```
+
+
+### `data.table::dcast`
+
+```{r}
+#| code-fold: show
+
+wdi_data_long |>
+  as.data.table() |>
+  dcast(country ~ series + year)
+```
+### `tidyr::pivot_wider`
+
+
+```{r}
+#| code-fold: show
+
+wdi_data_long |>
+  tidyr::pivot_wider(names_from = c(series, year), values_from = value)
+```
+
+### `duckdb::pivot`
+
+See https://duckdb.org/docs/stable/sql/statements/pivot
+
+```{bash}
+#| code-fold: show
+
+duckdb << EOF
+create or replace table wdi_data_long as
+from read_csv('wdi_data_long.csv');
+
+.mode markdown
+pivot wdi_data_long
+-- with a custom sep
+-- on series || '.' || year
+on series, year
+using first(value);
+EOF
+
+```
+:::
+
+To conclude, this is not a diss at `reshape`. In fact, it is great even with the abovementioned idiosyncriasies, if we use it with care. But, I hope it gets better and more usable in future versions of R.
+
+----
+
+{{< var sign >}}
+
+-----

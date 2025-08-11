@@ -1,0 +1,13 @@
+country,series,year,value
+"Korea, Rep.",pop_total,2019,51764822
+"Korea, Rep.",pop_total,2020,51836239
+"Korea, Rep.",gdp_pc_ppp,2019,46757.2614496182
+"Korea, Rep.",gdp_pc_ppp,2020,46361.5957811718
+Ethiopia,pop_total,2019,115737383
+Ethiopia,pop_total,2020,118917671
+Ethiopia,gdp_pc_ppp,2019,2437.97046055952
+Ethiopia,gdp_pc_ppp,2020,2516.54907642544
+Germany,pop_total,2019,83092962
+Germany,pop_total,2020,83160871
+Germany,gdp_pc_ppp,2019,62970.7160913279
+Germany,gdp_pc_ppp,2020,60342.6627037391
