@@ -49,7 +49,7 @@ I did my Ph.D. in Urban Economics at [RGS
 Econ](https://www.rgs-econ.org/), based at the [University of
 Duisburg-Essen]({{< var ude-url >}}).
 
-If you come to the [Ruhrgebiet](https://en.wikipedia.org/wiki/Ruhr) (or generally NRW) or to [Randstad, the Netherlands](https://en.wikipedia.org/wiki/Randstad), drop me a message through one of the [socials](index.qmd#quick-links). I would be happy to grab a coffee or a beer (Pils oder Blonde?).
+Drop me a message through one of the [socials](index.qmd#quick-links). I would be happy to grab a coffee or a beer (Pils oder Blonde?), if you're around town.
 
 I love data generation, through web scraping, api hacking, etc. If you want to collaborate on a project, feel free to reach out.
 :::
