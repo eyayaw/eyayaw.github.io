@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../{{< var profile-img >}}" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-f07a380226b71dccd824dee245407231.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3e8f12d1b5c8d04d32925f9f9ead600c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -231,14 +232,14 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lib_path <span class="ot">=</span> <span class="fu">normalizePath</span>(.Library)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lib_path <span class="ot">=</span> <span class="fu">normalizePath</span>(.Library)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fields <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Title"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>installed_pkgs <span class="ot">=</span> <span class="fu">installed.packages</span>(lib_path, <span class="at">fields=</span>fields) <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>()</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>base_pkgs <span class="ot">=</span> <span class="fu">subset</span>(installed_pkgs, Priority <span class="sc">==</span> <span class="st">"base"</span>, <span class="at">select =</span>  <span class="fu">c</span>(<span class="st">"Package"</span>, fields))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>high_pkgs <span class="ot">=</span> <span class="fu">subset</span>(installed_pkgs, Priority <span class="sc">==</span> <span class="st">"high"</span>, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Package"</span>, fields))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>high_pkgs <span class="ot">=</span> <span class="fu">subset</span>(installed_pkgs, Priority <span class="sc">==</span> <span class="st">"high"</span>, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Package"</span>, fields))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>There are 14 base R packages, in R 4.5.1. Below is a complete list.</p>
@@ -248,14 +249,14 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Base R Packages
+<span class="screen-reader-only">Important</span>Base R Packages
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"- %s --- %s"</span>, base_pkgs<span class="sc">$</span>Package, base_pkgs<span class="sc">$</span>Title) <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"- %s --- %s"</span>, base_pkgs<span class="sc">$</span>Package, base_pkgs<span class="sc">$</span>Title) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <ul>
 <li>base — The R Base Package</li>
@@ -280,15 +281,15 @@ Base R Packages
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>default_pkgs <span class="ot">=</span> <span class="fu">in_plain_r</span>(<span class="st">"cat(getOption('defaultPackages'))"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>default_pkgs <span class="ot">=</span> <span class="fu">strsplit</span>(default_pkgs, <span class="st">" "</span>)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>default_pkgs <span class="ot">=</span> <span class="fu">in_plain_r</span>(<span class="st">"cat(getOption('defaultPackages'))"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>default_pkgs <span class="ot">=</span> <span class="fu">strsplit</span>(default_pkgs, <span class="st">" "</span>)[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>The default packages are attached when R starts up. As of R 4.5.1 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">in_plain_r</span>(<span class="st">"cat(search())"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">in_plain_r</span>(<span class="st">"cat(search())"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] ".GlobalEnv package:stats package:graphics package:grDevices package:utils package:datasets package:methods Autoloads package:base"</code></pre>
@@ -310,16 +311,16 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>To modify the list of default packages, set the env variable <code>R_DEFAULT_PACKAGES</code> in your <code>.Renviron</code>, or set the <code>defaultPackages</code> option in <code>.Rprofile</code> (see <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Default-packages">R manuals</a>). If you set <code>R_DEFAULT_PACKAGES=NULL</code>, then only {base} is loaded.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.Renviron</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">R_DEFAULT_PACKAGES</span><span class="op">=</span>base,utils,stats,methods</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.Renviron</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">R_DEFAULT_PACKAGES</span><span class="op">=</span>base,utils,stats,methods</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or,</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.Rprofile</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">defaultPackages=</span><span class="fu">c</span>(<span class="st">"base"</span>, <span class="st">"utils"</span>, <span class="st">"stats"</span>, <span class="st">"methods"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.Rprofile</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">defaultPackages=</span><span class="fu">c</span>(<span class="st">"base"</span>, <span class="st">"utils"</span>, <span class="st">"stats"</span>, <span class="st">"methods"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>As you can see below, only {base} is loaded when no default packages are provided.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">'export R_DEFAULT_PACKAGES=NULL;R --vanilla --no-echo --quiet -e "cat(search())"'</span>, <span class="at">intern=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">'export R_DEFAULT_PACKAGES=NULL;R --vanilla --no-echo --quiet -e "cat(search())"'</span>, <span class="at">intern=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] ".GlobalEnv Autoloads package:base"</code></pre>
@@ -330,7 +331,7 @@ Tip
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>other_base_pkgs <span class="ot">=</span> <span class="fu">setdiff</span>(base_pkgs<span class="sc">$</span>Package, <span class="fu">c</span>(<span class="st">"base"</span>, default_pkgs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>other_base_pkgs <span class="ot">=</span> <span class="fu">setdiff</span>(base_pkgs<span class="sc">$</span>Package, <span class="fu">c</span>(<span class="st">"base"</span>, default_pkgs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>The other base R packages are {compiler}, {grid}, {parallel}, {splines}, {stats4}, {tcltk}, and {tools}. These (or some) may not be familiar to you (myself included) if you’re not a package developer. I have used {tools} for example to check package dependencies (e.g., <code>tools::package_dependencies("data.table", recursive = TRUE)</code>), and work with file paths (see my <a href="https://x.com/eyayaw/status/1488568897334915081">tweet</a>). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?</p>
@@ -398,13 +399,14 @@ Tip
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

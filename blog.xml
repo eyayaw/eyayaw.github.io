@@ -9,7 +9,7 @@
 <link>https://eyayaw.github.io/blog.html</link>
 <atom:link href="https://eyayaw.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Eyayaw Beze&#39;s personal website</description>
-<generator>quarto-1.7.33</generator>
+<generator>quarto-1.8.26</generator>
 <lastBuildDate>Mon, 11 Aug 2025 21:35:42 GMT</lastBuildDate>
 <item>
   <title>Underwhelmed by stats::reshape</title>
@@ -59,7 +59,7 @@ Tip
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># import data (source WBG WDI)</span></span>
 <span id="cb1-2">wdi_data_wide <span class="ot" style="color: #003B4F;
@@ -104,16 +104,16 @@ font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"^pop"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"^gdp"</span>)</span></code></pre></div>
+font-style: inherit;">"^gdp"</span>)</span></code></pre></div></div>
 </details>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-About the sample WDI datasets
+<span class="screen-reader-only">Note</span>About the sample WDI datasets
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -123,7 +123,7 @@ About the sample WDI datasets
 <div class="cell" data-layout-nrow="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -164,7 +164,7 @@ font-style: inherit;">|&gt;</span></span>
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">kable</span>()</span></code></pre></div>
+font-style: inherit;">kable</span>()</span></code></pre></div></div>
 </details>
 <div id="tbl-original-data" class="quarto-layout-panel anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -372,12 +372,12 @@ Table&nbsp;2: The data in true wide format (cleaned)
 </div>
 <p>To pivot this into a long format, we just collect the suffixed years in the (series) columns into a single column “year”, and each series makes (or gets collapsed into) a single column.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Reshape to long with other packages">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Reshape to long with other packages
+<span class="screen-reader-only">Tip</span>Reshape to long with other packages
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -385,13 +385,13 @@ Reshape to long with other packages
 <div class="callout-body-container callout-body">
 <p>IMO, all three solutions are straighforward. We get a proper long format, a row represents a record for a country at a point-in-time, that is, this is in a typical panel (<a href="https://en.wikipedia.org/wiki/Panel_data">repeated-crossection or longitudinal</a>) data format.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true"><code>data.table::melt</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false"><code>tidyr::pivot_longer</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" aria-controls="tabset-1-3" aria-selected="false"><code>duckdb::unpivot</code></a></li></ul>
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true" href=""><code>data.table::melt</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false" href=""><code>tidyr::pivot_longer</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" aria-controls="tabset-1-3" aria-selected="false" href=""><code>duckdb::unpivot</code></a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -420,7 +420,7 @@ background-color: null;
 font-style: inherit;">id.vars =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span></span>
-<span id="cb3-6">)</span></code></pre></div>
+<span id="cb3-6">)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       country   year pop_total gdp_pc_ppp
@@ -438,7 +438,7 @@ font-style: inherit;">"country"</span></span>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
 <span id="cb5-2">  tidyr<span class="sc" style="color: #5E5E5E;
@@ -469,7 +469,7 @@ background-color: null;
 font-style: inherit;">".value"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>)</span>
-<span id="cb5-6">  )</span></code></pre></div>
+<span id="cb5-6">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
@@ -488,7 +488,7 @@ font-style: inherit;">"year"</span>)</span>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">duckdb</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -567,7 +567,7 @@ background-color: null;
 font-style: inherit;">order by country, year;</span></span>
 <span id="cb7-26"><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">EOF</span></span></code></pre></div>
+font-style: inherit;">EOF</span></span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>|   country   | year |    gdp_pc_ppp    |  pop_total  |
@@ -587,7 +587,7 @@ font-style: inherit;">EOF</span></span></code></pre></div>
 </div>
 </div>
 <p>According to the <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html">doc</a>, the easiest way to reshape to long with <code>reshape</code> is by using “nicely” formatted column names: that is, use a <code>sep</code> (which defaults to <code>.</code>) between the time <code>varying</code> variables and the <code>timevar</code>, like <code>gdp_pc_ppp.2020</code> and <code>pop_total.2020</code>. This nice formatting has the added benefit that <code>v.names</code> (<code>gdp_pc_ppp</code>, <code>pop_total</code>) and <code>times</code> (i.e., the values for <code>timevar</code>) (2020), will be auto-guessed; otherwise, we need to supply them ourselves (which is error prone).</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="do" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">### Typical usage for converting from wide to long format:</span></span>
 <span id="cb9-2"></span>
@@ -603,12 +603,12 @@ background-color: null;
 font-style: inherit;">#         varying = c(___), # vector</span></span>
 <span id="cb9-7"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#         sep)              # to help guess 'v.names' and 'times'</span></span></code></pre></div>
+font-style: inherit;">#         sep)              # to help guess 'v.names' and 'times'</span></span></code></pre></div></div>
 <p>So let’s rename our <code>varying</code> columns using a special <code>sep</code> and try reshaping to long as follows:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">sep <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">sep <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -696,7 +696,7 @@ font-style: inherit;"># the default is `.`</span></span>
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">head</span>()</span></code></pre></div>
+font-style: inherit;">head</span>()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     country year pop_total gdp_pc_ppp
@@ -709,7 +709,7 @@ Germany.2020         Germany 2020  83160871  60342.663</code></pre>
 </div>
 </div>
 <p>That is a hell of unnatural detour for reshaping. What if we want to go along with our column names? Enter explicit-specification:</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="do" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">### Typical usage for converting from wide to long format:</span></span>
 <span id="cb12-2"></span>
@@ -735,11 +735,11 @@ background-color: null;
 font-style: inherit;">#         timevar, times, # name / values of constructed time variable</span></span>
 <span id="cb12-11"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#         idvar, ids)     # name / values of constructed id variable</span></span></code></pre></div>
+font-style: inherit;">#         idvar, ids)     # name / values of constructed id variable</span></span></code></pre></div></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">wdi_data_wide_long2 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">wdi_data_wide_long2 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -817,7 +817,7 @@ font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">10</span>)</span></code></pre></div>
+font-style: inherit;">10</span>)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     country year       pop gdp_pc_ppp
@@ -840,7 +840,7 @@ Germany.2020         Germany 2020  83160871  60342.663</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">wdi_data_wide_long3 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">wdi_data_wide_long3 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -905,7 +905,7 @@ font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">10</span>)</span></code></pre></div>
+font-style: inherit;">10</span>)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     country year pop_total_ gdp_pc_ppp_
@@ -921,7 +921,7 @@ Germany.2020         Germany 2020   83160871   60342.663</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">wdi_data_wide_unbalanced <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">wdi_data_wide_unbalanced <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> wdi_data_wide[, <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -986,32 +986,32 @@ background-color: null;
 font-style: inherit;">fixed =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>)</span>
-<span id="cb17-10">  )</span></code></pre></div>
+<span id="cb17-10">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-error">
 <pre><code>Error in reshapeLong(data, idvar = idvar, timevar = timevar, varying = varying, : 'varying' arguments must be the same length</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Unbalanced data handled by other packages">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Unbalanced data handled by other packages
+<span class="screen-reader-only">Tip</span>Unbalanced data handled by other packages
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true"><code>data.table:melt</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false"><code>tidyr::pivot_longer</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" aria-controls="tabset-2-3" aria-selected="false"><code>duckdb::unpivot</code></a></li></ul>
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true" href=""><code>data.table:melt</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" aria-controls="tabset-2-2" aria-selected="false" href=""><code>tidyr::pivot_longer</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" aria-controls="tabset-2-3" aria-selected="false" href=""><code>duckdb::unpivot</code></a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># data.table solution</span></span>
 <span id="cb19-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
@@ -1043,7 +1043,7 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">d{4})$"</span>)</span>
-<span id="cb19-7">  )</span></code></pre></div>
+<span id="cb19-7">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       country   year pop_total gdp_pc_ppp
@@ -1061,7 +1061,7 @@ font-style: inherit;">d{4})$"</span>)</span>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># tidyr solution</span></span>
 <span id="cb21-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
@@ -1095,7 +1095,7 @@ background-color: null;
 font-style: inherit;">".value"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>)</span>
-<span id="cb21-7">  )</span></code></pre></div>
+<span id="cb21-7">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
@@ -1114,7 +1114,7 @@ font-style: inherit;">"year"</span>)</span>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># duckdb solution</span></span>
 <span id="cb23-2"></span>
@@ -1211,7 +1211,7 @@ font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">\n</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div>
+font-style: inherit;">"</span>)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────────┬─────────┬──────────────────┬─────────────┐
@@ -1238,13 +1238,13 @@ font-style: inherit;">"</span>)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="reshape-to-wide-reshape...-direction-wide">Reshape to wide: <code>reshape(..., direction = "wide")</code></h2>
 <p>Reshaping from long to wide is supposed to be straightforward. However, <code>reshape</code> handles one <code>timevar</code> at a time. This is because <code>reshape</code> is designed to fundamentally deal with longitudinal data. However, the sample long dataset (see Table&nbsp;1 (b)) is not quite in that form as we have <code>series</code> and <code>year</code> as <code>timevar</code>s. So we need to transform the dataset into a longitudinal form (<code>country</code>, <code>year</code>, <code>pop_total</code>, <code>gdp_pc_ppp</code>), which means we reshape to wide with <code>timevar="series"</code>. Then, we reshape this again with <code>timevar="year"</code>. Thus, the solution involves reshaping twice along the two dimensions (<code>series</code>, <code>year</code>). However, <code>data.table::dcast</code>, <code>tidyr::pivot_wider</code>, and <code>duckdb::pivot</code> handle this in one step.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true"><code>reshapeWide</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false"><code>data.table::dcast</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" aria-controls="tabset-3-3" aria-selected="false"><code>tidyr::pivot_wider</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" aria-controls="tabset-3-4" aria-selected="false"><code>duckdb::pivot</code></a></li></ul>
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" aria-controls="tabset-3-1" aria-selected="true" href=""><code>reshapeWide</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" aria-controls="tabset-3-2" aria-selected="false" href=""><code>data.table::dcast</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" aria-controls="tabset-3-3" aria-selected="false" href=""><code>tidyr::pivot_wider</code></a></li><li class="nav-item"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" aria-controls="tabset-3-4" aria-selected="false" href=""><code>duckdb::pivot</code></a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># step 1 -&gt; reshape into longitudinal</span></span>
 <span id="cb25-2">(<span class="at" style="color: #657422;
@@ -1282,7 +1282,7 @@ background-color: null;
 font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"_"</span></span>
-<span id="cb25-9">))</span></code></pre></div>
+<span id="cb25-9">))</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       country year value_pop_total value_gdp_pc_ppp
@@ -1295,7 +1295,7 @@ font-style: inherit;">"_"</span></span>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># step 2 -&gt; wide format</span></span>
 <span id="cb27-2">wdi_data_longitudinal <span class="sc" style="color: #5E5E5E;
@@ -1330,7 +1330,7 @@ font-style: inherit;">-&gt;</span> wdi_data_long_wide</span>
 <span id="cb27-9"></span>
 <span id="cb27-10">wdi_data_long_wide <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wide)))</span></span></code></pre></div>
+font-style: inherit;"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wide)))</span></span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      country value_pop_total_2019 value_gdp_pc_ppp_2019 value_pop_total_2020
@@ -1348,7 +1348,7 @@ font-style: inherit;"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wi
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
 <span id="cb29-2">  <span class="fu" style="color: #4758AB;
@@ -1362,7 +1362,7 @@ font-style: inherit;">dcast</span>(country <span class="sc" style="color: #5E5E5
 background-color: null;
 font-style: inherit;">~</span> series <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">+</span> year)</span></code></pre></div>
+font-style: inherit;">+</span> year)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Key: &lt;country&gt;
@@ -1378,7 +1378,7 @@ font-style: inherit;">+</span> year)</span></code></pre></div>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
 <span id="cb31-2">  tidyr<span class="sc" style="color: #5E5E5E;
@@ -1391,7 +1391,7 @@ font-style: inherit;">names_from =</span> <span class="fu" style="color: #4758AB
 background-color: null;
 font-style: inherit;">c</span>(series, year), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">values_from =</span> value)</span></code></pre></div>
+font-style: inherit;">values_from =</span> value)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
@@ -1408,7 +1408,7 @@ font-style: inherit;">values_from =</span> value)</span></code></pre></div>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">duckdb</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1440,7 +1440,7 @@ background-color: null;
 font-style: inherit;">using first(value);</span></span>
 <span id="cb33-11"><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">EOF</span></span></code></pre></div>
+font-style: inherit;">EOF</span></span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>|   country   | gdp_pc_ppp_2019  | gdp_pc_ppp_2020  | pop_total_2019 | pop_total_2020 |
@@ -1525,7 +1525,7 @@ font-style: inherit;">EOF</span></span></code></pre></div>
 <section id="component-1-package-management-with-homebrew" class="level2">
 <h2 class="anchored" data-anchor-id="component-1-package-management-with-homebrew">Component 1: Package Management with Homebrew</h2>
 <p>macOS, unlike many Linux distros, doesn’t come with a built-in package manager. <a href="https://docs.brew.sh/">Homebrew</a> fills this (“the missing package manager”) gap, becoming the first tool I install on any new Mac:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">/bin/bash</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -1541,11 +1541,11 @@ font-style: inherit;">-fsSL</span> https://raw.githubusercontent.com/Homebrew/in
 background-color: null;
 font-style: inherit;">)</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
+font-style: inherit;">"</span></span></code></pre></div></div>
 <p>Homebrew lets me install both GUIs (casks) and cli tools (formulae) and through simple commands. Here is how I install my favorite packages via Homebrew:</p>
 <section id="core-tools" class="level3">
 <h3 class="anchored" data-anchor-id="core-tools">Core tools</h3>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Password and secrets management</span></span>
 <span id="cb2-2"><span class="ex" style="color: null;
@@ -1610,11 +1610,11 @@ font-style: inherit;"># terminal multiplexer</span></span>
 background-color: null;
 font-style: inherit;">brew</span> install stow  <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># for dotfiles management</span></span></code></pre></div>
+font-style: inherit;"># for dotfiles management</span></span></code></pre></div></div>
 </section>
 <section id="command-line-utilities" class="level3">
 <h3 class="anchored" data-anchor-id="command-line-utilities">Command-line utilities</h3>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">brew</span> install tldr  <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1645,11 +1645,11 @@ font-style: inherit;"># GitHub CLI</span></span>
 background-color: null;
 font-style: inherit;">brew</span> install mas  <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># for Mac App Store apps</span></span></code></pre></div>
+font-style: inherit;"># for Mac App Store apps</span></span></code></pre></div></div>
 </section>
 <section id="dev-environments" class="level3">
 <h3 class="anchored" data-anchor-id="dev-environments">Dev environments</h3>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Programming languages</span></span>
 <span id="cb4-2"><span class="ex" style="color: null;
@@ -1712,9 +1712,9 @@ font-style: inherit;"># R &amp; Python IDEs by Posit</span></span>
 background-color: null;
 font-style: inherit;">brew</span> install neovim  <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># for btw</span></span></code></pre></div>
+font-style: inherit;"># for btw</span></span></code></pre></div></div>
 <p>I also install typefaces (mostly coding fonts). My <a href="https://github.com/eyayaw/dotfiles/blob/main/scripts/install/fonts.sh">fonts installer script</a> copies my purchased fonts to <code>~/Library/Fonts/</code>, including <a href="https://monolisa.dev">MonoLisa</a> and <a href="https://usgraphics.com/products/berkeley-mono">Berkeley Mono</a>. The free ones can be installed via Homebrew, such as <a href="https://github.com/JetBrains/JetBrainsMono">JetBrains Mono</a> and <a href="https://github.com/githubnext/monaspace">Monaspace</a>.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Fonts</span></span>
 <span id="cb5-2"><span class="ex" style="color: null;
@@ -1750,9 +1750,9 @@ font-style: inherit;">open-sans</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">,</span><span class="dt" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">roboto}</span></span></code></pre></div>
+font-style: inherit;">roboto}</span></span></code></pre></div></div>
 <p>I also install Mac App Store apps, mostly not free:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Mac App Store apps (using mas)</span></span>
 <span id="cb6-2"><span class="ex" style="color: null;
@@ -1769,7 +1769,7 @@ font-style: inherit;"># Final Cut Pro</span></span>
 background-color: null;
 font-style: inherit;">mas</span> install 1091189122  <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Bear Notes</span></span></code></pre></div>
+font-style: inherit;"># Bear Notes</span></span></code></pre></div></div>
 <p>As an academic, I use <a href="https://zotero.org">Zotero</a> for reference management (sometimes as read-later storage, and has an impressive PDF reader). For academic citations, I use <a href="https://retorque.re/zotero-better-bibtex">Better BibTex</a> to automatically generate citations keys in Zotero. I write a script to install this addon, instead of <a href="https://retorque.re/zotero-better-bibtex/installation/">manually installing</a> it.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -1817,7 +1817,7 @@ Tip
 └── ... other tools</code></pre>
 <p>Notice how the directory structure (for each package) mirrors where these files would normally live in my home directory.This is key to how Stow works.</p>
 <p>To apply these configs, I simply run:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># or run from anywhere by adding the `--dir` flag with the location of your dotfiles</span></span>
 <span id="cb8-2"><span class="co" style="color: #5E5E5E;
@@ -1834,7 +1834,7 @@ font-style: inherit;">--target</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">${HOME}</span> zsh ghostty karabiner git tmux zed R rstudio</span></code></pre></div>
+font-style: inherit;">${HOME}</span> zsh ghostty karabiner git tmux zed R rstudio</span></code></pre></div></div>
 <div id="screenshot-stow-in-action" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://eyayaw.github.io/posts/setting-up-a-new-mac/media/screenshot-dotfiles-symlinks-1.png" class="img-fluid figure-img"></p>
@@ -1843,7 +1843,7 @@ font-style: inherit;">${HOME}</span> zsh ghostty karabiner git tmux zed R rstudi
 </div>
 <p>As shown in the screenshot above, Stow creates symbolic links from the appropriate locations in my home directory to the files in my dotfiles repository. When I update a config file in my dotfiles, the change is automatically reflected in the corresponding config file and hence the package that uses the config, and vice versa.</p>
 <p>For example, here is a simplified version of my Zed config which is located at <code>~/Developer/dotfiles/zed/.config/zed/settings.json</code>:</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb9-2">  <span class="dt" style="color: #AD0000;
@@ -1967,14 +1967,14 @@ background-color: null;
 font-style: inherit;">"editor_width"</span></span>
 <span id="cb9-15"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
+font-style: inherit;">}</span></span></code></pre></div></div>
 <p>With Stow, this file lives in my dotfiles repository but appears to Zed as if it’s in the expected <code>~/.config/zed/</code> location.</p>
 </section>
 </section>
 <section id="component-3-customizing-macos-defaults" class="level2">
 <h2 class="anchored" data-anchor-id="component-3-customizing-macos-defaults">Component 3: Customizing macOS Defaults</h2>
 <p>macOS comes with many default settings that I immediately change on a new system. Rather than clicking through System Preferences, I use a <a href="https://github.com/eyayaw/dot/blob/main/scripts/macos/set_defaults.sh">script</a> that modifies these settings programmatically, which are mostly adapted from Mathias Bynens’ <a href="https://github.com/mathiasbynens/dotfiles/blob/master/.macos">dotfiles</a>.</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Use list view in Finder by default</span></span>
 <span id="cb10-2"><span class="ex" style="color: null;
@@ -2024,7 +2024,7 @@ font-style: inherit;"># Disable automatic capitalization, smart quotes, etc.</sp
 background-color: null;
 font-style: inherit;">defaults</span> write NSGlobalDomain NSAutomaticCapitalizationEnabled <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">-bool</span> false</span></code></pre></div>
+font-style: inherit;">-bool</span> false</span></code></pre></div></div>
 <p>These commands modify the property list files that store macOS preferences. After running my settings script, I restart the machine to ensure all changes take effect.</p>
 </section>
 <section id="putting-it-all-together" class="level2">
@@ -2092,7 +2092,7 @@ Appendix
 <section id="r" class="level3">
 <h3 class="anchored" data-anchor-id="r">R</h3>
 <p>My R setup is made up of R default options and environment variables, and linting rules for the <a href="https://github.com/r-lib/lintr/"><code>lintr</code></a> package.</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># .Rprofile</span></span>
 <span id="cb11-2"><span class="fu" style="color: #4758AB;
@@ -2152,16 +2152,16 @@ background-color: null;
 font-style: inherit;">datatable.optimize =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">TRUE</span></span>
-<span id="cb11-15">)</span></code></pre></div>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
+<span id="cb11-15">)</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># .Renviron</span></span>
 <span id="cb12-2"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">R_MAX_VSIZE</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span>48Gb</span></code></pre></div>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+font-style: inherit;">=</span>48Gb</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># .lintr</span></span>
 <span id="cb13-2"><span class="ex" style="color: null;
@@ -2195,7 +2195,7 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">encoding:</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"UTF-8"</span></span></code></pre></div>
+font-style: inherit;">"UTF-8"</span></span></code></pre></div></div>
 <p>Everything else can be found in the <a href="https://github.com/eyayaw/dotfiles">dotfiles repo</a>.</p>
 </section></details>
 
@@ -2233,7 +2233,7 @@ font-style: inherit;">"UTF-8"</span></span></code></pre></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">lib_path <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">lib_path <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2290,7 +2290,7 @@ font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Package"</span>, fields))</span></code></pre></div>
+font-style: inherit;">"Package"</span>, fields))</span></code></pre></div></div>
 </details>
 </div>
 <p>There are 14 base R packages, in R 4.5.1. Below is a complete list.</p>
@@ -2300,13 +2300,13 @@ font-style: inherit;">"Package"</span>, fields))</span></code></pre></div>
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Base R Packages
+<span class="screen-reader-only">Important</span>Base R Packages
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">sprintf</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -2327,7 +2327,7 @@ font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">\n</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div>
+font-style: inherit;">"</span>)</span></code></pre></div></div>
 </details>
 <ul>
 <li>base — The R Base Package</li>
@@ -2352,7 +2352,7 @@ font-style: inherit;">"</span>)</span></code></pre></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">default_pkgs <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">default_pkgs <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2367,18 +2367,18 @@ font-style: inherit;">strsplit</span>(default_pkgs, <span class="st" style="colo
 background-color: null;
 font-style: inherit;">" "</span>)[[<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>]]</span></code></pre></div>
+font-style: inherit;">1</span>]]</span></code></pre></div></div>
 </details>
 </div>
 <p>The default packages are attached when R starts up. As of R 4.5.1 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">in_plain_r</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"cat(search())"</span>)</span></code></pre></div>
+font-style: inherit;">"cat(search())"</span>)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] ".GlobalEnv package:stats package:graphics package:grDevices package:utils package:datasets package:methods Autoloads package:base"</code></pre>
@@ -2400,16 +2400,16 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>To modify the list of default packages, set the env variable <code>R_DEFAULT_PACKAGES</code> in your <code>.Renviron</code>, or set the <code>defaultPackages</code> option in <code>.Rprofile</code> (see <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Default-packages">R manuals</a>). If you set <code>R_DEFAULT_PACKAGES=NULL</code>, then only {base} is loaded.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># ~/.Renviron</span></span>
 <span id="cb6-2"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">R_DEFAULT_PACKAGES</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span>base,utils,stats,methods</span></code></pre></div>
+font-style: inherit;">=</span>base,utils,stats,methods</span></code></pre></div></div>
 <p>Or,</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># ~/.Rprofile</span></span>
 <span id="cb7-2"><span class="fu" style="color: #4758AB;
@@ -2426,12 +2426,12 @@ font-style: inherit;">"utils"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"stats"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"methods"</span>))</span></code></pre></div>
+font-style: inherit;">"methods"</span>))</span></code></pre></div></div>
 <p>As you can see below, only {base} is loaded when no default packages are provided.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">system</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -2439,7 +2439,7 @@ font-style: inherit;">'export R_DEFAULT_PACKAGES=NULL;R --vanilla --no-echo --qu
 background-color: null;
 font-style: inherit;">intern=</span><span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] ".GlobalEnv Autoloads package:base"</code></pre>
@@ -2450,7 +2450,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">other_base_pkgs <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">other_base_pkgs <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2460,7 +2460,7 @@ font-style: inherit;">$</span>Package, <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div>
+font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div></div>
 </details>
 </div>
 <p>The other base R packages are {compiler}, {grid}, {parallel}, {splines}, {stats4}, {tcltk}, and {tools}. These (or some) may not be familiar to you (myself included) if you’re not a package developer. I have used {tools} for example to check package dependencies (e.g., <code>tools::package_dependencies("data.table", recursive = TRUE)</code>), and work with file paths (see my <a href="https://x.com/eyayaw/status/1488568897334915081">tweet</a>). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?</p>

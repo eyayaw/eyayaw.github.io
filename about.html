@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="./{{< var profile-img >}}" rel="icon">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-65ef9bc6449578477aba7d52303f127d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-35155b22413c9ef7a79a96887d465071.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -173,7 +174,7 @@ Stehmann](https://www.airliners.net/photo/-/-/1618928/L?qsp=eJwtjEEKAjEMRe+StRsZ
 <p>I went to Bahir Dar University for my undergrad, for my master’s to <a href="https://kdischool.ac.kr/">KDI School</a> in South Korea, and to Budapest, Regensburg and Trento for a joint European master in comparative local development (<a href="https://www.unitn.it/ateneo/813/joint-european-master-of-local-development-code">Master CoDe</a>).</p>
 <p>For more than three years, I worked for Jimma University, <a href="https://ju.edu.et/college-of-business-and-conomics/">department of Economics</a>, where I taught undergrad economics courses.</p>
 <p>I did my Ph.D.&nbsp;in Urban Economics at <a href="https://www.rgs-econ.org/">RGS Econ</a>, based at the <a href="https://www.uni-due.de/en/index.php">University of Duisburg-Essen</a>.</p>
-<p>If you come to the <a href="https://en.wikipedia.org/wiki/Ruhr">Ruhrgebiet</a> (or generally NRW) or to <a href="https://en.wikipedia.org/wiki/Randstad">Randstad, the Netherlands</a>, drop me a message through one of the <a href="./index.html#quick-links">socials</a>. I would be happy to grab a coffee or a beer (Pils oder Blonde?).</p>
+<p>Drop me a message through one of the <a href="./index.html#quick-links">socials</a>. I would be happy to grab a coffee or a beer (Pils oder Blonde?), if you’re around town.</p>
 <p>I love data generation, through web scraping, api hacking, etc. If you want to collaborate on a project, feel free to reach out.</p>
 </div>
 
@@ -232,13 +233,14 @@ Stehmann](https://www.airliners.net/photo/-/-/1618928/L?qsp=eJwtjEEKAjEMRe+StRsZ
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
