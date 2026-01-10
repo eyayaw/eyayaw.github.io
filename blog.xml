@@ -1837,7 +1837,7 @@ background-color: null;
 font-style: inherit;">${HOME}</span> zsh ghostty karabiner git tmux zed R rstudio</span></code></pre></div></div>
 <div id="screenshot-stow-in-action" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://eyayaw.github.io/posts/setting-up-a-new-mac/media/screenshot-dotfiles-symlinks-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://eyayaw.github.io/posts/setting-up-a-new-mac/screenshot-dotfiles-symlinks-1.png" class="img-fluid figure-img"></p>
 <figcaption>Symlinked dotfiles<br><em>This screenshot shows Stow in action, where configs in my home directory (left side) are pointing to their actual location in my dotfiles directory (right side)</em>.</figcaption>
 </figure>
 </div>
