@@ -172,7 +172,7 @@ cd ~/Developer/dotfiles
 stow --target=${HOME} zsh ghostty karabiner git tmux zed R rstudio
 ```
 
-![Symlinked dotfiles<br>_This screenshot shows Stow in action, where configs in my home directory (left side) are pointing to their actual location in my dotfiles directory (right side)_.](media/screenshot-dotfiles-symlinks-1.png){#screenshot-stow-in-action}
+![Symlinked dotfiles<br>_This screenshot shows Stow in action, where configs in my home directory (left side) are pointing to their actual location in my dotfiles directory (right side)_.](screenshot-dotfiles-symlinks-1.png){#screenshot-stow-in-action}
 
 
 As shown in the screenshot above, Stow creates symbolic links from the appropriate locations in my home directory to the files in my dotfiles repository. When I update a config file in my dotfiles, the change is automatically reflected in the corresponding config file and hence the package that uses the config, and vice versa.
