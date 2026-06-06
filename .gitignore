@@ -1,4 +1,3 @@
-**/_*.qmd
 _freeze/
 *_files/
 google*.html
@@ -15,3 +14,6 @@ _site/
 /env/
 /.venv/
 /.condaenv/
+
+**/*.quarto_ipynb
+drafts/

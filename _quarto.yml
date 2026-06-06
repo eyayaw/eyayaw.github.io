@@ -6,6 +6,7 @@ project:
   render:
     - "*.qmd"
     - "posts/**/*.qmd"
+    - "!drafts/"
 website:
   title: Eyayaw Beze
   description: "Eyayaw Beze's personal website"
