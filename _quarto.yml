@@ -37,15 +37,15 @@ website:
         href: "{{< var github >}}"
   page-footer:
     left: >-
-      <span><i class="fa-solid fa-copyright"></i> {{< var year >}} Eyayaw Beze | እያያው ተካ</span>
+      <span>© {{< var year >}} Eyayaw Beze | እያያው ተካ</span>
     center: >-
-      [<i class="fa-brands fa-github"></i>]({{< var github >}})
-      [<i class="fa-brands fa-linkedin"></i>]({{< var linkedin >}})
-      [<i class="fa-brands fa-twitter"></i>]({{< var twitter >}})
-      [<i class="fa-brands fa-mastodon"></i>]({{< var mastodon >}})
-      [<i class="fa-brands fa-bluesky"></i>]({{< var bluesky >}})
+      [<i class="bi bi-github" aria-hidden="true"></i>]({{< var github >}}){aria-label="GitHub"}
+      [<i class="bi bi-linkedin" aria-hidden="true"></i>]({{< var linkedin >}}){aria-label="LinkedIn"}
+      [<i class="bi bi-twitter" aria-hidden="true"></i>]({{< var twitter >}}){aria-label="Twitter"}
+      [<i class="bi bi-mastodon" aria-hidden="true"></i>]({{< var mastodon >}}){aria-label="Mastodon"}
+      [<i class="bi bi-bluesky" aria-hidden="true"></i>]({{< var bluesky >}}){aria-label="Bluesky"}
     right: >-
-      <span>Made with ❤️ + <a href="https://r-project.org"><i class="fa-brands fa-r-project"></i></a> + <a href="https://quarto.org"><img src="https://quarto.org/favicon.png" width="16" height="16"/> Quarto</a></span>
+      <span>Made with ❤️ + <a href="https://r-project.org" aria-label="R project"><img src="/img/icons/r.svg" alt="R" class="inline-icon"/></a> + <a href="https://quarto.org"><img src="/img/icons/quarto.png" alt="" width="16" height="16"/> Quarto</a></span>
 
 format:
   html:
@@ -59,7 +59,5 @@ format:
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
           <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-          <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 
 editor: source
