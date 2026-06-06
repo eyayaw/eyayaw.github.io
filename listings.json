@@ -1,12 +1,7 @@
 [
   {
     "listing": "/til.html",
-    "items": [
-      "/til/flatten-nested-lists/index.html",
-      "/til/group-by-aggregation/index.html",
-      "/til/python-walrus-operator/index.html",
-      "/til/r-list2env/index.html"
-    ]
+    "items": []
   },
   {
     "listing": "/blog.html",

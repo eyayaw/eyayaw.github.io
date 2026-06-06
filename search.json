@@ -1,52 +1,10 @@
 [
   {
-    "objectID": "til/r-list2env/index.html",
-    "href": "til/r-list2env/index.html",
-    "title": "TIL: Unpack a Named List into Variables with list2env()",
-    "section": "",
-    "text": "list2env() unpacks a named list into individual variables in a given environment — similar to Python’s dictionary unpacking."
-  },
-  {
-    "objectID": "til/r-list2env/index.html#basic-usage",
-    "href": "til/r-list2env/index.html#basic-usage",
-    "title": "TIL: Unpack a Named List into Variables with list2env()",
-    "section": "Basic usage",
-    "text": "Basic usage\n\n\n\nR\n\n\nparams &lt;- list(mu = 0, sigma = 1, n = 100)\n\n# unpack into the current environment\nlist2env(params, envir = environment())\n\nmu\n# [1] 0\nsigma\n# [1] 1\nn\n# [1] 100"
-  },
-  {
-    "objectID": "til/r-list2env/index.html#practical-example-simulation-parameters",
-    "href": "til/r-list2env/index.html#practical-example-simulation-parameters",
-    "title": "TIL: Unpack a Named List into Variables with list2env()",
-    "section": "Practical example: simulation parameters",
-    "text": "Practical example: simulation parameters\n\n\n\nR\n\n\nconfig &lt;- list(\n  seed = 42,\n  n_sim = 1000,\n  alpha = 0.05,\n  method = \"bootstrap\"\n)\n\n# instead of config$seed, config$n_sim, etc.\nlist2env(config, envir = environment())\n\nset.seed(seed)\nreplicate(n_sim, mean(rnorm(30)))\n\n\n\n\nUse sparingly — it populates your environment with potentially many variables. For controlled scoping, pass envir = new.env() and work within that environment."
-  },
-  {
-    "objectID": "til/group-by-aggregation/index.html",
-    "href": "til/group-by-aggregation/index.html",
-    "title": "TIL: Group-by Aggregation",
-    "section": "",
-    "text": "The bread-and-butter of data work: split data by groups, compute a summary per group, combine. Here’s how it looks in Python, R, and SQL (DuckDB) — side by side."
-  },
-  {
-    "objectID": "til/group-by-aggregation/index.html#side-by-side-mean-price-by-category",
-    "href": "til/group-by-aggregation/index.html#side-by-side-mean-price-by-category",
-    "title": "TIL: Group-by Aggregation",
-    "section": "Side-by-side: mean price by category",
-    "text": "Side-by-side: mean price by category\n\n\n\nPython\n\n\nimport pandas as pd\n\ndf = pd.DataFrame({\n    \"category\": [\"A\",\"A\",\"B\",\"B\",\"C\"],\n    \"price\": [10, 15, 20, 25, 30],\n})\n\n(df\n  .groupby(\"category\")[\"price\"]\n  .mean()\n  .reset_index()\n)\n\n\n\n\nR\n\n\ndf &lt;- data.frame(\n  category = c(\"A\",\"A\",\"B\",\"B\",\"C\"),\n  price = c(10, 15, 20, 25, 30)\n)\n\naggregate(price ~ category, df, mean)\n\n# or with dplyr\ndplyr::summarise(\n  dplyr::group_by(df, category),\n  price = mean(price)\n)\n\n\n\n\nSQL / DuckDB\n\n\nSELECT\n  category,\n  AVG(price) AS price\nFROM df\nGROUP BY category;\n\n\n\n\nDuckDB can query R and Python data frames directly via its native integrations — no need to export to a file first."
-  },
-  {
-    "objectID": "til/group-by-aggregation/index.html#multiple-aggregations",
-    "href": "til/group-by-aggregation/index.html#multiple-aggregations",
-    "title": "TIL: Group-by Aggregation",
-    "section": "Multiple aggregations",
-    "text": "Multiple aggregations\n\n\nPythonRSQL\n\n\n(df\n  .groupby(\"category\")[\"price\"]\n  .agg([\"mean\", \"min\", \"max\", \"count\"])\n  .reset_index()\n)\n\n\n# base R\naggregate(\n  price ~ category, df,\n  \\(x) c(mean = mean(x), min = min(x),\n         max = max(x), count = length(x))\n)\n\n# dplyr\ndf |&gt;\n  dplyr::summarise(\n    mean  = mean(price),\n    min   = min(price),\n    max   = max(price),\n    count = dplyr::n(),\n    .by   = category\n  )\n\n\nSELECT\n  category,\n  AVG(price) AS mean,\n  MIN(price) AS min,\n  MAX(price) AS max,\n  COUNT(*)   AS count\nFROM df\nGROUP BY category;"
-  },
-  {
     "objectID": "til.html",
     "href": "til.html",
     "title": "Today I Learned",
     "section": "",
-    "text": "TIL: Flatten a Nested List\n\n\n\npython\n\nr\n\ndata-wrangling\n\n\n\n\n\n\n\n\n\nMar 1, 2026\n\n\nEyayaw Beze\n\n\n\n\n\n\n\n\n\n\n\n\nTIL: Group-by Aggregation\n\n\n\npython\n\nr\n\nsql\n\ndata-wrangling\n\n\n\n\n\n\n\n\n\nMar 1, 2026\n\n\nEyayaw Beze\n\n\n\n\n\n\n\n\n\n\n\n\nTIL: The Walrus Operator in Python\n\n\n\npython\n\n\n\n\n\n\n\n\n\nMar 1, 2026\n\n\nEyayaw Beze\n\n\n\n\n\n\n\n\n\n\n\n\nTIL: Unpack a Named List into Variables with list2env()\n\n\n\nr\n\n\n\n\n\n\n\n\n\nMar 1, 2026\n\n\nEyayaw Beze\n\n\n\n\n\nNo matching items"
+    "text": "No matching items"
   },
   {
     "objectID": "posts/welcome-to-my-blog/index.html",
@@ -278,47 +236,5 @@
     "title": "Eyayaw Beze",
     "section": "",
     "text": "Abstract\n\nThis study presents new empirical evidence for the monocentric city model in a developing country, using unique real estate data for Addis Ababa. The study confirms two of the key predictions of the model: the negative rent and the negative structural density gradients. Both house prices and rents decrease as we move away from the center of Addis Ababa. Using building footprint datasets, the study also demonstrates that the structural density (measured by building height) strongly decreases with distance to the Central Business District (CBD). This study provides a comprehensive georeferenced real estate dataset for Addis Ababa, the first study to do so. The findings highlight the enduring relevance of the monocentric city model in cities in developed and developing countries.\n\n\n\n\n\n\nAbstract\n\nThe COVID-19 pandemic has disrupted established urban patterns. The literature on the impact of the pandemic on real estate markets in the US has shown a significant increase in the demand for suburban housing, resulting in a considerable increase in suburban prices compared to those in the city center (termed the “donut effect”). However, the German housing market did not experience such drastic changes. To examine price and rent adjustments during the pandemic, we analyze detailed housing data and find little evidence supporting the donut effect seen in the US. Apartment rents increase in suburban areas, while house prices do not change significantly. Examining the role of amenities, we find no explanation for price and rent differences between the central business district (CBD) and suburbs. The differences between the two markets may be attributed to cultural and structural distinctions. Our analysis, which includes data on population patterns and migration behavior, reveals that residents in Germany exhibit a slower-moving trend. Our findings remain robust across different settings and subsets of cities. — Coauthored with Patrick Thiel\n\n\n\n\n\n\nAbstract\n\nThe study estimates the housing supply elasticity and the impact of geographic constraints in Germany from 2008-2019 using the Bartik instrument. The results show that the housing supply is, on average, inelastic, with a floorspace elasticity of 0.22 and a units elasticity of 0.25. The study also reveals that geographical constraints partially affect the housing supply elasticity across districts. Notably, high development intensity decreases the elasticity, while the unavailability of land for development due to restrictive geography has no significant impact on the housing supply elasticity. The housing supply elasticity estimates may prove useful for calibrating quantitative urban models in Germany.\n\n\n\n\n\n\nAbstract\n\nEthiopia is found in the “Eastern Africa migration system” known for turbulent population mobility due to a host of social, economic, and political factors. The migration problem of East Africa, in which, a substantial exploration of the complexity and intensity of the migration pattern of Ethiopia has become necessary in the context of social transformation and development processes. To this end, this study is designed to provide migratory change and developmental patterns of international migration of Ethiopia in regional and sub-regional perspectives based on long-term macro statistics. The data obtained from the Reports of the United Nations Department for Economic and Social Affairs and World Bank’s Development Indicators have been used to describe, analyze and explain long-term patterns of international migration of Ethiopia within the regional contexts. Results show the trend that Ethiopia experienced a continuous increase in its international migrant stock in the last five decades, from less than 400,000 in 1960 to over 1 million in 2015. Refugees and transit migrants constituted the largest number of immigrants, mostly from the neighboring countries, driven by continuous conflicts and political instability. Ethiopia, once dominant in refugee flows in the Horn of Africa due to political conflict, famine, and persecution, experienced a sharp decline in the share of refugees in the Horn of Africa in the last three decades. Economic motives have recently become the prime factors in migration decisions among the Ethiopians as observed with the fact that the USA and the Middle East are the major destinations. The findings revealed that Ethiopian emigration is characterized by the inter-continental flows unlike the Sub-Saharan migration pattern known to have an intra-continental migratory link. Feminization of Ethiopian migration is also evident particularly in core destination countries of the Global North, which indicates the increasing role of females in migration decisions but also disproves the widely held perception about Ethiopians emigration to the Arab World as female-specific. In the final analysis, Ethiopia could be regarded rather as a destination, with over 1.2 million migrants, than as an origin, with just over 800,000 as of 2017, which now make the country a regional migration hub in the Horn of Africa. — Coauthored with Fikadu Ayanie, Tihitina Fanta, and Dagnachew Melese"
-  },
-  {
-    "objectID": "til/flatten-nested-lists/index.html",
-    "href": "til/flatten-nested-lists/index.html",
-    "title": "TIL: Flatten a Nested List",
-    "section": "",
-    "text": "How to flatten a nested (ragged) list into a simple vector/list in Python and R."
-  },
-  {
-    "objectID": "til/flatten-nested-lists/index.html#side-by-side",
-    "href": "til/flatten-nested-lists/index.html#side-by-side",
-    "title": "TIL: Flatten a Nested List",
-    "section": "Side-by-side",
-    "text": "Side-by-side\n\n\n\nPython\n\n\nnested = [[1, 2], [3], [4, 5, 6]]\n\n# list comprehension\nflat = [x for sub in nested for x in sub]\n# [1, 2, 3, 4, 5, 6]\n\n# itertools (lazy)\nfrom itertools import chain\nflat = list(chain.from_iterable(nested))\n\n\n\n\nR\n\n\nnested &lt;- list(c(1, 2), 3, c(4, 5, 6))\n\n# base R\nflat &lt;- unlist(nested)\n# [1] 1 2 3 4 5 6\n\n# purrr (typed output)\nflat &lt;- purrr::list_c(nested)\n\n\n\n\nunlist() recursively flattens by default. Use recursive = FALSE for one level only. In Python, chain.from_iterable is also single-level — for deep nesting, write a recursive function."
-  },
-  {
-    "objectID": "til/flatten-nested-lists/index.html#recursive-deep-flattening",
-    "href": "til/flatten-nested-lists/index.html#recursive-deep-flattening",
-    "title": "TIL: Flatten a Nested List",
-    "section": "Recursive deep flattening",
-    "text": "Recursive deep flattening\nFor arbitrarily nested structures:\n\n\nPythonR\n\n\ndef flatten(lst):\n    for item in lst:\n        if isinstance(item, list):\n            yield from flatten(item)\n        else:\n            yield item\n\ndeep = [[1, [2, 3]], [4, [5, [6]]]]\nlist(flatten(deep))\n# [1, 2, 3, 4, 5, 6]\n\n\nflatten_deep &lt;- function(x) {\n  if (!is.list(x)) return(x)\n  unlist(lapply(x, flatten_deep))\n}\n\ndeep &lt;- list(list(1, list(2, 3)), list(4, list(5, list(6))))\nflatten_deep(deep)\n# [1] 1 2 3 4 5 6"
-  },
-  {
-    "objectID": "til/python-walrus-operator/index.html",
-    "href": "til/python-walrus-operator/index.html",
-    "title": "TIL: The Walrus Operator in Python",
-    "section": "",
-    "text": "The walrus operator (:=) lets you assign a value inside an expression — avoiding repeated computation or extra lines."
-  },
-  {
-    "objectID": "til/python-walrus-operator/index.html#basic-usage",
-    "href": "til/python-walrus-operator/index.html#basic-usage",
-    "title": "TIL: The Walrus Operator in Python",
-    "section": "Basic usage",
-    "text": "Basic usage\n\n\n\nPython\n\n\n# without walrus — calls len() twice or needs a temp variable\ndata = [1, 2, 3, 4, 5]\nif len(data) &gt; 3:\n    print(f\"Too many items: {len(data)}\")\n\n# with walrus — assign and test in one shot\nif (n := len(data)) &gt; 3:\n    print(f\"Too many items: {n}\")"
-  },
-  {
-    "objectID": "til/python-walrus-operator/index.html#useful-in-while-loops-and-comprehensions",
-    "href": "til/python-walrus-operator/index.html#useful-in-while-loops-and-comprehensions",
-    "title": "TIL: The Walrus Operator in Python",
-    "section": "Useful in while loops and comprehensions",
-    "text": "Useful in while loops and comprehensions\n\n\n\nPython\n\n\n# read lines until empty\nimport sys\nwhile (line := sys.stdin.readline().strip()):\n    print(f\"Got: {line}\")\n\n# filter and transform in one pass\nraw = [\"  hello \", \"\", \" world \", \"  \"]\ncleaned = [s for item in raw if (s := item.strip())]\n# ['hello', 'world']\n\n\n\n\nRequires Python 3.8+. PEP 572 introduced this as “assignment expressions”."
   }
 ]
