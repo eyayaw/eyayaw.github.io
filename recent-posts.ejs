@@ -6,7 +6,7 @@
 <ul class="list">
     <% for (const item of items) { %>
       <li <%= metadataAttrs(item) %>>
-        <%= fmtDate(item.date) %> - <a href="<%- item.path %>" class="listing-title"><%= item.title %></a>
+        <span class="post-date"><%= fmtDate(item.date) %></span> - <a href="<%- item.path %>" class="listing-title"><%= item.title %></a>
       </li>
     <% } %>
 </ul>
