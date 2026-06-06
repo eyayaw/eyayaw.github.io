@@ -4,7 +4,7 @@ subtitle: "Automation with Homebrew, dotfiles, and macOS defaults"
 date: 2025-04-25
 categories: [config, cli, macos, programming]
 number-sections: false
-image: welcome-to-mac.png
+image: welcome-to-mac.jpg
 ---
 
 I finally treated myself to a new Mac Mini for completing my PhD. In the past, setting up a new machine meant hours of manual downloading, clicking through installers, and tediously configuring apps and tweaking default OS settings. However, over time I learned setup automation, so now I can get everything up and running quickly with minimal manual effort.
@@ -14,9 +14,9 @@ What have I learned? Writing a set of shell scripts that handle everything from 
 
 ::: {layout-ncol="2"}
 
-![The new Mac Mini](mac-mini-closeup2.png)
+![The new Mac Mini](mac-mini-closeup2.jpg)
 
-![Initial setup process completed, ready to hit `./bootstrap.sh`](welcome-to-mac.png)
+![Initial setup process completed, ready to hit `./bootstrap.sh`](welcome-to-mac.jpg)
 :::
 
 
