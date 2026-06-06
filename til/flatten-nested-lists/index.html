@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Apps and tools I lovingly use!">
+<meta name="author" content="Eyayaw Beze">
+<meta name="dcterms.date" content="2026-03-01">
 
-<title>My Setup – Eyayaw Beze</title>
+<title>TIL: Flatten a Nested List – Eyayaw Beze</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,27 +25,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href=".//img/favicon.jpg" rel="icon" type="image/jpeg">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-26d9cc88ab9604001aabd73cb1ea1d8f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../..//img/favicon.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-346337e101949f30c9d2a2307ffdd10b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,16 +117,18 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </script>
+<style>html{ scroll-behavior: smooth; }</style>
 <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="My Setup – Eyayaw Beze">
-<meta property="og:description" content="Apps and tools I lovingly use!">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../til-styles.css">
+<meta property="og:title" content="TIL: Flatten a Nested List – Eyayaw Beze">
+<meta property="og:description" content="Eyayaw Beze’s personal website">
 <meta property="og:site_name" content="Eyayaw Beze">
 <meta name="twitter:title" content="Eyayaw">
-<meta name="twitter:description" content="Apps and tools I lovingly use!">
+<meta name="twitter:description" content="Eyayaw Beze’s personal website">
 <meta name="twitter:creator" content="@eyayaw">
 <meta name="twitter:site" content="@eyayaw">
 <meta name="twitter:card" content="summary_large_image">
@@ -103,7 +141,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">eyayaw</span>
     </a>
   </div>
@@ -114,25 +152,25 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./research.html"> 
+    <a class="nav-link" href="../../research.html"> 
 <span class="menu-text">research</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./til.html"> 
+    <a class="nav-link" href="../../til.html"> 
 <span class="menu-text">til</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./my-setup.html" aria-current="page"> 
+    <a class="nav-link" href="../../my-setup.html"> 
 <span class="menu-text">my setup</span></a>
   </li>  
   <li class="nav-item compact">
@@ -153,43 +191,44 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#fonts-and-themes" id="toc-fonts-and-themes" class="nav-link active" data-scroll-target="#fonts-and-themes">Fonts and Themes</a></li>
-  <li><a href="#must-haves" id="toc-must-haves" class="nav-link" data-scroll-target="#must-haves">Must-haves</a></li>
-  <li><a href="#productivityutilities" id="toc-productivityutilities" class="nav-link" data-scroll-target="#productivityutilities">Productivity/Utilities</a></li>
-  <li><a href="#development-cli" id="toc-development-cli" class="nav-link" data-scroll-target="#development-cli">Development &amp; CLI</a>
-  <ul class="collapse">
-  <li><a href="#shell-cli-tools" id="toc-shell-cli-tools" class="nav-link" data-scroll-target="#shell-cli-tools">Shell &amp; CLI Tools</a></li>
-  <li><a href="#editors-ides" id="toc-editors-ides" class="nav-link" data-scroll-target="#editors-ides">Editors &amp; IDEs</a></li>
-  <li><a href="#programming-languages-data-tools" id="toc-programming-languages-data-tools" class="nav-link" data-scroll-target="#programming-languages-data-tools">Programming Languages &amp; Data Tools</a></li>
-  <li><a href="#web-api-hacking" id="toc-web-api-hacking" class="nav-link" data-scroll-target="#web-api-hacking">Web &amp; API Hacking</a></li>
-  <li><a href="#documentation-literate-programming" id="toc-documentation-literate-programming" class="nav-link" data-scroll-target="#documentation-literate-programming">Documentation &amp; Literate Programming</a></li>
-  </ul></li>
-  <li><a href="#security-cloud" id="toc-security-cloud" class="nav-link" data-scroll-target="#security-cloud">Security &amp; Cloud</a></li>
-  <li><a href="#ai-tools" id="toc-ai-tools" class="nav-link" data-scroll-target="#ai-tools">AI Tools</a></li>
+  <li><a href="#side-by-side" id="toc-side-by-side" class="nav-link active" data-scroll-target="#side-by-side">Side-by-side</a></li>
+  <li><a href="#recursive-deep-flattening" id="toc-recursive-deep-flattening" class="nav-link" data-scroll-target="#recursive-deep-flattening">Recursive deep flattening</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/my-setup.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/my-setup.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/flatten-nested-lists/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/flatten-nested-lists/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">My Setup</h1>
-</div>
-
-<div>
-  <div class="description">
-    <em>Apps and tools I lovingly use!</em>
+<h1 class="title">TIL: Flatten a Nested List</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">r</div>
+    <div class="quarto-category">data-wrangling</div>
   </div>
-</div>
+  </div>
+
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://github.com/eyayaw">Eyayaw Beze</a> </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 1, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -199,219 +238,78 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </header>
 
 
-<p>This page documents my dev/academic setup. For the apps and tools I currently use, I also provide alternatives that I’ve used previously or am familiar with.</p>
-<section id="fonts-and-themes" class="level2">
-<h2 class="anchored" data-anchor-id="fonts-and-themes">Fonts and Themes</h2>
-<ul>
-<li><a href="https://monolisa.dev">MonoLisa</a>, <a href="https://usgraphics.com/products/berkeley-mono">Berkeley Mono</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/JetBrains/JetBrainsMono">JetBrains Mono</a>, <a href="https://github.com/githubnext/monaspace">Monaspace</a></li>
-</ul></li>
-<li>Themes:
-<ul>
-<li><a href="https://github.com/chriskempson/tomorrow-theme">Tomorrow</a></li>
-<li><a href="https://ethanschoonover.com/solarized/">Solarized</a></li>
-<li><a href="https://rosepinetheme.com/themes/">Rose Pine</a></li>
-<li><a href="https://github.com/morhetz/gruvbox">gruvbox</a></li>
-</ul></li>
-</ul>
+<p>How to flatten a nested (ragged) list into a simple vector/list in Python and R.</p>
+<section id="side-by-side" class="level2">
+<h2 class="anchored" data-anchor-id="side-by-side">Side-by-side</h2>
+<div class="code-compare">
+<div class="code-panel python">
+<div class="lang-header">
+<p>Python</p>
+</div>
+<div class="panel-code">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nested <span class="op">=</span> [[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># list comprehension</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>flat <span class="op">=</span> [x <span class="cf">for</span> sub <span class="kw">in</span> nested <span class="cf">for</span> x <span class="kw">in</span> sub]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [1, 2, 3, 4, 5, 6]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># itertools (lazy)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> chain</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>flat <span class="op">=</span> <span class="bu">list</span>(chain.from_iterable(nested))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="code-panel r">
+<div class="lang-header">
+<p>R</p>
+</div>
+<div class="panel-code">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nested <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">3</span>, <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># base R</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>flat <span class="ot">&lt;-</span> <span class="fu">unlist</span>(nested)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 1 2 3 4 5 6</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># purrr (typed output)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>flat <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">list_c</span>(nested)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="code-note">
+<p><code>unlist()</code> recursively flattens by default. Use <code>recursive = FALSE</code> for one level only. In Python, <code>chain.from_iterable</code> is also single-level — for deep nesting, write a recursive function.</p>
+</div>
 </section>
-<section id="must-haves" class="level2">
-<h2 class="anchored" data-anchor-id="must-haves">Must-haves</h2>
-<ul>
-<li><strong>Password Manager:</strong> <a href="https://1password.com/">1Password</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://bitwarden.com/">Bitwarden</a>, <a href="https://proton.me/pass">Proton Pass</a>, <a href="https://www.dashlane.com/">Dashlane</a></li>
-</ul></li>
-<li><strong>Launcher:</strong> <a href="https://www.raycast.com/">Raycast</a> $, <a href="https://www.alfredapp.com/">Alfred</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/mikker/LeaderKey.app">LeaderKey</a></li>
-</ul></li>
-<li><strong>Browser:</strong> <a href="https://arc.net/">Arc</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/zen-browser/desktop">Zen Browser</a></li>
-</ul></li>
-<li><strong>Keyboard Customization:</strong> <a href="https://karabiner-elements.pqrs.org/">Karabiner-Elements</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/jtroo/kanata">Kanata</a></li>
-</ul></li>
-<li><strong>Clipboard History</strong>: <a href="https://tapbots.com/pastebot/">Pastebot</a> $
-<ul>
-<li><em>Alternatives</em>: Raycast/Alfred clipboard history features</li>
-</ul></li>
-<li><strong>Window Management</strong>: <a href="https://magnet.crowdcafe.com">Magnet</a>, <a href="https://www.raycast.com/core-features/window-management">Raycast Windom Management</a></li>
-<li><strong>System Cleaning:</strong> <a href="https://macpaw.com/cleanmymac">CleanMyMac</a> $</li>
-<li><strong>Screenshots/Recording:</strong> <a href="https://cleanshot.com/">CleanShot</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://shottr.cc/">Shottr</a></li>
-</ul></li>
-<li><strong>Reference Management:</strong> <a href="https://www.zotero.org/">Zotero</a> + <a href="https://github.com/retorquere/zotero-better-bibtex">Better BibTex</a>
-<ul>
-<li><em>Alternatives</em>: Mendeley, EndNote</li>
-</ul></li>
-<li><strong>RSS Feed Reader</strong>: <a href="https://www.inoreader.com">Inoreader</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://feedly.com/">Feedly</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="productivityutilities" class="level2">
-<h2 class="anchored" data-anchor-id="productivityutilities">Productivity/Utilities</h2>
-<ul>
-<li><strong>System Monitoring:</strong> <a href="https://bjango.com/mac/istatmenus/">iStat Menus</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://bjango.com/mac/stats/">Stats</a></li>
-</ul></li>
-<li><strong>Menu Bar Organization:</strong> <a href="https://bjango.com/mac/bartender/">Bartender</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/jordanbaird/Ice">Ice</a>, <a href="https://github.com/Hidden">Hidden</a>, <a href="https://github.com/Mortennn/Dozer">Dozer</a></li>
-</ul></li>
-<li><strong>App Switcher:</strong> <a href="https://github.com/lwouis/alt-tab-macos">AltTab</a>
-<ul>
-<li><em>Alternatives</em>: Use CMD+Tab</li>
-</ul></li>
-<li><strong>Note Taking:</strong> <a href="https://bear.app">Bear Notes</a> $
-<ul>
-<li><em>Alternatives</em>: Obsidian, Notion, Apple Notes, <a href="https://github.com/laurent22/joplin">Joplin</a></li>
-</ul></li>
-<li><strong>PDF Handling:</strong> <a href="https://pdfexpert.com/">PDF Expert</a> $, Preview</li>
-<li><strong>Bookmark Management:</strong> <a href="https://raindrop.io/">Raindrop.io</a>
-<ul>
-<li><em>Alternatives</em>: Pocket, Instapaper</li>
-</ul></li>
-<li><strong>Media Downloader</strong>: <a href="https://software.charliemonroe.net/downie/">Downie</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="development-cli" class="level2">
-<h2 class="anchored" data-anchor-id="development-cli">Development &amp; CLI</h2>
-<section id="shell-cli-tools" class="level3">
-<h3 class="anchored" data-anchor-id="shell-cli-tools">Shell &amp; CLI Tools</h3>
-<ul>
-<li><strong>Terminal Emulator:</strong> <a href="https://github.com/ghostty-org/ghostty">Ghostty</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/gnachman/iTerm2">iTerm2</a>, <a href="https://github.com/kovidgoyal/kitty">Kitty</a>, <a href="https://github.com/alacritty/alacritty">Alacritty</a></li>
-</ul></li>
-<li><strong>Shell Prompt:</strong> <a href="https://starship.rs/">Starship</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/romkatv/powerlevel10k">Powerlevel10k</a>, <a href="https://ohmyz.sh/">Oh My Zsh prompts</a></li>
-</ul></li>
-<li><strong>Terminal Multiplexer:</strong> <a href="https://github.com/tmux/tmux">tmux</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://www.gnu.org/software/screen/">Screen</a>, <a href="https://zellij.dev/">Zellij</a></li>
-</ul></li>
-<li><strong>Dotfile Manager:</strong> <a href="https://www.gnu.org/software/stow/">GNU Stow</a></li>
-<li><strong>CLI Utilities:</strong>
-<ul>
-<li><a href="https://cli.github.com/">gh</a>: GitHub CLI</li>
-<li><a href="https://github.com/git-lfs/git-lfs">git-lfs</a>: Git Large File System</li>
-<li><a href="https://github.com/sharkdp/bat">bat</a>: <code>cat</code> with syntax highlighting</li>
-<li><a href="https://github.com/junegunn/fzf">fzf</a>: Fuzzy finder
-<ul>
-<li><em>Alternatives</em> (for shell history): <a href="https://github.com/carljm/mcfly">mcfly</a>, <a href="https://github.com/atuinsh/atuin">atuin</a>, <a href="https://github.com/skim-rs/skim">skim</a></li>
-</ul></li>
-<li><a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>: Fast <code>grep</code> alternative</li>
-<li><a href="https://github.com/sharkdp/fd">fd</a>: <code>find</code> alternative</li>
-<li><a href="https://jqlang.org/">jq</a>: JSON processor</li>
-<li><a href="https://github.com/charmbracelet/glow">glow</a>: Terminal Markdown viewer</li>
-<li><a href="https://github.com/nektos/act">act</a>: Run github actions locally</li>
-</ul></li>
-</ul>
-</section>
-<section id="editors-ides" class="level3">
-<h3 class="anchored" data-anchor-id="editors-ides">Editors &amp; IDEs</h3>
-<ul>
-<li><a href="https://zed.dev">Zed</a> (+ Preview)
-<ul>
-<li><em>Alternatives</em>: <a href="https://helix-editor.com">Helix</a>, <a href="https://sublimetext.com">Sublime Text</a></li>
-</ul></li>
-<li><a href="https://code.visualstudio.com/">Visual Studio Code</a> (+ Insiders)</li>
-<li><a href="https://neovim.io/">Neovim</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://www.vim.org/">Vim</a></li>
-</ul></li>
-<li><a href="https://posit.co/rstudio/">RStudio</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://posit.co/positron">Positron</a>, <a href="https://github.com/randy3k/radian">Radian</a>, VS Code</li>
-</ul></li>
-</ul>
-</section>
-<section id="programming-languages-data-tools" class="level3">
-<h3 class="anchored" data-anchor-id="programming-languages-data-tools">Programming Languages &amp; Data Tools</h3>
-<ul>
-<li><a href="https://python.org">Python</a>
-<ul>
-<li>Package/Env Management: <a href="https://github.com/astral-sh/uv">uv</a> (<em>Alternatives</em>: pip, conda)</li>
-<li>Linter/Formatter: <a href="https://github.com/astral-sh/ruff">ruff</a></li>
-</ul></li>
-<li><a href="https://www.r-project.org/">R</a>
-<ul>
-<li>Formatter: <a href="https://github.com/posit-dev/air">air</a> (<em>Alternatives</em>: styler, formatR)</li>
-</ul></li>
-<li>SQL &amp; Big Data: <a href="https://duckdb.org">DuckDB</a>, <a href="https://www.postgresql.org">PostgreSQL</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://sqlite.org">SQLite</a>, <a href="https://mysql.com">MySQL</a>, <a href="https://clickhouse.com">ClickHouse</a>, <a href="https://pola.rs">Polars</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="web-api-hacking" class="level3">
-<h3 class="anchored" data-anchor-id="web-api-hacking">Web &amp; API Hacking</h3>
-<ul>
-<li><a href="https://github.com/usebruno/bruno">Bruno</a>: API client
-<ul>
-<li><em>Alternatives</em>: Insomnia, Postman</li>
-</ul></li>
-<li><a href="https://github.com/mitmproxy/mitmproxy">Mitmproxy</a>: HTTP inspection
-<ul>
-<li><em>Alternatives</em>: <a href="https://portswigger.net/burp">Burp Suite</a></li>
-</ul></li>
-<li><a href="https://developer.android.com/studio/run/emulator">Android Emulator</a></li>
-</ul>
-</section>
-<section id="documentation-literate-programming" class="level3">
-<h3 class="anchored" data-anchor-id="documentation-literate-programming">Documentation &amp; Literate Programming</h3>
-<ul>
-<li><a href="https://quarto.org">Quarto</a>
-<ul>
-<li><em>Alternatives</em>: R Markdown, <a href="https://github.com/yihui/litedown">Litedown</a>, Jupyter Notebooks</li>
-</ul></li>
-<li><a href="https://pandoc.org">Pandoc</a>: Document converter</li>
-<li><a href="https://github.com/typst/typst">Typst</a>: LaTeX alternative</li>
-</ul>
-</section>
-</section>
-<section id="security-cloud" class="level2">
-<h2 class="anchored" data-anchor-id="security-cloud">Security &amp; Cloud</h2>
-<ul>
-<li><strong>Ad Blocking:</strong> <a href="https://adguard.com/">AdGuard</a> $, <a href="https://github.com/gorhill/uBlock">uBlock Origin</a></li>
-<li><strong>Firewall/Network monitoring:</strong> <a href="https://www.obdev.at/products/littlesnitch/index.html">Little Snitch</a> $</li>
-<li><strong>VPN:</strong> <a href="https://www.hotspotshield.com/">Hotspot Shield</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://mullvad.net/en">Mullvad VPN</a>, ProtonVPN, AdGuard VPN, Tailscale</li>
-</ul></li>
-<li><strong>Cloud Storage:</strong> <a href="https://icloud.com">iCloud Drive</a> $
-<ul>
-<li><em>Alternatives</em>: Google Drive, Dropbox, pCloud</li>
-</ul></li>
-<li><strong>File Encryption:</strong> <a href="https://cryptomator.org/">Cryptomator</a></li>
-</ul>
-</section>
-<section id="ai-tools" class="level2">
-<h2 class="anchored" data-anchor-id="ai-tools">AI Tools</h2>
-<ul>
-<li><strong>Chat/Assistants:</strong> <a href="https://claude.ai">Claude</a>, <a href="https://openai.com/">ChatGPT</a>, <a href="https://gemini.google.com">Gemini</a>, <a href="https://www.raycast.com/core-features/ai">Raycast AI</a></li>
-<li><strong>Local LLMs:</strong> <a href="https://github.com/ollama/ollama">Ollama</a>, <a href="https://lmstudio.ai/">LM Studio</a></li>
-<li><strong>CLI</strong>: <a href="https://github.com/Aider-AI/aider">Aider</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/anthropics/claude-code">Claude Code</a>, <a href="https://github.com/openai/codex">OpenAI Codex</a>, <a href="https://github.com/OpenInterpreter/open-interpreter">Open Interpreter</a></li>
-</ul></li>
-<li><strong>Transcription:</strong> <a href="https://superwhisper.com/">SuperWhisper</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://goodsnooze.gumroad.com/l/macwhisper">MacWhisper</a></li>
-</ul></li>
-</ul>
+<section id="recursive-deep-flattening" class="level2">
+<h2 class="anchored" data-anchor-id="recursive-deep-flattening">Recursive deep flattening</h2>
+<p>For arbitrarily nested structures:</p>
+<div class="til-tabs">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> flatten(lst):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> lst:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(item, <span class="bu">list</span>):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> <span class="cf">from</span> flatten(item)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> item</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>deep <span class="op">=</span> [[<span class="dv">1</span>, [<span class="dv">2</span>, <span class="dv">3</span>]], [<span class="dv">4</span>, [<span class="dv">5</span>, [<span class="dv">6</span>]]]]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(flatten(deep))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [1, 2, 3, 4, 5, 6]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>flatten_deep <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.list</span>(x)) <span class="fu">return</span>(x)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>(<span class="fu">lapply</span>(x, flatten_deep))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>deep <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="dv">2</span>, <span class="dv">3</span>)), <span class="fu">list</span>(<span class="dv">4</span>, <span class="fu">list</span>(<span class="dv">5</span>, <span class="fu">list</span>(<span class="dv">6</span>))))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">flatten_deep</span>(deep)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 1 2 3 4 5 6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -817,6 +715,35 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
     }
   });
   </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "eyayaw/eyayaw.github.io";
+    script.dataset.repoId = "R_kgDOOV4-gw";
+    script.dataset.category = "Comments";
+    script.dataset.categoryId = "DIC_kwDOOV4-g84CpcO9";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -825,9 +752,9 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </div>   
     <div class="nav-footer-center">
 <p><a href="https://github.com/eyayaw" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a> <a href="https://linkedin.com/in/eyayaw" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a> <a href="https://twitter.com/eyayaw" aria-label="Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></a> <a href="https://mastodon.social/@eyayaw" aria-label="Mastodon"><i class="bi bi-mastodon" aria-hidden="true"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social" aria-label="Bluesky"><i class="bi bi-bluesky" aria-hidden="true"></i></a></p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/my-setup.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/my-setup.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/flatten-nested-lists/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/flatten-nested-lists/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
-<p><span>Made with ❤️ + <a href="https://r-project.org" aria-label="R project"><img src="./img/icons/r.svg" alt="R" class="inline-icon"></a> + <a href="https://quarto.org"><img src="./img/icons/quarto.png" alt="" width="16" height="16"> Quarto</a></span></p>
+<p><span>Made with ❤️ + <a href="https://r-project.org" aria-label="R project"><img src="../../img/icons/r.svg" alt="R" class="inline-icon"></a> + <a href="https://quarto.org"><img src="../../img/icons/quarto.png" alt="" width="16" height="16"> Quarto</a></span></p>
 </div>
   </div>
 </footer>
@@ -835,4 +762,5 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

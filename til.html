@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Apps and tools I lovingly use!">
 
-<title>My Setup – Eyayaw Beze</title>
+<title>Today I Learned – Eyayaw Beze</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,6 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href=".//img/favicon.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -72,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0MBR68SHL8"></script>
 
 <script type="text/javascript">
@@ -84,13 +114,41 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="My Setup – Eyayaw Beze">
-<meta property="og:description" content="Apps and tools I lovingly use!">
+<link rel="stylesheet" href="til/til-styles.css">
+<link rel="alternate" type="application/rss+xml" title="Eyayaw Beze" href="til.xml" data-external="1"><meta property="og:title" content="Today I Learned – Eyayaw Beze">
 <meta property="og:site_name" content="Eyayaw Beze">
 <meta name="twitter:title" content="Eyayaw">
-<meta name="twitter:description" content="Apps and tools I lovingly use!">
 <meta name="twitter:creator" content="@eyayaw">
 <meta name="twitter:site" content="@eyayaw">
 <meta name="twitter:card" content="summary_large_image">
@@ -99,7 +157,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -128,11 +186,11 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <span class="menu-text">blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./til.html"> 
+    <a class="nav-link active" href="./til.html" aria-current="page"> 
 <span class="menu-text">til</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./my-setup.html" aria-current="page"> 
+    <a class="nav-link" href="./my-setup.html"> 
 <span class="menu-text">my setup</span></a>
   </li>  
   <li class="nav-item compact">
@@ -148,275 +206,173 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Today I Learned</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#fonts-and-themes" id="toc-fonts-and-themes" class="nav-link active" data-scroll-target="#fonts-and-themes">Fonts and Themes</a></li>
-  <li><a href="#must-haves" id="toc-must-haves" class="nav-link" data-scroll-target="#must-haves">Must-haves</a></li>
-  <li><a href="#productivityutilities" id="toc-productivityutilities" class="nav-link" data-scroll-target="#productivityutilities">Productivity/Utilities</a></li>
-  <li><a href="#development-cli" id="toc-development-cli" class="nav-link" data-scroll-target="#development-cli">Development &amp; CLI</a>
-  <ul class="collapse">
-  <li><a href="#shell-cli-tools" id="toc-shell-cli-tools" class="nav-link" data-scroll-target="#shell-cli-tools">Shell &amp; CLI Tools</a></li>
-  <li><a href="#editors-ides" id="toc-editors-ides" class="nav-link" data-scroll-target="#editors-ides">Editors &amp; IDEs</a></li>
-  <li><a href="#programming-languages-data-tools" id="toc-programming-languages-data-tools" class="nav-link" data-scroll-target="#programming-languages-data-tools">Programming Languages &amp; Data Tools</a></li>
-  <li><a href="#web-api-hacking" id="toc-web-api-hacking" class="nav-link" data-scroll-target="#web-api-hacking">Web &amp; API Hacking</a></li>
-  <li><a href="#documentation-literate-programming" id="toc-documentation-literate-programming" class="nav-link" data-scroll-target="#documentation-literate-programming">Documentation &amp; Literate Programming</a></li>
-  </ul></li>
-  <li><a href="#security-cloud" id="toc-security-cloud" class="nav-link" data-scroll-target="#security-cloud">Security &amp; Cloud</a></li>
-  <li><a href="#ai-tools" id="toc-ai-tools" class="nav-link" data-scroll-target="#ai-tools">AI Tools</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/my-setup.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/my-setup.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="ZGF0YS13cmFuZ2xpbmc=">data-wrangling <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(3)</span></div><div class="category" data-category="cg==">r <span class="quarto-category-count">(3)</span></div><div class="category" data-category="c3Fs">sql <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">My Setup</h1>
+
+
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="cHl0aG9uJTJDciUyQ2RhdGEtd3JhbmdsaW5n" data-listing-date-sort="1772319600000" data-listing-file-modified-sort="1780752609578" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="205">
+<div class="thumbnail"><a href="./til/flatten-nested-lists/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./til/flatten-nested-lists/index.html" class="no-external">TIL: Flatten a Nested List</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('cg=='); return false;">r</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS13cmFuZ2xpbmc='); return false;">data-wrangling</div>
+
 </div>
-
-<div>
-  <div class="description">
-    <em>Apps and tools I lovingly use!</em>
-  </div>
+<div class="delink listing-description"><a href="./til/flatten-nested-lists/index.html" class="no-external">
+How to flatten a nested (ragged) list into a simple vector/list in Python and R.
+</a></div>
 </div>
+<div class="metadata">
+<a href="./til/flatten-nested-lists/index.html" class="no-external">
+<div class="listing-date">
+Mar 1, 2026
+</div>
+<div class="listing-author">
+Eyayaw Beze
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="cHl0aG9uJTJDciUyQ3NxbCUyQ2RhdGEtd3JhbmdsaW5n" data-listing-date-sort="1772319600000" data-listing-file-modified-sort="1780752609638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="237">
+<div class="thumbnail"><a href="./til/group-by-aggregation/index.html" class="no-external">
 
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
 
-<div class="quarto-title-meta">
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./til/group-by-aggregation/index.html" class="no-external">TIL: Group-by Aggregation</a>
+</h3>
+<div class="listing-categories">
 
-    
-  
-    
-  </div>
-  
+<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
 
+<div class="listing-category" onclick="window.quartoListingCategory('cg=='); return false;">r</div>
 
-</header>
+<div class="listing-category" onclick="window.quartoListingCategory('c3Fs'); return false;">sql</div>
 
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS13cmFuZ2xpbmc='); return false;">data-wrangling</div>
 
-<p>This page documents my dev/academic setup. For the apps and tools I currently use, I also provide alternatives that I’ve used previously or am familiar with.</p>
-<section id="fonts-and-themes" class="level2">
-<h2 class="anchored" data-anchor-id="fonts-and-themes">Fonts and Themes</h2>
-<ul>
-<li><a href="https://monolisa.dev">MonoLisa</a>, <a href="https://usgraphics.com/products/berkeley-mono">Berkeley Mono</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/JetBrains/JetBrainsMono">JetBrains Mono</a>, <a href="https://github.com/githubnext/monaspace">Monaspace</a></li>
-</ul></li>
-<li>Themes:
-<ul>
-<li><a href="https://github.com/chriskempson/tomorrow-theme">Tomorrow</a></li>
-<li><a href="https://ethanschoonover.com/solarized/">Solarized</a></li>
-<li><a href="https://rosepinetheme.com/themes/">Rose Pine</a></li>
-<li><a href="https://github.com/morhetz/gruvbox">gruvbox</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="must-haves" class="level2">
-<h2 class="anchored" data-anchor-id="must-haves">Must-haves</h2>
-<ul>
-<li><strong>Password Manager:</strong> <a href="https://1password.com/">1Password</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://bitwarden.com/">Bitwarden</a>, <a href="https://proton.me/pass">Proton Pass</a>, <a href="https://www.dashlane.com/">Dashlane</a></li>
-</ul></li>
-<li><strong>Launcher:</strong> <a href="https://www.raycast.com/">Raycast</a> $, <a href="https://www.alfredapp.com/">Alfred</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/mikker/LeaderKey.app">LeaderKey</a></li>
-</ul></li>
-<li><strong>Browser:</strong> <a href="https://arc.net/">Arc</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/zen-browser/desktop">Zen Browser</a></li>
-</ul></li>
-<li><strong>Keyboard Customization:</strong> <a href="https://karabiner-elements.pqrs.org/">Karabiner-Elements</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/jtroo/kanata">Kanata</a></li>
-</ul></li>
-<li><strong>Clipboard History</strong>: <a href="https://tapbots.com/pastebot/">Pastebot</a> $
-<ul>
-<li><em>Alternatives</em>: Raycast/Alfred clipboard history features</li>
-</ul></li>
-<li><strong>Window Management</strong>: <a href="https://magnet.crowdcafe.com">Magnet</a>, <a href="https://www.raycast.com/core-features/window-management">Raycast Windom Management</a></li>
-<li><strong>System Cleaning:</strong> <a href="https://macpaw.com/cleanmymac">CleanMyMac</a> $</li>
-<li><strong>Screenshots/Recording:</strong> <a href="https://cleanshot.com/">CleanShot</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://shottr.cc/">Shottr</a></li>
-</ul></li>
-<li><strong>Reference Management:</strong> <a href="https://www.zotero.org/">Zotero</a> + <a href="https://github.com/retorquere/zotero-better-bibtex">Better BibTex</a>
-<ul>
-<li><em>Alternatives</em>: Mendeley, EndNote</li>
-</ul></li>
-<li><strong>RSS Feed Reader</strong>: <a href="https://www.inoreader.com">Inoreader</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://feedly.com/">Feedly</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="productivityutilities" class="level2">
-<h2 class="anchored" data-anchor-id="productivityutilities">Productivity/Utilities</h2>
-<ul>
-<li><strong>System Monitoring:</strong> <a href="https://bjango.com/mac/istatmenus/">iStat Menus</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://bjango.com/mac/stats/">Stats</a></li>
-</ul></li>
-<li><strong>Menu Bar Organization:</strong> <a href="https://bjango.com/mac/bartender/">Bartender</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/jordanbaird/Ice">Ice</a>, <a href="https://github.com/Hidden">Hidden</a>, <a href="https://github.com/Mortennn/Dozer">Dozer</a></li>
-</ul></li>
-<li><strong>App Switcher:</strong> <a href="https://github.com/lwouis/alt-tab-macos">AltTab</a>
-<ul>
-<li><em>Alternatives</em>: Use CMD+Tab</li>
-</ul></li>
-<li><strong>Note Taking:</strong> <a href="https://bear.app">Bear Notes</a> $
-<ul>
-<li><em>Alternatives</em>: Obsidian, Notion, Apple Notes, <a href="https://github.com/laurent22/joplin">Joplin</a></li>
-</ul></li>
-<li><strong>PDF Handling:</strong> <a href="https://pdfexpert.com/">PDF Expert</a> $, Preview</li>
-<li><strong>Bookmark Management:</strong> <a href="https://raindrop.io/">Raindrop.io</a>
-<ul>
-<li><em>Alternatives</em>: Pocket, Instapaper</li>
-</ul></li>
-<li><strong>Media Downloader</strong>: <a href="https://software.charliemonroe.net/downie/">Downie</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="development-cli" class="level2">
-<h2 class="anchored" data-anchor-id="development-cli">Development &amp; CLI</h2>
-<section id="shell-cli-tools" class="level3">
-<h3 class="anchored" data-anchor-id="shell-cli-tools">Shell &amp; CLI Tools</h3>
-<ul>
-<li><strong>Terminal Emulator:</strong> <a href="https://github.com/ghostty-org/ghostty">Ghostty</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/gnachman/iTerm2">iTerm2</a>, <a href="https://github.com/kovidgoyal/kitty">Kitty</a>, <a href="https://github.com/alacritty/alacritty">Alacritty</a></li>
-</ul></li>
-<li><strong>Shell Prompt:</strong> <a href="https://starship.rs/">Starship</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/romkatv/powerlevel10k">Powerlevel10k</a>, <a href="https://ohmyz.sh/">Oh My Zsh prompts</a></li>
-</ul></li>
-<li><strong>Terminal Multiplexer:</strong> <a href="https://github.com/tmux/tmux">tmux</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://www.gnu.org/software/screen/">Screen</a>, <a href="https://zellij.dev/">Zellij</a></li>
-</ul></li>
-<li><strong>Dotfile Manager:</strong> <a href="https://www.gnu.org/software/stow/">GNU Stow</a></li>
-<li><strong>CLI Utilities:</strong>
-<ul>
-<li><a href="https://cli.github.com/">gh</a>: GitHub CLI</li>
-<li><a href="https://github.com/git-lfs/git-lfs">git-lfs</a>: Git Large File System</li>
-<li><a href="https://github.com/sharkdp/bat">bat</a>: <code>cat</code> with syntax highlighting</li>
-<li><a href="https://github.com/junegunn/fzf">fzf</a>: Fuzzy finder
-<ul>
-<li><em>Alternatives</em> (for shell history): <a href="https://github.com/carljm/mcfly">mcfly</a>, <a href="https://github.com/atuinsh/atuin">atuin</a>, <a href="https://github.com/skim-rs/skim">skim</a></li>
-</ul></li>
-<li><a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>: Fast <code>grep</code> alternative</li>
-<li><a href="https://github.com/sharkdp/fd">fd</a>: <code>find</code> alternative</li>
-<li><a href="https://jqlang.org/">jq</a>: JSON processor</li>
-<li><a href="https://github.com/charmbracelet/glow">glow</a>: Terminal Markdown viewer</li>
-<li><a href="https://github.com/nektos/act">act</a>: Run github actions locally</li>
-</ul></li>
-</ul>
-</section>
-<section id="editors-ides" class="level3">
-<h3 class="anchored" data-anchor-id="editors-ides">Editors &amp; IDEs</h3>
-<ul>
-<li><a href="https://zed.dev">Zed</a> (+ Preview)
-<ul>
-<li><em>Alternatives</em>: <a href="https://helix-editor.com">Helix</a>, <a href="https://sublimetext.com">Sublime Text</a></li>
-</ul></li>
-<li><a href="https://code.visualstudio.com/">Visual Studio Code</a> (+ Insiders)</li>
-<li><a href="https://neovim.io/">Neovim</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://www.vim.org/">Vim</a></li>
-</ul></li>
-<li><a href="https://posit.co/rstudio/">RStudio</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://posit.co/positron">Positron</a>, <a href="https://github.com/randy3k/radian">Radian</a>, VS Code</li>
-</ul></li>
-</ul>
-</section>
-<section id="programming-languages-data-tools" class="level3">
-<h3 class="anchored" data-anchor-id="programming-languages-data-tools">Programming Languages &amp; Data Tools</h3>
-<ul>
-<li><a href="https://python.org">Python</a>
-<ul>
-<li>Package/Env Management: <a href="https://github.com/astral-sh/uv">uv</a> (<em>Alternatives</em>: pip, conda)</li>
-<li>Linter/Formatter: <a href="https://github.com/astral-sh/ruff">ruff</a></li>
-</ul></li>
-<li><a href="https://www.r-project.org/">R</a>
-<ul>
-<li>Formatter: <a href="https://github.com/posit-dev/air">air</a> (<em>Alternatives</em>: styler, formatR)</li>
-</ul></li>
-<li>SQL &amp; Big Data: <a href="https://duckdb.org">DuckDB</a>, <a href="https://www.postgresql.org">PostgreSQL</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://sqlite.org">SQLite</a>, <a href="https://mysql.com">MySQL</a>, <a href="https://clickhouse.com">ClickHouse</a>, <a href="https://pola.rs">Polars</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="web-api-hacking" class="level3">
-<h3 class="anchored" data-anchor-id="web-api-hacking">Web &amp; API Hacking</h3>
-<ul>
-<li><a href="https://github.com/usebruno/bruno">Bruno</a>: API client
-<ul>
-<li><em>Alternatives</em>: Insomnia, Postman</li>
-</ul></li>
-<li><a href="https://github.com/mitmproxy/mitmproxy">Mitmproxy</a>: HTTP inspection
-<ul>
-<li><em>Alternatives</em>: <a href="https://portswigger.net/burp">Burp Suite</a></li>
-</ul></li>
-<li><a href="https://developer.android.com/studio/run/emulator">Android Emulator</a></li>
-</ul>
-</section>
-<section id="documentation-literate-programming" class="level3">
-<h3 class="anchored" data-anchor-id="documentation-literate-programming">Documentation &amp; Literate Programming</h3>
-<ul>
-<li><a href="https://quarto.org">Quarto</a>
-<ul>
-<li><em>Alternatives</em>: R Markdown, <a href="https://github.com/yihui/litedown">Litedown</a>, Jupyter Notebooks</li>
-</ul></li>
-<li><a href="https://pandoc.org">Pandoc</a>: Document converter</li>
-<li><a href="https://github.com/typst/typst">Typst</a>: LaTeX alternative</li>
-</ul>
-</section>
-</section>
-<section id="security-cloud" class="level2">
-<h2 class="anchored" data-anchor-id="security-cloud">Security &amp; Cloud</h2>
-<ul>
-<li><strong>Ad Blocking:</strong> <a href="https://adguard.com/">AdGuard</a> $, <a href="https://github.com/gorhill/uBlock">uBlock Origin</a></li>
-<li><strong>Firewall/Network monitoring:</strong> <a href="https://www.obdev.at/products/littlesnitch/index.html">Little Snitch</a> $</li>
-<li><strong>VPN:</strong> <a href="https://www.hotspotshield.com/">Hotspot Shield</a> $
-<ul>
-<li><em>Alternatives</em>: <a href="https://mullvad.net/en">Mullvad VPN</a>, ProtonVPN, AdGuard VPN, Tailscale</li>
-</ul></li>
-<li><strong>Cloud Storage:</strong> <a href="https://icloud.com">iCloud Drive</a> $
-<ul>
-<li><em>Alternatives</em>: Google Drive, Dropbox, pCloud</li>
-</ul></li>
-<li><strong>File Encryption:</strong> <a href="https://cryptomator.org/">Cryptomator</a></li>
-</ul>
-</section>
-<section id="ai-tools" class="level2">
-<h2 class="anchored" data-anchor-id="ai-tools">AI Tools</h2>
-<ul>
-<li><strong>Chat/Assistants:</strong> <a href="https://claude.ai">Claude</a>, <a href="https://openai.com/">ChatGPT</a>, <a href="https://gemini.google.com">Gemini</a>, <a href="https://www.raycast.com/core-features/ai">Raycast AI</a></li>
-<li><strong>Local LLMs:</strong> <a href="https://github.com/ollama/ollama">Ollama</a>, <a href="https://lmstudio.ai/">LM Studio</a></li>
-<li><strong>CLI</strong>: <a href="https://github.com/Aider-AI/aider">Aider</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://github.com/anthropics/claude-code">Claude Code</a>, <a href="https://github.com/openai/codex">OpenAI Codex</a>, <a href="https://github.com/OpenInterpreter/open-interpreter">Open Interpreter</a></li>
-</ul></li>
-<li><strong>Transcription:</strong> <a href="https://superwhisper.com/">SuperWhisper</a>
-<ul>
-<li><em>Alternatives</em>: <a href="https://goodsnooze.gumroad.com/l/macwhisper">MacWhisper</a></li>
-</ul></li>
-</ul>
+</div>
+<div class="delink listing-description"><a href="./til/group-by-aggregation/index.html" class="no-external">
+The bread-and-butter of data work: split data by groups, compute a summary per group, combine. Here’s how it looks in Python, R, and SQL (DuckDB) — side by side.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./til/group-by-aggregation/index.html" class="no-external">
+<div class="listing-date">
+Mar 1, 2026
+</div>
+<div class="listing-author">
+Eyayaw Beze
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="cHl0aG9u" data-listing-date-sort="1772319600000" data-listing-file-modified-sort="1780752609686" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="136">
+<div class="thumbnail"><a href="./til/python-walrus-operator/index.html" class="no-external">
 
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
 
-</section>
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./til/python-walrus-operator/index.html" class="no-external">TIL: The Walrus Operator in Python</a>
+</h3>
+<div class="listing-categories">
 
-</main> <!-- /main -->
+<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
+
+</div>
+<div class="delink listing-description"><a href="./til/python-walrus-operator/index.html" class="no-external">
+The walrus operator (<code>:=</code>) lets you assign a value inside an expression — avoiding repeated computation or extra lines.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./til/python-walrus-operator/index.html" class="no-external">
+<div class="listing-date">
+Mar 1, 2026
+</div>
+<div class="listing-author">
+Eyayaw Beze
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="cg==" data-listing-date-sort="1772319600000" data-listing-file-modified-sort="1780752609852" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="105">
+<div class="thumbnail"><a href="./til/r-list2env/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./til/r-list2env/index.html" class="no-external">TIL: Unpack a Named List into Variables with list2env()</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cg=='); return false;">r</div>
+
+</div>
+<div class="delink listing-description"><a href="./til/r-list2env/index.html" class="no-external">
+<code>list2env()</code> unpacks a named list into individual variables in a given environment — similar to Python’s dictionary unpacking.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./til/r-list2env/index.html" class="no-external">
+<div class="listing-date">
+Mar 1, 2026
+</div>
+<div class="listing-author">
+Eyayaw Beze
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -825,7 +781,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </div>   
     <div class="nav-footer-center">
 <p><a href="https://github.com/eyayaw" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a> <a href="https://linkedin.com/in/eyayaw" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a> <a href="https://twitter.com/eyayaw" aria-label="Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></a> <a href="https://mastodon.social/@eyayaw" aria-label="Mastodon"><i class="bi bi-mastodon" aria-hidden="true"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social" aria-label="Bluesky"><i class="bi bi-bluesky" aria-hidden="true"></i></a></p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/my-setup.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/my-setup.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><span>Made with ❤️ + <a href="https://r-project.org" aria-label="R project"><img src="./img/icons/r.svg" alt="R" class="inline-icon"></a> + <a href="https://quarto.org"><img src="./img/icons/quarto.png" alt="" width="16" height="16"> Quarto</a></span></p>
 </div>

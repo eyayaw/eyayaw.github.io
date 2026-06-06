@@ -1,6 +1,15 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/til.html",
+    "items": [
+      "/til/flatten-nested-lists/index.html",
+      "/til/group-by-aggregation/index.html",
+      "/til/python-walrus-operator/index.html",
+      "/til/r-list2env/index.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
     "items": [
       "/posts/underwhelmed-by-stats-reshape/index.html",
       "/posts/setting-up-a-new-mac/index.html",
@@ -9,7 +18,7 @@
     ]
   },
   {
-    "listing": "/blog.html",
+    "listing": "/index.html",
     "items": [
       "/posts/underwhelmed-by-stats-reshape/index.html",
       "/posts/setting-up-a-new-mac/index.html",

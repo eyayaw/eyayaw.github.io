@@ -1,44 +1,56 @@
-/* css styles */
+/* ── Color tokens (from anthropic's palette) ───── */
+:root {
+    --color-clay: #d97757;
+    --color-ivory-dark: #e8e6dc;
+    --color-ivory-light: #faf9f5;
+    --color-ivory-medium: #f0eee6;
+}
 
+/* ── Base ───────────────────────────────────────────────────────────────── */
 body {
-  font-family: Inter, "Open Sans", sans-serif;
+  font-family: Inter, sans-serif;
   background-color: var(--color-ivory-light);
   padding: 20px;
   line-height: 1.5;
 }
 
 a {
+  color: #a8512f; /* deep clay; passes WCAG AA on the ivory background */
   text-decoration: none;
 }
 
 a:hover {
+  color: var(--color-clay);
   text-decoration: underline;
 }
 
-pre, code, .sourceCode{
-  font-family: "IBM Plex Mono";
+summary {
+  cursor: pointer;
 }
 
-#quarto-header > nav, .nav-footer,  #quarto-appendix.default {
+.navbar .nav-link.active {
+  color: #a8512f;
+}
+
+pre, code, .sourceCode {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ── Site chrome ────────────────────────────────────────────────────────── */
+#quarto-header > nav, .nav-footer, #quarto-appendix.default {
   background-color: var(--color-ivory-medium);
 }
 
-/* i {
-  margin: 0 10px;
-  text-decoration: none;
-  color: inherit;
+/* small inline brand logos (R, Python, DuckDB) used in text and the footer */
+.inline-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  vertical-align: text-bottom;
 }
-
-i:hover {
-  opacity: 0.7;
-} */
-
 
 .mufc {
   color: #DA291C;
 }
-
-
 
 .cv-link {
   display: inline-block;
@@ -57,44 +69,151 @@ i:hover {
   text-decoration: none;
 }
 
-/* Taken from anthropic's website */
-:root {
-    --color-book-cloth: #cc785c;
-    --color-cactus: #bcd1ca;
-    --color-clay: #d97757;
-    --color-cloud-dark: #87867f;
-    --color-cloud-light: #d1cfc5;
-    --color-cloud-medium: #b0aea5;
-    --color-coral: #ebcece;
-    --color-dark: #0f0f0e;
-    --color-fig: #c46686;
-    --color-heather: #cbcadb;
-    --color-ivory-dark: #e8e6dc;
-    --color-ivory-light: #faf9f5;
-    --color-ivory-medium: #f0eee6;
-    --color-kraft: #d4a27f;
-    --color-lilac: #8989de;
-    --color-light: #fff;
-    --color-manilla: #ebdbbc;
-    --color-manilla-light: #f1e6d0;
-    --color-oat: #e3dacc;
-    --color-olive: #788c5d;
-    --color-sky: #6a98bc;
-    --color-slate-dark: #141413;
-    --color-slate-light: #5e5d59;
-    --color-slate-medium: #3d3d3a;
-    /*
-    --spacer-01: 4px;
-    --spacer-02: 8px;
-    --spacer-03: 12px;
-    --spacer-04: 16px;
-    --spacer-05: 24px;
-    --spacer-06: 32px;
-    --spacer-07: 40px;
-    --spacer-08: 48px;
-    --spacer-09: 64px;
-    --spacer-10: 80px;
-    --spacer-11: 96px;
-    --spacer-12: 160px
-    */
+/* ── Homepage: profile box ──────────────────────────────────────────────── */
+.profile-box {
+  display: flex;
+  gap: 16px;
+  background-color: var(--color-ivory-medium);
+  border: 1px solid var(--color-ivory-dark);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 16px 0;
+}
+
+.avatar {
+  align-self: center;
+}
+
+.avatar img {
+  max-height: 6rem;
+}
+
+.profile-content {
+  align-self: center;
+  min-width: 0;
+}
+
+.profile-content p:first-of-type {
+  margin-top: 0;
+}
+
+.profile-content p + p {
+  margin-top: 1rem;
+}
+
+@media (max-width: 480px) {
+  .profile-box {
+    flex-direction: column;
+  }
+
+  .avatar img {
+    margin: 0 auto;
+  }
+}
+
+/* ── Homepage: lists (recent posts, hobby projects, quick links) ────────── */
+#recent-posts .quarto-listing {
+  padding-bottom: 0;
+}
+
+#recent-posts ul,
+.hobby-projects ul {
+  padding-left: 1rem;
+}
+
+#recent-posts ul > li,
+.hobby-projects li,
+.quick-links-list li {
+  margin-bottom: 0.5rem;
+}
+
+.post-date {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85em;
+  color: #555;
+}
+
+.quick-links-list ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.quick-links-list i {
+  margin-right: 0.5rem;
+}
+
+/* ── Homepage: research projects ────────────────────────────────────────── */
+.research-project {
+  margin-bottom: 1.8rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--color-clay);
+}
+
+/* research.qmd entries reuse the card; tame the heading inside it */
+.research-project h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.research-project p {
+  margin: 0 0 0.5rem;
+}
+
+.research-project p:last-child {
+  margin-bottom: 0;
+}
+
+.research-title {
+  font-weight: bold;
+  display: block;
+}
+
+.research-summary {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* ── About page ─────────────────────────────────────────────────────────── */
+/* Mimic Jolla about theme */
+.about-image {
+  object-fit: cover;
+  margin: 0 auto 1.5em;
+  width: 15em;
+  height: 15em;
+  border-radius: 50%; /* round */
+  display: block;
+}
+
+.intro-text {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.pronunciation {
+  color: #555;
+  font-size: 0.9em;
+}
+
+.bio-section {
+  margin: 2rem 0;
+}
+
+.bio-text {
+  line-height: 1.6;
+}
+
+.location-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+  border: 1px solid #e8e2bf;
+}
+
+.location-caption {
+  text-align: center;
+  font-size: 0.85em;
+  color: #555;
+  margin-top: 0.5rem;
 }
