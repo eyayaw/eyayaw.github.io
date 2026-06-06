@@ -7,6 +7,6 @@ citation: false
 
 This is the first post in my blog. Welcome!
 
-![](media/thumbnail.jpg)
+![](thumbnail.jpg)
 
 I will blog about what I have learned in my `R` and `Python` journey. Stay tuned!

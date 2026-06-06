@@ -18,7 +18,7 @@ website:
     card-style: summary_large_image
     site: "@eyayaw"
   open-graph: true
-  favicon: "{{< var profile-img >}}"
+  favicon: /img/favicon.jpg
   google-analytics: "G-0MBR68SHL8"
   navbar:
     title: eyayaw

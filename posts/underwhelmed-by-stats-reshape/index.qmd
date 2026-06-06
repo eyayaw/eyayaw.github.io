@@ -1,6 +1,6 @@
 ---
 title: Underwhelmed by `stats::reshape`
-date: last-modified
+date: 2025-08-12
 categories: [r, base-r, tutorial, programming]
 engine: knitr
 execute:

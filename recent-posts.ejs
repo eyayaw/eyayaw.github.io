@@ -1,8 +1,12 @@
-<!-- Recent posts with ISO date format (YYYY-MM-DD) -->
+<!-- Recent posts with ISO date format (YYYY-MM-DD), formatted in local time to avoid the UTC day-shift from toISOString() -->
+<% const fmtDate = (d) => {
+     const x = new Date(d);
+     return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
+   } %>
 <ul class="list">
     <% for (const item of items) { %>
       <li <%= metadataAttrs(item) %>>
-        <%= new Date(item.date).toISOString().split('T')[0] %> - <a href="<%- item.path %>" class="listing-title"><%= item.title %></a>
+        <%= fmtDate(item.date) %> - <a href="<%- item.path %>" class="listing-title"><%= item.title %></a>
       </li>
     <% } %>
 </ul>
