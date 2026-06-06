@@ -10,8 +10,8 @@ project:
 website:
   title: Eyayaw Beze
   description: "Eyayaw Beze's personal website"
-  site-url: https://eyayaw.github.io/ #"{{< var site-url >}}"
-  repo-url: https://github.com/eyayaw/eyayaw.github.io #"{{< var repo-url >}}"
+  site-url: https://eyayaw.github.io/
+  repo-url: https://github.com/eyayaw/eyayaw.github.io
   repo-actions: [source, edit, issue]
   twitter-card:
     title: Eyayaw

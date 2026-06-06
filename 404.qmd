@@ -1,0 +1,7 @@
+---
+title: "Page not found"
+---
+
+The page you're looking for doesn't exist (or moved).
+
+Try the [home page](/), the [blog](/blog.html), or [TIL](/til.html).

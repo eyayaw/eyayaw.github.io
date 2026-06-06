@@ -1,11 +1,11 @@
 ---
-css: about.css
+description: "About Eyayaw Beze---background, education, and how to get in touch."
 ---
 
 
 ```{=html}
 <img src="{{< var profile-img-about >}}" alt="Eyayaw Beze" class="about-image"/>
-````
+```
 
 ::: intro-text
 
@@ -21,12 +21,6 @@ Hi there, this is Eyayaw Beze (እያያው ተካ).
 I grew up in a small village called Shumshuha (ሹምሹሃ) (aka Lalibela
 Airport) about 10km southwest of the historic town [Lalibela,
 Ethiopia](https://en.wikipedia.org/wiki/Lalibela).
-
-```{=html}
-<!-- ![[Shumshuha --- Lalibela Airport, photo © [Raimund
-Stehmann]({{< var hometown-img-credit >}}),
-[Airliners](https://airliners.net)]{.location-caption}]({{< var hometown-img >}}){.location-image fig-alt="Shumshuha --- Lalibela Airport"} -->
-```
 
 ```{=html}
 <div>
@@ -47,10 +41,9 @@ taught undergrad economics courses.
 
 I did my Ph.D. in Urban Economics at [RGS
 Econ](https://www.rgs-econ.org/), based at the [University of
-Duisburg-Essen]({{< var ude-url >}}).
+Duisburg-Essen]({{< var ude-url >}}). See my [CV](cv.qmd) for the details.
 
 Drop me a message through one of the [socials](index.qmd#quick-links). I would be happy to grab a coffee or a beer (Pils oder Blonde?), if you're around town.
 
 I love data generation, through web scraping, api hacking, etc. If you want to collaborate on a project, feel free to reach out.
 :::
-
