@@ -37,7 +37,7 @@ LIMIT 5;
 ```
 :::
 
-::: {.note}
+::: {.til-note}
 Optional caveat or aside, placed right after a comparison, it tucks under it.
 :::
 

@@ -15,7 +15,7 @@
    and stack on narrow screens. For three columns, add `.column-page-right`
    (left edge stays aligned with the text, extends rightward as needed):
      ::: {.compare .column-page-right}
-   `.note` is a quiet aside; placed right after a comparison it tucks under.
+   `.til-note` is a quiet aside; placed right after a comparison it tucks under.
 */
 
 :root {
@@ -127,29 +127,36 @@ pre.sourceCode span.ot {
     content: "duckdb";
 }
 
+/* the label sits at the top of quarto's copy-button scaffold (which is
+   position:relative); the button is absolute top:0, so it lands in the
+   label row. drop it past the label onto the code's top-right corner. */
+.compare .code-copy-button {
+    top: 1.5rem;
+}
+
 /* ── Title-block categories: match the site's lowercase voice ───────────── */
 .quarto-title .quarto-categories .quarto-category {
     text-transform: lowercase;
 }
 
 /* ── Quiet aside ────────────────────────────────────────────────────────── */
-.note {
+.til-note {
     margin: 1rem 0;
     font-size: 0.875rem;
     color: var(--til-muted);
 }
 
-.note p {
+.til-note p {
     margin: 0;
 }
 
 /* inside the quiet aside, code chips would be gray confetti — just mono
    (:not() bumps specificity above the global inline-code tint) */
-.note code:not(.sourceCode) {
+.til-note code:not(.sourceCode) {
     padding: 0;
     background: none;
 }
 
-.compare + .note {
+.compare + .til-note {
     margin-top: -0.5rem;
 } /* tuck under its comparison */
