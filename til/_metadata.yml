@@ -1,0 +1,16 @@
+smooth-scroll: true
+author:
+  - name: Eyayaw Beze
+    url: "{{< var github >}}"
+toc: true
+toc-title: Contents
+code-overflow: wrap
+freeze: auto
+css: styles-til.css
+comments:
+  giscus:
+    repo: "eyayaw/eyayaw.github.io"
+    mapping: pathname
+    category: Comments
+
+# These are options for all TIL posts!

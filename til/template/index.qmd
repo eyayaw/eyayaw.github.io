@@ -1,0 +1,67 @@
+---
+title: "TIL: Template"
+date: "2026-06-07"
+categories: [python, r, sql]
+---
+
+One or two sentences on what I learned.
+
+<!-- ── Single labeled block ─────────────────────────────────────────────────
+     One block inside `.compare` = a lone labeled box (still content-sized).
+     A bare fenced block outside `.compare` needs no wrapper at all. -->
+
+::: {.compare}
+```python
+result = [x**2 for x in range(10)]
+print(result)
+```
+:::
+
+<!-- ── Side by side ─────────────────────────────────────────────────────────
+     Wrap plain fenced code blocks in `.compare`. Each block becomes a
+     content-sized column—a box that hugs its code, with a centered
+     language label above. Columns stack full-width on phones. -->
+
+::: {.compare}
+```python
+import pandas as pd
+
+df = pd.read_csv("data.csv")
+df.head()
+```
+
+```sql
+SELECT *
+FROM 'data.csv'
+LIMIT 5;
+```
+:::
+
+::: {.note}
+Optional caveat or aside, placed right after a comparison, it tucks under it.
+:::
+
+<!-- ── Three columns ────────────────────────────────────────────────────────
+     Add `.column-page-right` to grant extra room: the left edge stays
+     aligned with the text, columns extend rightward only as needed. -->
+
+:::: {.compare .column-page-right}
+```python
+import pandas as pd
+data = pd.read_csv("data.csv")
+data.groupby("category")["value"].agg(["count", "mean"])
+```
+
+```r
+library(data.table)
+data = fread("data.csv")
+data[, .(n = .N, mean = mean(value, na.rm = TRUE)), by = category]
+```
+
+````sql
+-- SQL (use ```{.sql .duckdb} to label it DuckDB)
+SELECT category, COUNT(*) AS n, AVG(value) AS mean
+FROM 'data.csv'
+GROUP BY category;
+````
+::::

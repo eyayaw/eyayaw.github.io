@@ -1,0 +1,11 @@
+---
+title: "Today I Learned (TIL)"
+listing:
+  contents: til
+  sort: "date desc"
+  type: default
+  categories: true
+  feed: true
+page-layout: full
+title-block-banner: true
+---
