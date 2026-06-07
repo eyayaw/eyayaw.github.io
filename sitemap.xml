@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://eyayaw.github.io/til.html</loc>
-    <lastmod>2026-03-01T11:56:32.394Z</lastmod>
+    <loc>https://eyayaw.github.io/til/template/index.html</loc>
+    <lastmod>2026-06-07T09:30:24.997Z</lastmod>
   </url>
   <url>
-    <loc>https://eyayaw.github.io/posts/welcome-to-my-blog/index.html</loc>
-    <lastmod>2026-06-06T13:24:38.421Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/posts/setting-up-a-new-mac/index.html</loc>
-    <lastmod>2026-06-06T13:26:44.468Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/my-setup.html</loc>
-    <lastmod>2025-05-19T16:47:16.615Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/cv.html</loc>
-    <lastmod>2026-06-06T13:36:53.725Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/about.html</loc>
-    <lastmod>2026-06-06T14:23:01.212Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/blog.html</loc>
-    <lastmod>2025-05-15T11:58:27.027Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/index.html</loc>
-    <lastmod>2026-06-06T17:44:59.402Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eyayaw.github.io/posts/base-r/index.html</loc>
-    <lastmod>2025-07-27T17:52:59.603Z</lastmod>
+    <loc>https://eyayaw.github.io/research.html</loc>
+    <lastmod>2026-06-06T17:14:38.770Z</lastmod>
   </url>
   <url>
     <loc>https://eyayaw.github.io/posts/underwhelmed-by-stats-reshape/index.html</loc>
     <lastmod>2026-06-06T18:03:00.865Z</lastmod>
   </url>
   <url>
-    <loc>https://eyayaw.github.io/research.html</loc>
-    <lastmod>2026-06-06T17:14:38.770Z</lastmod>
+    <loc>https://eyayaw.github.io/posts/base-r/index.html</loc>
+    <lastmod>2025-07-27T17:52:59.603Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/index.html</loc>
+    <lastmod>2026-06-06T17:44:59.402Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/blog.html</loc>
+    <lastmod>2025-05-15T11:58:27.027Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/about.html</loc>
+    <lastmod>2026-06-06T14:23:01.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/cv.html</loc>
+    <lastmod>2026-06-06T13:36:53.725Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/my-setup.html</loc>
+    <lastmod>2025-05-19T16:47:16.615Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/posts/setting-up-a-new-mac/index.html</loc>
+    <lastmod>2026-06-06T13:26:44.468Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/posts/welcome-to-my-blog/index.html</loc>
+    <lastmod>2026-06-06T13:24:38.421Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eyayaw.github.io/til.html</loc>
+    <lastmod>2026-06-07T09:32:55.470Z</lastmod>
   </url>
 </urlset>

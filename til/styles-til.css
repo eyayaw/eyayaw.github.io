@@ -1,0 +1,155 @@
+/* ── TIL styles ─────────────────────────────────────────────────────────────
+   One construct. Wrap 1–3 plain fenced code blocks in a `.compare` div:
+
+     ::: {.compare}
+     ```python
+     ...
+     ```
+     ```sql
+     ...
+     ```
+     :::
+
+   Each block becomes a column: a quiet lowercase label above a tinted box
+   that hugs its content. Columns are separated by whitespace, not rules,
+   and stack on narrow screens. For three columns, add `.column-page-right`
+   (left edge stays aligned with the text, extends rightward as needed):
+     ::: {.compare .column-page-right}
+   `.note` is a quiet aside; placed right after a comparison it tucks under.
+*/
+
+:root {
+    --til-muted: #5f5b51; /* warm gray for labels and asides */
+}
+
+/* ── Code blocks: the pre is the box—a flat tint, no chrome ───────────── */
+div.sourceCode {
+    margin: 1.25rem 0;
+    background: none;
+    border: 0;
+}
+
+div.sourceCode pre.sourceCode {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-ivory-medium);
+    border: 0;
+    border-radius: 4px;
+    line-height: 1.55;
+    tab-size: 4;
+}
+
+/* color already differentiates tokens; bold double-encodes and makes
+   keyword-dense SQL panels visually heavier than their neighbors */
+pre.sourceCode span.kw,
+pre.sourceCode span.cf,
+pre.sourceCode span.sc,
+pre.sourceCode span.ot {
+    font-weight: 400;
+}
+
+/* inline code: quiet tint instead of the theme's pink */
+:not(pre) > code:not(.sourceCode) {
+    padding: 0.1em 0.3em;
+    border-radius: 4px;
+    background-color: var(--color-ivory-medium);
+    color: inherit;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+/* ── The comparison: content-sized columns, even whitespace gutters ─────── */
+.compare {
+    display: grid;
+    grid-auto-flow: column; /* N blocks → N columns, each as wide as its code */
+    justify-content: start; /* load-bearing: the default (normal = stretch)
+                               would inflate the auto tracks to fill the row */
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.compare > * {
+    min-width: 0; /* wrap long lines, don't widen the column */
+    margin: 0;
+}
+
+/* margin must also be zeroed here: quarto's copy-button JS wraps each block
+   in a scaffold div, so sourceCode isn't always the direct grid child */
+.compare div.sourceCode {
+    margin: 0;
+}
+
+/* the box hugs its content width too—no tinted dead space to the right;
+   long lines still cap at the column and wrap */
+.compare pre.sourceCode {
+    width: fit-content;
+    max-width: 100%;
+}
+
+@media (max-width: 700px) {
+    .compare {
+        grid-auto-flow: row; /* stack */
+        gap: 1rem;
+    }
+
+    /* stacked boxes of varying widths look ragged; go full-width */
+    .compare pre.sourceCode {
+        width: 100%;
+    }
+}
+
+/* ── Labels: lowercase, above the box, derived from the language class ──── */
+.compare div.sourceCode::before {
+    content: "code"; /* fallback; overridden per language below */
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--til-muted);
+}
+
+.compare div.sourceCode:has(pre.python)::before {
+    content: "python";
+}
+.compare div.sourceCode:has(pre.r)::before {
+    content: "r";
+}
+.compare div.sourceCode:has(pre.sql)::before {
+    content: "sql";
+}
+.compare div.sourceCode:has(pre.bash)::before,
+.compare div.sourceCode:has(pre.sh)::before {
+    content: "shell";
+}
+/* keep last so ```{.sql .duckdb} relabels to duckdb */
+.compare div.sourceCode:has(pre.duckdb)::before {
+    content: "duckdb";
+}
+
+/* ── Title-block categories: match the site's lowercase voice ───────────── */
+.quarto-title .quarto-categories .quarto-category {
+    text-transform: lowercase;
+}
+
+/* ── Quiet aside ────────────────────────────────────────────────────────── */
+.note {
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    color: var(--til-muted);
+}
+
+.note p {
+    margin: 0;
+}
+
+/* inside the quiet aside, code chips would be gray confetti — just mono
+   (:not() bumps specificity above the global inline-code tint) */
+.note code:not(.sourceCode) {
+    padding: 0;
+    background: none;
+}
+
+.compare + .note {
+    margin-top: -0.5rem;
+} /* tuck under its comparison */

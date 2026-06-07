@@ -1,7 +1,12 @@
 [
   {
-    "listing": "/til.html",
-    "items": []
+    "listing": "/index.html",
+    "items": [
+      "/posts/underwhelmed-by-stats-reshape/index.html",
+      "/posts/setting-up-a-new-mac/index.html",
+      "/posts/base-r/index.html",
+      "/posts/welcome-to-my-blog/index.html"
+    ]
   },
   {
     "listing": "/blog.html",
@@ -13,12 +18,9 @@
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/til.html",
     "items": [
-      "/posts/underwhelmed-by-stats-reshape/index.html",
-      "/posts/setting-up-a-new-mac/index.html",
-      "/posts/base-r/index.html",
-      "/posts/welcome-to-my-blog/index.html"
+      "/til/template/index.html"
     ]
   }
 ]

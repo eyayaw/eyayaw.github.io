@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Eyayaw Beze">
-<meta name="dcterms.date" content="2026-03-01">
+<meta name="dcterms.date" content="2026-06-07">
 
-<title>TIL: Unpack a Named List into Variables with list2env() – Eyayaw Beze</title>
+<title>TIL: Template – Eyayaw Beze</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-346337e101949f30c9d2a2307ffdd10b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-9cb591dc4a548ded678bba7f9c76a5d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,8 +123,8 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<link rel="stylesheet" href="../til-styles.css">
-<meta property="og:title" content="TIL: Unpack a Named List into Variables with list2env() – Eyayaw Beze">
+<link rel="stylesheet" href="../styles-til.css">
+<meta property="og:title" content="TIL: Template – Eyayaw Beze">
 <meta property="og:description" content="Eyayaw Beze’s personal website">
 <meta property="og:site_name" content="Eyayaw Beze">
 <meta name="twitter:title" content="Eyayaw">
@@ -189,24 +189,19 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
-   
-  <ul>
-  <li><a href="#basic-usage" id="toc-basic-usage" class="nav-link active" data-scroll-target="#basic-usage">Basic usage</a></li>
-  <li><a href="#practical-example-simulation-parameters" id="toc-practical-example-simulation-parameters" class="nav-link" data-scroll-target="#practical-example-simulation-parameters">Practical example: simulation parameters</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/r-list2env/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/r-list2env/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">TIL: Unpack a Named List into Variables with list2env()</h1>
+<h1 class="title">TIL: Template</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">python</div>
     <div class="quarto-category">r</div>
+    <div class="quarto-category">sql</div>
   </div>
   </div>
 
@@ -224,7 +219,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 1, 2026</p>
+      <p class="date">June 7, 2026</p>
     </div>
   </div>
   
@@ -236,59 +231,47 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </header>
 
 
-<p><code>list2env()</code> unpacks a named list into individual variables in a given environment — similar to Python’s dictionary unpacking.</p>
-<section id="basic-usage" class="level2">
-<h2 class="anchored" data-anchor-id="basic-usage">Basic usage</h2>
-<div class="code-solo">
-<div class="code-panel r">
-<div class="lang-header">
-<p>R</p>
+<p>One or two sentences on what I learned.</p>
+<!-- ── Single labeled block ─────────────────────────────────────────────────
+     One block inside `.compare` = a lone labeled box (still content-sized).
+     A bare fenced block outside `.compare` needs no wrapper at all. -->
+<div class="compare">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> [x<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>)]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="panel-code">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>, <span class="at">n =</span> <span class="dv">100</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># unpack into the current environment</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">list2env</span>(params, <span class="at">envir =</span> <span class="fu">environment</span>())</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>mu</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sigma</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 1</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>n</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- ── Side by side ─────────────────────────────────────────────────────────
+     Wrap plain fenced code blocks in `.compare`. Each block becomes a
+     content-sized column—a box that hugs its code, with a centered
+     language label above. Columns stack full-width on phones. -->
+<div class="compare">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data.csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'data.csv'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="note">
+<p>Optional caveat or aside, placed right after a comparison, it tucks under it.</p>
 </div>
-</div>
-</section>
-<section id="practical-example-simulation-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="practical-example-simulation-parameters">Practical example: simulation parameters</h2>
-<div class="code-solo">
-<div class="code-panel r">
-<div class="lang-header">
-<p>R</p>
-</div>
-<div class="panel-code">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>config <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">42</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_sim =</span> <span class="dv">1000</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"bootstrap"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of config$seed, config$n_sim, etc.</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">list2env</span>(config, <span class="at">envir =</span> <span class="fu">environment</span>())</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(seed)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(n_sim, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-<div class="code-note">
-<p>Use sparingly — it populates your environment with potentially many variables. For controlled scoping, pass <code>envir = new.env()</code> and work within that environment.</p>
+<!-- ── Three columns ────────────────────────────────────────────────────────
+     Add `.column-page-right` to grant extra room: the left edge stays
+     aligned with the text, columns extend rightward only as needed. -->
+<div class="compare column-page-right">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"data.csv"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data.groupby(<span class="st">"category"</span>)[<span class="st">"value"</span>].agg([<span class="st">"count"</span>, <span class="st">"mean"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">fread</span>(<span class="st">"data.csv"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data[, .(<span class="at">n =</span> .N, <span class="at">mean =</span> <span class="fu">mean</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), by <span class="ot">=</span> category]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- SQL (use ```{.sql .duckdb} to label it DuckDB)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">category</span>, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n, <span class="fu">AVG</span>(<span class="fu">value</span>) <span class="kw">AS</span> mean</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'data.csv'</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">category</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -728,7 +711,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </div>   
     <div class="nav-footer-center">
 <p><a href="https://github.com/eyayaw" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a> <a href="https://linkedin.com/in/eyayaw" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a> <a href="https://twitter.com/eyayaw" aria-label="Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></a> <a href="https://mastodon.social/@eyayaw" aria-label="Mastodon"><i class="bi bi-mastodon" aria-hidden="true"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social" aria-label="Bluesky"><i class="bi bi-bluesky" aria-hidden="true"></i></a></p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/r-list2env/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/r-list2env/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/template/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/template/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><span>Made with ❤️ + <a href="https://r-project.org" aria-label="R project"><img src="../../img/icons/r.svg" alt="R" class="inline-icon"></a> + <a href="https://quarto.org"><img src="../../img/icons/quarto.png" alt="" width="16" height="16"> Quarto</a></span></p>
 </div>

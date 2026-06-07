@@ -10,6 +10,177 @@
 <atom:link href="https://eyayaw.github.io/til.xml" rel="self" type="application/rss+xml"/>
 <description>Eyayaw Beze&#39;s personal website</description>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Sat, 06 Jun 2026 18:22:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 06 Jun 2026 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>TIL: Template</title>
+  <dc:creator>Eyayaw Beze</dc:creator>
+  <link>https://eyayaw.github.io/til/template/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>One or two sentences on what I learned.</p>
+<!-- ── Single labeled block ─────────────────────────────────────────────────
+     One block inside `.compare` = a lone labeled box (still content-sized).
+     A bare fenced block outside `.compare` needs no wrapper at all. -->
+<div class="compare">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)]</span>
+<span id="cb1-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(result)</span></code></pre></div></div>
+</div>
+<!-- ── Side by side ─────────────────────────────────────────────────────────
+     Wrap plain fenced code blocks in `.compare`. Each block becomes a
+     content-sized column—a box that hugs its code, with a centered
+     language label above. Columns stack full-width on phones. -->
+<div class="compare">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data.csv"</span>)</span>
+<span id="cb2-4">df.head()</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">SELECT</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span></span>
+<span id="cb3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data.csv'</span></span>
+<span id="cb3-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">LIMIT</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>;</span></code></pre></div></div>
+</div>
+<div class="note">
+<p>Optional caveat or aside, placed right after a comparison, it tucks under it.</p>
+</div>
+<!-- ── Three columns ────────────────────────────────────────────────────────
+     Add `.column-page-right` to grant extra room: the left edge stays
+     aligned with the text, columns extend rightward only as needed. -->
+<div class="compare column-page-right">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb4-2">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data.csv"</span>)</span>
+<span id="cb4-3">data.groupby(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"category"</span>)[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"value"</span>].agg([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean"</span>])</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(data.table)</span>
+<span id="cb5-2">data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fread</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data.csv"</span>)</span>
+<span id="cb5-3">data[, .(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> .N, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mean =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mean</span>(value, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">na.rm =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)), by <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> category]</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- SQL (use ```{.sql .duckdb} to label it DuckDB)</span></span>
+<span id="cb6-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">SELECT</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">category</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">COUNT</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> n, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AVG</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">value</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> mean</span>
+<span id="cb6-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data.csv'</span></span>
+<span id="cb6-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">category</span>;</span></code></pre></div></div>
+</div>
+
+
+
+ ]]></description>
+  <category>python</category>
+  <category>r</category>
+  <category>sql</category>
+  <guid>https://eyayaw.github.io/til/template/</guid>
+  <pubDate>Sat, 06 Jun 2026 22:00:00 GMT</pubDate>
+</item>
 </channel>
 </rss>
