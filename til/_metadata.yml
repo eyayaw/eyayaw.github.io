@@ -7,6 +7,29 @@ toc-title: Contents
 code-overflow: wrap
 freeze: auto
 css: styles-til.css
+# Derive each .compare block's language label from its highlight class at load:
+# any language works, aliases normalize (py→python, sh/bash/zsh→shell), and the
+# last class wins so `{.sql .duckdb}` highlights as SQL but labels "duckdb".
+include-after-body:
+  text: |
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const ALIAS = {
+        py: "python", python: "python", python3: "python",
+        sh: "shell", bash: "shell", zsh: "shell", shell: "shell", console: "shell",
+        js: "javascript", javascript: "javascript", ts: "typescript",
+        rb: "ruby", rs: "rust", yml: "yaml", r: "r", sql: "sql", duckdb: "duckdb",
+      };
+      const SKIP = new Set(["sourceCode", "code-with-copy", "numberLines",
+        "number-lines", "hidden", "cell-code", "code-annotation-code"]);
+      document.querySelectorAll(".compare div.sourceCode").forEach((div) => {
+        const pre = div.querySelector("pre");
+        if (!pre) return;
+        const tok = [...pre.classList].reverse().find((c) => !SKIP.has(c));
+        div.dataset.lang = tok ? (ALIAS[tok] || tok) : "code";
+      });
+    });
+    </script>
 comments:
   giscus:
     repo: "eyayaw/eyayaw.github.io"

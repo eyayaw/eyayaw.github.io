@@ -1,5 +1,5 @@
 /* ── TIL styles ─────────────────────────────────────────────────────────────
-   One construct. Wrap 1–3 plain fenced code blocks in a `.compare` div:
+   One construct. Wrap plain fenced code blocks in a `.compare` div:
 
      ::: {.compare}
      ```python
@@ -11,11 +11,17 @@
      :::
 
    Each block becomes a column: a quiet lowercase label above a tinted box
-   that hugs its content. Columns are separated by whitespace, not rules,
-   and stack on narrow screens. For three columns, add `.column-page-right`
-   (left edge stays aligned with the text, extends rightward as needed):
+   that hugs its content, separated by whitespace, not rules. Usually 2–3;
+   more works too — tracks shrink-to-fit so a wide row never clips, and the
+   grid stacks to full-width on tablet (3+ columns) and phones. For 3+ columns
+   add `.column-page-right` for room (left edge stays aligned with the text):
      ::: {.compare .column-page-right}
-   `.til-note` is a quiet aside; placed right after a comparison it tucks under.
+
+   Labels are written at load from each block's language class by the script
+   inlined in `_metadata.yml`: any language works, aliases are normalized
+   (py→python, sh/bash/zsh→shell), and the last class wins so `{.sql .duckdb}`
+   highlights as SQL yet labels "duckdb". `.til-note` is a quiet aside; placed
+   right after a comparison it tucks under.
 */
 
 :root {
@@ -58,18 +64,21 @@ pre.sourceCode span.ot {
     box-decoration-break: clone;
 }
 
-/* ── The comparison: content-sized columns, even whitespace gutters ─────── */
+/* ── The comparison: content-sized columns that shrink-to-fit, never clip ── */
 .compare {
     display: grid;
-    grid-auto-flow: column; /* N blocks → N columns, each as wide as its code */
-    justify-content: start; /* load-bearing: the default (normal = stretch)
-                               would inflate the auto tracks to fill the row */
+    grid-auto-flow: column; /* N blocks → N columns */
+    /* hug the code, but the 0 floor lets tracks shrink and wrap instead of
+       overflowing the page. (the default `auto` floors at min-content—the
+       longest unbreakable token—so wide rows clip off-screen with no scroll.) */
+    grid-auto-columns: minmax(0, max-content);
+    justify-content: start; /* prose-aligned; any slack sits to the right */
     gap: 1.5rem;
     margin: 1.5rem 0;
 }
 
 .compare > * {
-    min-width: 0; /* wrap long lines, don't widen the column */
+    min-width: 0;
     margin: 0;
 }
 
@@ -79,28 +88,32 @@ pre.sourceCode span.ot {
     margin: 0;
 }
 
-/* the box hugs its content width too—no tinted dead space to the right;
-   long lines still cap at the column and wrap */
 .compare pre.sourceCode {
-    width: fit-content;
-    max-width: 100%;
+    width: 100%; /* fill the content-sized track; wrap if it has to shrink */
 }
 
-@media (max-width: 700px) {
+/* Stacking, aligned to quarto's own grid breakpoints (768/992). More columns
+   need more room, so they stack sooner; stacked boxes go full-width. */
+@media (max-width: 767.98px) {
     .compare {
-        grid-auto-flow: row; /* stack */
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, 1fr);
         gap: 1rem;
     }
-
-    /* stacked boxes of varying widths look ragged; go full-width */
-    .compare pre.sourceCode {
-        width: 100%;
+}
+@media (max-width: 991.98px) {
+    .compare:has(> :nth-child(3)) {
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
     }
 }
 
-/* ── Labels: lowercase, above the box, derived from the language class ──── */
+/* ── Labels: lowercase, above each box. The script in `_metadata.yml` writes
+   the normalized language name into data-lang at load; the label stays hidden
+   until then, so with JS off there's no empty gap (just no label). ────────── */
 .compare div.sourceCode::before {
-    content: "code"; /* fallback; overridden per language below */
+    content: attr(data-lang);
     display: block;
     margin-bottom: 0.4rem;
     font-family: "IBM Plex Mono", monospace;
@@ -108,23 +121,8 @@ pre.sourceCode span.ot {
     text-align: center;
     color: var(--til-muted);
 }
-
-.compare div.sourceCode:has(pre.python)::before {
-    content: "python";
-}
-.compare div.sourceCode:has(pre.r)::before {
-    content: "r";
-}
-.compare div.sourceCode:has(pre.sql)::before {
-    content: "sql";
-}
-.compare div.sourceCode:has(pre.bash)::before,
-.compare div.sourceCode:has(pre.sh)::before {
-    content: "shell";
-}
-/* keep last so ```{.sql .duckdb} relabels to duckdb */
-.compare div.sourceCode:has(pre.duckdb)::before {
-    content: "duckdb";
+.compare div.sourceCode:not([data-lang])::before {
+    display: none;
 }
 
 /* the label sits at the top of quarto's copy-button scaffold (which is
