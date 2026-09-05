@@ -41,6 +41,13 @@ pre, code, .sourceCode {
   background-color: var(--color-ivory-medium);
 }
 
+#footnotes {
+  background-color: var(--color-ivory-dark);
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
 /* small inline brand logos (R, Python, DuckDB) used in text and the footer */
 .inline-icon {
   width: 1.25rem;
