@@ -14,7 +14,7 @@ code-fold: true
 #| label: setup
 #| echo: false
 
-library(data.table)
+library(data.table, warn.conflicts=FALSE)
 
 num_countries = 3
 num_years = 2
