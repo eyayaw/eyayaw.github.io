@@ -9,12 +9,12 @@
 <link>https://eyayaw.github.io/til.html</link>
 <atom:link href="https://eyayaw.github.io/til.xml" rel="self" type="application/rss+xml"/>
 <description>Eyayaw Beze&#39;s personal website</description>
-<generator>quarto-1.9.38</generator>
+<generator>quarto-1.10.18</generator>
 <lastBuildDate>Sat, 06 Jun 2026 22:00:00 GMT</lastBuildDate>
 <item>
   <title>TIL: Template</title>
   <dc:creator>Eyayaw Beze</dc:creator>
-  <link>https://eyayaw.github.io/til/template/</link>
+  <link>https://eyayaw.github.io/til/til-template/</link>
   <description><![CDATA[ 
 
 
@@ -82,7 +82,7 @@ font-style: inherit;">LIMIT</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>;</span></code></pre></div></div>
 </div>
-<div class="note">
+<div class="til-note">
 <p>Optional caveat or aside, placed right after a comparison, it tucks under it.</p>
 </div>
 <!-- ── Three columns ────────────────────────────────────────────────────────
@@ -179,7 +179,7 @@ font-style: inherit;">category</span>;</span></code></pre></div></div>
   <category>python</category>
   <category>r</category>
   <category>sql</category>
-  <guid>https://eyayaw.github.io/til/template/</guid>
+  <guid>https://eyayaw.github.io/til/til-template/</guid>
   <pubDate>Sat, 06 Jun 2026 22:00:00 GMT</pubDate>
 </item>
 </channel>

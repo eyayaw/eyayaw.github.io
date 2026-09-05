@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,10 +14,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -77,10 +80,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-9cb591dc4a548ded678bba7f9c76a5d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6f9fcc2430862256e790a901257cd8a5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -252,7 +255,7 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'data.csv'</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="note">
+<div class="til-note">
 <p>Optional caveat or aside, placed right after a comparison, it tucks under it.</p>
 </div>
 <!-- ── Three columns ────────────────────────────────────────────────────────
@@ -711,12 +714,30 @@ gtag('config', 'G-0MBR68SHL8', { 'anonymize_ip': true});
 </div>   
     <div class="nav-footer-center">
 <p><a href="https://github.com/eyayaw" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a> <a href="https://linkedin.com/in/eyayaw" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a> <a href="https://twitter.com/eyayaw" aria-label="Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></a> <a href="https://mastodon.social/@eyayaw" aria-label="Mastodon"><i class="bi bi-mastodon" aria-hidden="true"></i></a> <a href="https://bsky.app/profile/eyayaw.bsky.social" aria-label="Bluesky"><i class="bi bi-bluesky" aria-hidden="true"></i></a></p>
-<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/template/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/template/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/eyayaw/eyayaw.github.io/blob/main/til/til-template/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/edit/main/til/til-template/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/eyayaw/eyayaw.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><span>Made with ❤️ + <a href="https://r-project.org" aria-label="R project"><img src="../../img/icons/r.svg" alt="R" class="inline-icon"></a> + <a href="https://quarto.org"><img src="../../img/icons/quarto.png" alt="" width="16" height="16"> Quarto</a></span></p>
 </div>
   </div>
 </footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ALIAS = {
+    py: "python", python: "python", python3: "python",
+    sh: "shell", bash: "shell", zsh: "shell", shell: "shell", console: "shell",
+    js: "javascript", javascript: "javascript", ts: "typescript",
+    rb: "ruby", rs: "rust", yml: "yaml", r: "r", sql: "sql", duckdb: "duckdb",
+  };
+  const SKIP = new Set(["sourceCode", "code-with-copy", "numberLines",
+    "number-lines", "hidden", "cell-code", "code-annotation-code"]);
+  document.querySelectorAll(".compare div.sourceCode").forEach((div) => {
+    const pre = div.querySelector("pre");
+    if (!pre) return;
+    const tok = [...pre.classList].reverse().find((c) => !SKIP.has(c));
+    div.dataset.lang = tok ? (ALIAS[tok] || tok) : "code";
+  });
+});
+</script>
 
 
 

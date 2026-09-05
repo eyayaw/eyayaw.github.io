@@ -9,7 +9,7 @@
 <link>https://eyayaw.github.io/blog.html</link>
 <atom:link href="https://eyayaw.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Eyayaw Beze&#39;s personal website</description>
-<generator>quarto-1.9.38</generator>
+<generator>quarto-1.10.18</generator>
 <lastBuildDate>Mon, 11 Aug 2025 22:00:00 GMT</lastBuildDate>
 <item>
   <title>Underwhelmed by stats::reshape</title>
@@ -20,17 +20,6 @@
 
 
 
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'data.table'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:base':
-
-    %notin%</code></pre>
-</div>
-</div>
 <p>When was the last time you used <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html"><code>stats::reshape</code></a>? Probably never, in the presence of {tidyr}’s <a href="https://tidyr.tidyverse.org/articles/pivot.html"><code>pivot_*</code></a> and {data.table}’s <a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html"><code>melt</code>/<code>dcast</code></a> reshaping (aka pivoting) functions.</p>
 <p>A while ago, while perusing through the {data.table} <a href="https://rdatatable.gitlab.io/data.table/articles/">vignettes</a>, I learned about the <code>reshape</code> function. The {data.table} core team described it as “<a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reshape.html#limitations-in-previous-meltdcast-approaches">It is an extremely useful and often underrated function.</a>”. As a member of the “dependency-frets” (as <code>reshape</code> is part of <a href="../base-r.html">base R</a>), I’ve been using it fairly since. However, it has some annoyances that might lead you to think that the function isn’t yet quite “fully ripe”, which could explain its “underratting”.</p>
 <p>First, it’s very slow; no further comment is needed, but that could be a deal breaker for some.<sup>1</sup></p>
@@ -70,33 +59,33 @@ Tip
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># import data (source WBG WDI)</span></span>
-<span id="cb3-2">wdi_data_wide <span class="ot" style="color: #003B4F;
+<span id="cb1-2">wdi_data_wide <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"wdi_data_wide.csv"</span>)</span>
-<span id="cb3-3">wdi_data_long <span class="ot" style="color: #003B4F;
+<span id="cb1-3">wdi_data_long <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"wdi_data_long.csv"</span>)</span>
-<span id="cb3-4"></span>
-<span id="cb3-5"><span class="co" style="color: #5E5E5E;
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># constants</span></span>
-<span id="cb3-6">data_url <span class="ot" style="color: #003B4F;
+<span id="cb1-6">data_url <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"https://databank.worldbank.org/id/8dfced2d"</span></span>
-<span id="cb3-7">varying_patt <span class="ot" style="color: #003B4F;
+<span id="cb1-7">varying_patt <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -107,7 +96,7 @@ background-color: null;
 font-style: inherit;">d{4})$"</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># regex for measure vars</span></span>
-<span id="cb3-8">varying_patt_vec <span class="ot" style="color: #003B4F;
+<span id="cb1-8">varying_patt_vec <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -134,7 +123,7 @@ font-style: inherit;">"^gdp"</span>)</span></code></pre></div></div>
 <div class="cell" data-layout-nrow="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -145,17 +134,17 @@ background-color: null;
 font-style: inherit;">FALSE</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb4-2">  <span class="fu" style="color: #4758AB;
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb4-3">  knitr<span class="sc" style="color: #5E5E5E;
+<span id="cb2-3">  knitr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>()</span>
-<span id="cb4-4"><span class="fu" style="color: #4758AB;
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -166,12 +155,12 @@ background-color: null;
 font-style: inherit;">FALSE</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb4-5">  <span class="fu" style="color: #4758AB;
+<span id="cb2-5">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb4-6">  knitr<span class="sc" style="color: #5E5E5E;
+<span id="cb2-6">  knitr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -402,18 +391,18 @@ Table&nbsp;2: The data in true wide format (cleaned)
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb5-2"><span class="fu" style="color: #4758AB;
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">as.data.table</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">melt</span>(</span>
-<span id="cb5-4">  <span class="at" style="color: #657422;
+<span id="cb3-4">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">measure.vars =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -426,12 +415,12 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">d{4})$"</span>),</span>
-<span id="cb5-5">  <span class="at" style="color: #657422;
+<span id="cb3-5">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">id.vars =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span></span>
-<span id="cb5-6">)</span></code></pre></div></div>
+<span id="cb3-6">)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       country   year pop_total gdp_pc_ppp
@@ -449,20 +438,20 @@ font-style: inherit;">"country"</span></span>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb7-2">  tidyr<span class="sc" style="color: #5E5E5E;
+<span id="cb5-2">  tidyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">pivot_longer</span>(</span>
-<span id="cb7-3">    <span class="at" style="color: #657422;
+<span id="cb5-3">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">cols =</span> <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>country,</span>
-<span id="cb7-4">    <span class="at" style="color: #657422;
+<span id="cb5-4">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">names_pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -471,7 +460,7 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">d{4})$"</span>,</span>
-<span id="cb7-5">    <span class="at" style="color: #657422;
+<span id="cb5-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">names_to =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -480,7 +469,7 @@ background-color: null;
 font-style: inherit;">".value"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>)</span>
-<span id="cb7-6">  )</span></code></pre></div></div>
+<span id="cb5-6">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
@@ -499,84 +488,84 @@ font-style: inherit;">"year"</span>)</span>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">duckdb</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;&lt; EOF</span></span>
-<span id="cb9-2"><span class="st" style="color: #20794D;
+<span id="cb7-2"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">create or replace table wdi_data_wide as</span></span>
-<span id="cb9-3"><span class="st" style="color: #20794D;
+<span id="cb7-3"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">from read_csv('wdi_data_wide.csv');</span></span>
-<span id="cb9-4"></span>
-<span id="cb9-5"><span class="st" style="color: #20794D;
+<span id="cb7-4"></span>
+<span id="cb7-5"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">set variable measure_patt = '^([a-z_]+)_(</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\d</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">{4})$';</span></span>
-<span id="cb9-6"></span>
-<span id="cb9-7"><span class="st" style="color: #20794D;
+<span id="cb7-6"></span>
+<span id="cb7-7"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">.mode markdown</span></span>
-<span id="cb9-8"><span class="st" style="color: #20794D;
+<span id="cb7-8"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">with unpivoted as (</span></span>
-<span id="cb9-9"><span class="st" style="color: #20794D;
+<span id="cb7-9"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  select</span></span>
-<span id="cb9-10"><span class="st" style="color: #20794D;
+<span id="cb7-10"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    country,</span></span>
-<span id="cb9-11"><span class="st" style="color: #20794D;
+<span id="cb7-11"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,</span></span>
-<span id="cb9-12"><span class="st" style="color: #20794D;
+<span id="cb7-12"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,</span></span>
-<span id="cb9-13"><span class="st" style="color: #20794D;
+<span id="cb7-13"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    column_value as value</span></span>
-<span id="cb9-14"><span class="st" style="color: #20794D;
+<span id="cb7-14"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  from (</span></span>
-<span id="cb9-15"><span class="st" style="color: #20794D;
+<span id="cb7-15"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    unpivot wdi_data_wide</span></span>
-<span id="cb9-16"><span class="st" style="color: #20794D;
+<span id="cb7-16"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    on COLUMNS(getvariable('measure_patt'))</span></span>
-<span id="cb9-17"><span class="st" style="color: #20794D;
+<span id="cb7-17"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    into</span></span>
-<span id="cb9-18"><span class="st" style="color: #20794D;
+<span id="cb7-18"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">      name column_name</span></span>
-<span id="cb9-19"><span class="st" style="color: #20794D;
+<span id="cb7-19"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">      value column_value</span></span>
-<span id="cb9-20"><span class="st" style="color: #20794D;
+<span id="cb7-20"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  )</span></span>
-<span id="cb9-21"><span class="st" style="color: #20794D;
+<span id="cb7-21"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">)</span></span>
-<span id="cb9-22"><span class="st" style="color: #20794D;
+<span id="cb7-22"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">pivot unpivoted</span></span>
-<span id="cb9-23"><span class="st" style="color: #20794D;
+<span id="cb7-23"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">on measure</span></span>
-<span id="cb9-24"><span class="st" style="color: #20794D;
+<span id="cb7-24"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">using first(value)</span></span>
-<span id="cb9-25"><span class="st" style="color: #20794D;
+<span id="cb7-25"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">order by country, year;</span></span>
-<span id="cb9-26"><span class="op" style="color: #5E5E5E;
+<span id="cb7-26"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">EOF</span></span></code></pre></div></div>
 </details>
@@ -598,42 +587,42 @@ font-style: inherit;">EOF</span></span></code></pre></div></div>
 </div>
 </div>
 <p>According to the <a href="https://search.r-project.org/R/refmans/stats/html/reshape.html">doc</a>, the easiest way to reshape to long with <code>reshape</code> is by using “nicely” formatted column names: that is, use a <code>sep</code> (which defaults to <code>.</code>) between the time <code>varying</code> variables and the <code>timevar</code>, like <code>gdp_pc_ppp.2020</code> and <code>pop_total.2020</code>. This nice formatting has the added benefit that <code>v.names</code> (<code>gdp_pc_ppp</code>, <code>pop_total</code>) and <code>times</code> (i.e., the values for <code>timevar</code>) (2020), will be auto-guessed; otherwise, we need to supply them ourselves (which is error prone).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="do" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">### Typical usage for converting from wide to long format:</span></span>
-<span id="cb11-2"></span>
-<span id="cb11-3"><span class="do" style="color: #5E5E5E;
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">### If names of wide-format variables are in a 'nice' format</span></span>
-<span id="cb11-4"></span>
-<span id="cb11-5"><span class="co" style="color: #5E5E5E;
+<span id="cb9-4"></span>
+<span id="cb9-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># reshape(data, direction = "long",</span></span>
-<span id="cb11-6"><span class="co" style="color: #5E5E5E;
+<span id="cb9-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#         varying = c(___), # vector</span></span>
-<span id="cb11-7"><span class="co" style="color: #5E5E5E;
+<span id="cb9-7"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#         sep)              # to help guess 'v.names' and 'times'</span></span></code></pre></div></div>
 <p>So let’s rename our <code>varying</code> columns using a special <code>sep</code> and try reshaping to long as follows:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">sep <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">sep <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"."</span></span>
-<span id="cb12-2"><span class="co" style="color: #5E5E5E;
+<span id="cb10-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># let's replace "_" (just before the year) with the sep to "nicely" format the column names</span></span>
-<span id="cb12-3">nicely_format_names <span class="ot" style="color: #003B4F;
+<span id="cb10-3">nicely_format_names <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">function</span>(nms) {</span>
-<span id="cb12-4">  <span class="fu" style="color: #4758AB;
+<span id="cb10-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">sub</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -646,30 +635,30 @@ background-color: null;
 font-style: inherit;">perl =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">TRUE</span>)</span>
-<span id="cb12-5">}</span>
-<span id="cb12-6"></span>
-<span id="cb12-7">nice_nms <span class="ot" style="color: #003B4F;
+<span id="cb10-5">}</span>
+<span id="cb10-6"></span>
+<span id="cb10-7">nice_nms <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">nicely_format_names</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">names</span>(wdi_data_wide))</span>
-<span id="cb12-8"></span>
-<span id="cb12-9">wdi_data_wide_long1 <span class="ot" style="color: #003B4F;
+<span id="cb10-8"></span>
+<span id="cb10-9">wdi_data_wide_long1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reshape</span>(</span>
-<span id="cb12-10">  <span class="fu" style="color: #4758AB;
+<span id="cb10-10">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">setNames</span>(wdi_data_wide, nice_nms),</span>
-<span id="cb12-11">  <span class="at" style="color: #657422;
+<span id="cb10-11">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"long"</span>,</span>
-<span id="cb12-12">  <span class="at" style="color: #657422;
+<span id="cb10-12">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -682,28 +671,28 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">d{4}$"</span>, sep), nice_nms),</span>
-<span id="cb12-13">  <span class="at" style="color: #657422;
+<span id="cb10-13">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span>, <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># if ommitted, an `id` column will be added `seq_along(data)`</span></span>
-<span id="cb12-14">  <span class="at" style="color: #657422;
+<span id="cb10-14">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>, <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># otherwise `time`</span></span>
-<span id="cb12-15">  <span class="at" style="color: #657422;
+<span id="cb10-15">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sep =</span> sep <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># the default is `.`</span></span>
-<span id="cb12-16">)</span>
-<span id="cb12-17"></span>
-<span id="cb12-18">wdi_data_wide_long1 <span class="sc" style="color: #5E5E5E;
+<span id="cb10-16">)</span>
+<span id="cb10-17"></span>
+<span id="cb10-18">wdi_data_wide_long1 <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -720,73 +709,73 @@ Germany.2020         Germany 2020  83160871  60342.663</code></pre>
 </div>
 </div>
 <p>That is a hell of unnatural detour for reshaping. What if we want to go along with our column names? Enter explicit-specification:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="do" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">### Typical usage for converting from wide to long format:</span></span>
-<span id="cb14-2"></span>
-<span id="cb14-3"><span class="co" style="color: #5E5E5E;
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># ...</span></span>
-<span id="cb14-4"></span>
-<span id="cb14-5"><span class="do" style="color: #5E5E5E;
+<span id="cb12-4"></span>
+<span id="cb12-5"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">### To specify long-format variable names explicitly</span></span>
-<span id="cb14-6"></span>
-<span id="cb14-7"><span class="co" style="color: #5E5E5E;
+<span id="cb12-6"></span>
+<span id="cb12-7"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># reshape(data, direction = "long",</span></span>
-<span id="cb14-8"><span class="co" style="color: #5E5E5E;
+<span id="cb12-8"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#         varying = ___,  # list / matrix / vector (use with care)</span></span>
-<span id="cb14-9"><span class="co" style="color: #5E5E5E;
+<span id="cb12-9"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#         v.names = ___,  # vector of variable names in long format</span></span>
-<span id="cb14-10"><span class="co" style="color: #5E5E5E;
+<span id="cb12-10"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#         timevar, times, # name / values of constructed time variable</span></span>
-<span id="cb14-11"><span class="co" style="color: #5E5E5E;
+<span id="cb12-11"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#         idvar, ids)     # name / values of constructed id variable</span></span></code></pre></div></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">wdi_data_wide_long2 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">wdi_data_wide_long2 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb15-2">  <span class="fu" style="color: #4758AB;
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reshape</span>(</span>
-<span id="cb15-3">    <span class="at" style="color: #657422;
+<span id="cb13-3">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"long"</span>,</span>
-<span id="cb15-4">    <span class="co" style="color: #5E5E5E;
+<span id="cb13-4">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># varying = lapply(c("^pop", "^gdp"), \(p) grepv(p, names(wdi_data_wide))),</span></span>
-<span id="cb15-5">    <span class="at" style="color: #657422;
+<span id="cb13-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">list</span>(</span>
-<span id="cb15-6">      <span class="fu" style="color: #4758AB;
+<span id="cb13-6">      <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"pop_total_2019"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"pop_total_2020"</span>),</span>
-<span id="cb15-7">      <span class="fu" style="color: #4758AB;
+<span id="cb13-7">      <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gdp_pc_ppp_2019"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gdp_pc_ppp_2020"</span>)</span>
-<span id="cb15-8">    ),</span>
-<span id="cb15-9">    <span class="at" style="color: #657422;
+<span id="cb13-8">    ),</span>
+<span id="cb13-9">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">v.names =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -795,21 +784,21 @@ background-color: null;
 font-style: inherit;">"pop"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gdp_pc_ppp"</span>),</span>
-<span id="cb15-10">    <span class="at" style="color: #657422;
+<span id="cb13-10">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span>, <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># otherwise column `ids` will be created</span></span>
-<span id="cb15-11">    <span class="at" style="color: #657422;
+<span id="cb13-11">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>, <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># otherwise "time"</span></span>
-<span id="cb15-12">    <span class="at" style="color: #657422;
+<span id="cb13-12">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">times =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -820,9 +809,9 @@ background-color: null;
 font-style: inherit;">"2020"</span>) <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># otherwise auto-generated</span></span>
-<span id="cb15-13">  )</span>
-<span id="cb15-14"></span>
-<span id="cb15-15">wdi_data_wide_long2 <span class="sc" style="color: #5E5E5E;
+<span id="cb13-13">  )</span>
+<span id="cb13-14"></span>
+<span id="cb13-15">wdi_data_wide_long2 <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -851,20 +840,20 @@ Germany.2020         Germany 2020  83160871  60342.663</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">wdi_data_wide_long3 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">wdi_data_wide_long3 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> wdi_data_wide <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb17-2">  <span class="fu" style="color: #4758AB;
+<span id="cb15-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reshape</span>(</span>
-<span id="cb17-3">    <span class="at" style="color: #657422;
+<span id="cb15-3">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"long"</span>,</span>
-<span id="cb17-4">    <span class="at" style="color: #657422;
+<span id="cb15-4">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -877,17 +866,17 @@ background-color: null;
 font-style: inherit;">"pop_total_2020"</span>,  <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gdp_pc_ppp_2020"</span>),</span>
-<span id="cb17-5">    <span class="at" style="color: #657422;
+<span id="cb15-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>,</span>
-<span id="cb17-6">    <span class="at" style="color: #657422;
+<span id="cb15-6">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span>,</span>
-<span id="cb17-7">    <span class="at" style="color: #657422;
+<span id="cb15-7">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">split =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -908,9 +897,9 @@ background-color: null;
 font-style: inherit;">fixed =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>)</span>
-<span id="cb17-8">  )</span>
-<span id="cb17-9"></span>
-<span id="cb17-10">wdi_data_wide_long3 <span class="sc" style="color: #5E5E5E;
+<span id="cb15-8">  )</span>
+<span id="cb15-9"></span>
+<span id="cb15-10">wdi_data_wide_long3 <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -932,7 +921,7 @@ Germany.2020         Germany 2020   83160871   60342.663</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">wdi_data_wide_unbalanced <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">wdi_data_wide_unbalanced <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> wdi_data_wide[, <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -941,19 +930,19 @@ background-color: null;
 font-style: inherit;">names</span>(wdi_data_wide), <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gdp_pc_ppp_2020"</span>)]</span>
-<span id="cb19-2"></span>
-<span id="cb19-3">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
+<span id="cb17-2"></span>
+<span id="cb17-3">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb19-4">  <span class="fu" style="color: #4758AB;
+<span id="cb17-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reshape</span>(</span>
-<span id="cb19-5">    <span class="at" style="color: #657422;
+<span id="cb17-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"long"</span>,</span>
-<span id="cb19-6">    <span class="at" style="color: #657422;
+<span id="cb17-6">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">varying =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -966,17 +955,17 @@ background-color: null;
 font-style: inherit;">d{4}$"</span>, <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">names</span>(wdi_data_wide_unbalanced)),</span>
-<span id="cb19-7">    <span class="at" style="color: #657422;
+<span id="cb17-7">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>,</span>
-<span id="cb19-8">    <span class="at" style="color: #657422;
+<span id="cb17-8">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span>,</span>
-<span id="cb19-9">    <span class="at" style="color: #657422;
+<span id="cb17-9">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">split =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -997,7 +986,7 @@ background-color: null;
 font-style: inherit;">fixed =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>)</span>
-<span id="cb19-10">  )</span></code></pre></div></div>
+<span id="cb17-10">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `reshapeLong()`:
@@ -1023,26 +1012,26 @@ font-style: inherit;">FALSE</span>)</span>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># data.table solution</span></span>
-<span id="cb21-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
+<span id="cb19-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb21-3">  <span class="fu" style="color: #4758AB;
+<span id="cb19-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">as.data.table</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb21-4">  <span class="fu" style="color: #4758AB;
+<span id="cb19-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">melt</span>(</span>
-<span id="cb21-5">    <span class="at" style="color: #657422;
+<span id="cb19-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">id.vars =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span>,</span>
-<span id="cb21-6">    <span class="at" style="color: #657422;
+<span id="cb19-6">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">measure.vars =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1055,7 +1044,7 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">d{4})$"</span>)</span>
-<span id="cb21-7">  )</span></code></pre></div></div>
+<span id="cb19-7">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       country   year pop_total gdp_pc_ppp
@@ -1073,23 +1062,23 @@ font-style: inherit;">d{4})$"</span>)</span>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># tidyr solution</span></span>
-<span id="cb23-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
+<span id="cb21-2">wdi_data_wide_unbalanced <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb23-3">  tidyr<span class="sc" style="color: #5E5E5E;
+<span id="cb21-3">  tidyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">pivot_longer</span>(</span>
-<span id="cb23-4">    <span class="at" style="color: #657422;
+<span id="cb21-4">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">cols =</span> <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>country,</span>
-<span id="cb23-5">    <span class="at" style="color: #657422;
+<span id="cb21-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">names_pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -1098,7 +1087,7 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">d{4})$"</span>,</span>
-<span id="cb23-6">    <span class="at" style="color: #657422;
+<span id="cb21-6">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">names_to =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1107,7 +1096,7 @@ background-color: null;
 font-style: inherit;">".value"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>)</span>
-<span id="cb23-7">  )</span></code></pre></div></div>
+<span id="cb21-7">  )</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
@@ -1126,88 +1115,88 @@ font-style: inherit;">"year"</span>)</span>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># duckdb solution</span></span>
-<span id="cb25-2"></span>
-<span id="cb25-3">duck_cmd <span class="ot" style="color: #003B4F;
+<span id="cb23-2"></span>
+<span id="cb23-3">duck_cmd <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> r<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{</span></span>
-<span id="cb25-4"><span class="st" style="color: #20794D;
+<span id="cb23-4"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">duckdb &lt;&lt; EOF</span></span>
-<span id="cb25-5"><span class="st" style="color: #20794D;
+<span id="cb23-5"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  create or replace table wdi_data_wide as</span></span>
-<span id="cb25-6"><span class="st" style="color: #20794D;
+<span id="cb23-6"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  from read_csv('wdi_data_wide.csv');</span></span>
-<span id="cb25-7"></span>
-<span id="cb25-8"><span class="st" style="color: #20794D;
+<span id="cb23-7"></span>
+<span id="cb23-8"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  set variable measure_patt = '^([a-z_]+)_(\d{4})$';</span></span>
-<span id="cb25-9"></span>
-<span id="cb25-10"><span class="st" style="color: #20794D;
+<span id="cb23-9"></span>
+<span id="cb23-10"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  pivot (</span></span>
-<span id="cb25-11"><span class="st" style="color: #20794D;
+<span id="cb23-11"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    select</span></span>
-<span id="cb25-12"><span class="st" style="color: #20794D;
+<span id="cb23-12"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    country,</span></span>
-<span id="cb25-13"><span class="st" style="color: #20794D;
+<span id="cb23-13"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 2) as year,</span></span>
-<span id="cb25-14"><span class="st" style="color: #20794D;
+<span id="cb23-14"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    regexp_extract(column_name, getvariable('measure_patt'), 1) as measure,</span></span>
-<span id="cb25-15"><span class="st" style="color: #20794D;
+<span id="cb23-15"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    column_value as value</span></span>
-<span id="cb25-16"><span class="st" style="color: #20794D;
+<span id="cb23-16"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    from (</span></span>
-<span id="cb25-17"><span class="st" style="color: #20794D;
+<span id="cb23-17"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">      unpivot wdi_data_wide</span></span>
-<span id="cb25-18"><span class="st" style="color: #20794D;
+<span id="cb23-18"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">      on COLUMNS( * exclude(country, gdp_pc_ppp_2020))</span></span>
-<span id="cb25-19"><span class="st" style="color: #20794D;
+<span id="cb23-19"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">      into</span></span>
-<span id="cb25-20"><span class="st" style="color: #20794D;
+<span id="cb23-20"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">        name column_name</span></span>
-<span id="cb25-21"><span class="st" style="color: #20794D;
+<span id="cb23-21"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">        value column_value</span></span>
-<span id="cb25-22"><span class="st" style="color: #20794D;
+<span id="cb23-22"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">    )</span></span>
-<span id="cb25-23"><span class="st" style="color: #20794D;
+<span id="cb23-23"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  )</span></span>
-<span id="cb25-24"><span class="st" style="color: #20794D;
+<span id="cb23-24"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  on measure</span></span>
-<span id="cb25-25"><span class="st" style="color: #20794D;
+<span id="cb23-25"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  using first(value)</span></span>
-<span id="cb25-26"><span class="st" style="color: #20794D;
+<span id="cb23-26"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">  order by country, year;</span></span>
-<span id="cb25-27"><span class="st" style="color: #20794D;
+<span id="cb23-27"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">EOF</span></span>
-<span id="cb25-28"><span class="st" style="color: #20794D;
+<span id="cb23-28"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">}"</span></span>
-<span id="cb25-29"></span>
-<span id="cb25-30"><span class="fu" style="color: #4758AB;
+<span id="cb23-29"></span>
+<span id="cb23-30"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1256,21 +1245,21 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># step 1 -&gt; reshape into longitudinal</span></span>
-<span id="cb27-2">(<span class="at" style="color: #657422;
+<span id="cb25-2">(<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">wdi_data_longitudinal =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reshape</span>(</span>
-<span id="cb27-3">  wdi_data_long,</span>
-<span id="cb27-4">  <span class="at" style="color: #657422;
+<span id="cb25-3">  wdi_data_long,</span>
+<span id="cb25-4">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"wide"</span>,</span>
-<span id="cb27-5">  <span class="at" style="color: #657422;
+<span id="cb25-5">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">idvar =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1279,22 +1268,22 @@ background-color: null;
 font-style: inherit;">"country"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>),</span>
-<span id="cb27-6">  <span class="at" style="color: #657422;
+<span id="cb25-6">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"series"</span>,</span>
-<span id="cb27-7">  <span class="at" style="color: #657422;
+<span id="cb25-7">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">v.names =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"value"</span>,</span>
-<span id="cb27-8">  <span class="at" style="color: #657422;
+<span id="cb25-8">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"_"</span></span>
-<span id="cb27-9">))</span></code></pre></div></div>
+<span id="cb25-9">))</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       country year value_pop_total value_gdp_pc_ppp
@@ -1307,40 +1296,40 @@ font-style: inherit;">"_"</span></span>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># step 2 -&gt; wide format</span></span>
-<span id="cb29-2">wdi_data_longitudinal <span class="sc" style="color: #5E5E5E;
+<span id="cb27-2">wdi_data_longitudinal <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb29-3">  <span class="fu" style="color: #4758AB;
+<span id="cb27-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reshape</span>(</span>
-<span id="cb29-4">    <span class="at" style="color: #657422;
+<span id="cb27-4">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">direction =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"wide"</span>,</span>
-<span id="cb29-5">    <span class="at" style="color: #657422;
+<span id="cb27-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">idvar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"country"</span>,</span>
-<span id="cb29-6">    <span class="at" style="color: #657422;
+<span id="cb27-6">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">timevar =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"year"</span>,</span>
-<span id="cb29-7">    <span class="at" style="color: #657422;
+<span id="cb27-7">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"_"</span></span>
-<span id="cb29-8">  ) <span class="ot" style="color: #003B4F;
+<span id="cb27-8">  ) <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">-&gt;</span> wdi_data_long_wide</span>
-<span id="cb29-9"></span>
-<span id="cb29-10">wdi_data_long_wide <span class="co" style="color: #5E5E5E;
+<span id="cb27-9"></span>
+<span id="cb27-10">wdi_data_long_wide <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wide)))</span></span></code></pre></div></div>
 </details>
@@ -1360,15 +1349,15 @@ font-style: inherit;"># |&gt; setNames(sub("^value_", "", names(wdi_data_long_wi
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb31-2">  <span class="fu" style="color: #4758AB;
+<span id="cb29-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">as.data.table</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb31-3">  <span class="fu" style="color: #4758AB;
+<span id="cb29-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">dcast</span>(country <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1390,10 +1379,10 @@ font-style: inherit;">+</span> year)</span></code></pre></div></div>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">wdi_data_long <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span></span>
-<span id="cb33-2">  tidyr<span class="sc" style="color: #5E5E5E;
+<span id="cb31-2">  tidyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1420,46 +1409,46 @@ font-style: inherit;">values_from =</span> value)</span></code></pre></div></div
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">duckdb</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;&lt; EOF</span></span>
-<span id="cb35-2"><span class="st" style="color: #20794D;
+<span id="cb33-2"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">create or replace table wdi_data_long as</span></span>
-<span id="cb35-3"><span class="st" style="color: #20794D;
+<span id="cb33-3"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">from read_csv('wdi_data_long.csv');</span></span>
-<span id="cb35-4"></span>
-<span id="cb35-5"><span class="st" style="color: #20794D;
+<span id="cb33-4"></span>
+<span id="cb33-5"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">.mode markdown</span></span>
-<span id="cb35-6"><span class="st" style="color: #20794D;
+<span id="cb33-6"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">pivot wdi_data_long</span></span>
-<span id="cb35-7"><span class="st" style="color: #20794D;
+<span id="cb33-7"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">-- with a custom sep</span></span>
-<span id="cb35-8"><span class="st" style="color: #20794D;
+<span id="cb33-8"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">-- on series || '.' || year</span></span>
-<span id="cb35-9"><span class="st" style="color: #20794D;
+<span id="cb33-9"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">on series, year</span></span>
-<span id="cb35-10"><span class="st" style="color: #20794D;
+<span id="cb33-10"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">using first(value);</span></span>
-<span id="cb35-11"><span class="op" style="color: #5E5E5E;
+<span id="cb33-11"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">EOF</span></span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>|   country   | gdp_pc_ppp_2019  | gdp_pc_ppp_2020  | pop_total_2019 | pop_total_2020 |
 |-------------|-----------------:|-----------------:|---------------:|---------------:|
+| Ethiopia    | 2437.97046055952 | 2516.54907642544 | 115737383.0    | 118917671.0    |
 | Korea, Rep. | 46757.2614496182 | 46361.5957811718 | 51764822.0     | 51836239.0     |
-| Germany     | 62970.7160913279 | 60342.6627037391 | 83092962.0     | 83160871.0     |
-| Ethiopia    | 2437.97046055952 | 2516.54907642544 | 115737383.0    | 118917671.0    |</code></pre>
+| Germany     | 62970.7160913279 | 60342.6627037391 | 83092962.0     | 83160871.0     |</code></pre>
 </div>
 </div>
 </div>
@@ -1487,8 +1476,9 @@ font-style: inherit;">EOF</span></span></code></pre></div></div>
 </section></div> ]]></description>
   <category>r</category>
   <category>base-r</category>
-  <category>tutorial</category>
-  <category>programming</category>
+  <category>tidyverse</category>
+  <category>rdatatable</category>
+  <category>duckdb</category>
   <guid>https://eyayaw.github.io/posts/underwhelmed-by-stats-reshape/</guid>
   <pubDate>Mon, 11 Aug 2025 22:00:00 GMT</pubDate>
 </item>
@@ -2223,10 +2213,9 @@ font-style: inherit;">"UTF-8"</span></span></code></pre></div></div>
 <li id="fn2"><p>You may need to the change its permission with <code>chmod +x bootstrap.sh</code> or use <code>source bootstrap.sh</code>↩︎</p></li>
 </ol>
 </section></div> ]]></description>
+  <category>macos</category>
   <category>config</category>
   <category>cli</category>
-  <category>macos</category>
-  <category>programming</category>
   <guid>https://eyayaw.github.io/posts/setting-up-a-new-mac/</guid>
   <pubDate>Thu, 24 Apr 2025 22:00:00 GMT</pubDate>
   <media:content url="https://eyayaw.github.io/posts/setting-up-a-new-mac/welcome-to-mac.jpg" medium="image" type="image/jpeg"/>
@@ -2305,7 +2294,7 @@ background-color: null;
 font-style: inherit;">"Package"</span>, fields))</span></code></pre></div></div>
 </details>
 </div>
-<p>There are 14 base R packages, in R 4.5.1. Below is a complete list.</p>
+<p>There are 14 base R packages, in R 4.6.1. Below is a complete list.</p>
 <div class="callout callout-style-default callout-important no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2382,7 +2371,7 @@ background-color: null;
 font-style: inherit;">1</span>]]</span></code></pre></div></div>
 </details>
 </div>
-<p>The default packages are attached when R starts up. As of R 4.5.1 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
+<p>The default packages are attached when R starts up. As of R 4.6.1 these are: {datasets}, {utils}, {grDevices}, {graphics}, {stats}, and {methods}. Obviously, add {base} to the list. You can also see them in the search path (prepended with <code>package:</code>):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2476,7 +2465,7 @@ font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div></d
 </details>
 </div>
 <p>The other base R packages are {compiler}, {grid}, {parallel}, {splines}, {stats4}, {tcltk}, and {tools}. These (or some) may not be familiar to you (myself included) if you’re not a package developer. I have used {tools} for example to check package dependencies (e.g., <code>tools::package_dependencies("data.table", recursive = TRUE)</code>), and work with file paths (see my <a href="https://x.com/eyayaw/status/1488568897334915081">tweet</a>). I have also lightly used {grid} to add annotations to base plots. Have you ever used {tcltk}?</p>
-<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.5.1), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
+<p>In sum, when people say “I use base R”, they probably mean {base} functions because the comparison is mostly about data manipulation/wrangling, not say visualization (base {graphics} vs {ggplot2}) or other tasks.<sup>3</sup> <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">Not true</a>? See examples <a href="https://x.com/hadleywickham/status/1231252596712771585">here</a>, <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-02-18-dt_particularities-toby_hocking/">here</a>. In other words, if you use <code>df[df$x &gt; 1, ]</code> instead of say <code>dplyr::filter(df, x &gt; 1)</code>, or <code>data.table::as.data.table(df)[x &gt; 1, ]</code>, you’re a base R-er. However, base R “should” refer to the suite of built-in packages in R (14 as of R 4.6.1), like {tidyverse} which is a collection of diverse (but related) packages <a href="https://www.tidyverse.org/packages/">from everyday data analyses to specialized packages</a>.</p>
 
 
 
@@ -2489,7 +2478,6 @@ font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div></d
 <li id="fn3"><p>Most, if not all, base R-ers use {ggplot2}, lovingly.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
-  <category>programming</category>
   <category>r</category>
   <category>base-r</category>
   <guid>https://eyayaw.github.io/posts/base-r/</guid>
@@ -2512,9 +2500,10 @@ font-style: inherit;">"base"</span>, default_pkgs))</span></code></pre></div></d
 
 
  ]]></description>
-  <category>news</category>
+  <category>meta</category>
   <guid>https://eyayaw.github.io/posts/welcome-to-my-blog/</guid>
   <pubDate>Sat, 30 Jul 2022 22:00:00 GMT</pubDate>
+  <media:content url="https://eyayaw.github.io/posts/welcome-to-my-blog/thumbnail.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

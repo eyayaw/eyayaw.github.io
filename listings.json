@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/blog.html",
     "items": [
       "/posts/underwhelmed-by-stats-reshape/index.html",
       "/posts/setting-up-a-new-mac/index.html",
@@ -9,7 +9,7 @@
     ]
   },
   {
-    "listing": "/blog.html",
+    "listing": "/index.html",
     "items": [
       "/posts/underwhelmed-by-stats-reshape/index.html",
       "/posts/setting-up-a-new-mac/index.html",
@@ -20,7 +20,7 @@
   {
     "listing": "/til.html",
     "items": [
-      "/til/template/index.html"
+      "/til/til-template/index.html"
     ]
   }
 ]
