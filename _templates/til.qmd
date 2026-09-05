@@ -1,0 +1,17 @@
+---
+title: ${TITLE}
+date: "${DATE}"
+categories: []
+draft: true
+---
+
+One or two sentences on what I learned.
+
+::: {.compare}
+```python
+```
+:::
+
+<!-- Layout options live in til/til-template/index.qmd: one labeled block,
+     side-by-side columns, `.til-note` asides, and `.column-page-right` for
+     three columns. -->

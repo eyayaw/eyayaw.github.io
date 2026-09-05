@@ -1,0 +1,21 @@
+---
+title: ${TITLE}
+description: ""
+date: "${DATE}"
+categories: [package, ${PROJECT}]
+image: thumbnail.png
+image-alt: ""
+draft: true
+page-layout: full
+execute:
+  freeze: true
+  echo: true
+  warning: false
+  message: false
+---
+
+One paragraph on what it does. Installation comes after.
+
+## Installation
+
+## Usage

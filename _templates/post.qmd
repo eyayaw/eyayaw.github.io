@@ -1,0 +1,11 @@
+---
+title: ${TITLE}
+description: ""
+date: "${DATE}"
+categories: []
+image: thumbnail.png
+image-alt: ""
+draft: true
+---
+
+Open with the problem you hit.

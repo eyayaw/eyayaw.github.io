@@ -1,0 +1,15 @@
+[project]
+name = "eyayaw-github-io"
+version = "0"
+requires-python = ">=3.14"
+dependencies = []
+
+[tool.uv]
+# Pin the tooling the scripts need, nothing here to build or install.
+package = false
+
+[dependency-groups]
+dev = ["pyyaml>=6", "ruff>=0.14", "ty>=0.0.1a21"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "DTZ", "FURB", "RUF"]
