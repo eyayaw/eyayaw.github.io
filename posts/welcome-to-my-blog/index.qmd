@@ -1,7 +1,10 @@
 ---
 title: "Welcome to my Blog"
+description: "First post. I'll write about what I pick up along the way in R and Python"
 date: "2022-07-31"
-categories: [news]
+categories: [meta]
+image: thumbnail.jpg
+image-alt: "An open laptop on a wooden desk beside a mug of black coffee, a notepad with a pen, and a phone"
 citation: false
 ---
 

@@ -1,10 +1,11 @@
 ---
 title: "Setting up a new Mac"
-subtitle: "Automation with Homebrew, dotfiles, and macOS defaults"
-date: 2025-04-25
-categories: [config, cli, macos, programming]
+description: "Automating a machine from scratch with Homebrew, GNU Stow for dotfiles, and macOS defaults"
+date: "2025-04-25"
+categories: [macos, config, cli]
 number-sections: false
 image: welcome-to-mac.jpg
+image-alt: "A Philips monitor on a desk showing the macOS setup assistant's Welcome to Mac screen, lit by a BenQ screen bar"
 ---
 
 I finally treated myself to a new Mac Mini for completing my PhD. In the past, setting up a new machine meant hours of manual downloading, clicking through installers, and tediously configuring apps and tweaking default OS settings. However, over time I learned setup automation, so now I can get everything up and running quickly with minimal manual effort.

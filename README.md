@@ -4,6 +4,7 @@
 
 ```sh
 uv run scripts/new.py post "<TITLE>" # kinds: post,package,til; --help for flags
+uv run scripts/check_posts.py # frontmatter + categories
 ```
 
 `new.py` drops a `draft: true` skeleton at `<section>/<slug>/index.qmd`, flip it for publish.
@@ -24,3 +25,9 @@ listing:
   include:
     categories: "package"
 ```
+
+`_categories.yml` is read only by `check_posts.py`, to catch a category typo before it becomes a real category.
+
+`check_posts.py` ignores drafts. Errors set the exit code, warnings don't.
+
+Published posts without a preview image get a warning. A specified image must exist.

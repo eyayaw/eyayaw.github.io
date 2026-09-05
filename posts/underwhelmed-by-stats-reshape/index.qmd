@@ -1,7 +1,8 @@
 ---
 title: Underwhelmed by `stats::reshape`
-date: 2025-08-12
-categories: [r, base-r, tutorial, programming]
+description: "Base R's pivoting function is useful and underrated, and also slow and awkward next to data.table, tidyr, and DuckDB"
+date: "2025-08-12"
+categories: [r, base-r, tidyverse, rdatatable, duckdb]
 engine: knitr
 execute:
   echo: true

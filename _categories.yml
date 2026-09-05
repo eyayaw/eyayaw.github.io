@@ -1,0 +1,35 @@
+# Every category a post is allowed to use. check_posts.py flattens the file into
+# one list of terms, so the headings below have no effect on validation.
+#
+# Each heading is a question about the post. A post takes one or two terms from
+# a heading, rarely more. Every term becomes a filter at
+# blog.html#category=<term>, so add one only when a second post will use it. A
+# term with one post is a filter that shows one post.
+
+# What is it written in or about?
+tech:
+  - r
+  - python
+  - cli
+  - sql
+  - duckdb
+
+# Which corner of R? A comparison post takes several.
+dialect:
+  - base-r
+  - tidyverse
+  - rdatatable
+
+# Where does it apply?
+platform:
+  - macos
+
+# What kind of post is it?
+kind:
+  - package # something I built and released
+  - config # dotfiles, machine setup, defaults
+  - meta # about this site
+
+# Which of my projects? Add the term when a project gets its first post.
+project:
+  - jobrake

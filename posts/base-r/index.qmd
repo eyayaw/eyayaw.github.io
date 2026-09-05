@@ -1,11 +1,13 @@
 ---
 title: "Base R"
+description: "What people actually mean by base R, and why it covers far more than the {base} package"
 date: "2025-04-07"
-categories: [programming, r, base-r]
+categories: [r, base-r]
 engine: knitr
 execute:
   echo: true
 image: base-r.svg
+image-alt: "A diagram splitting base R's 14 packages into three columns, core, default, and other, under the formula base R = {base} + {default} + {other}"
 ---
 
 ```{r}
