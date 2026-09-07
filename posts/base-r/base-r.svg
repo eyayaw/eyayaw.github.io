@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect x="0" y="0" width="800" height="600" fill="#f8f9fa" rx="10" ry="10" stroke="#d0d0d0" stroke-width="2"/>
+  
+  <!-- Definitions for R logo gradient -->
+  <defs>
+    <linearGradient id="gradientFill-1" x1="0" x2="1" y1="0" y2="1" gradientUnits="objectBoundingBox" spreadMethod="pad">
+      <stop offset="0" stop-color="rgb(203,206,208)" stop-opacity="1"/>
+      <stop offset="1" stop-color="rgb(132,131,139)" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="gradientFill-2" x1="0" x2="1" y1="0" y2="1" gradientUnits="objectBoundingBox" spreadMethod="pad">
+      <stop offset="0" stop-color="rgb(39,109,195)" stop-opacity="1"/>
+      <stop offset="1" stop-color="rgb(22,92,170)" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Title with "Base" text and R logo -->
+  <text x="350" y="70" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="end" fill="#276DC3" style="font-style: italic;">Base</text>
+  
+  <!-- R logo (scaled and positioned) -->
+  <g transform="translate(355, 20) scale(0.08, 0.08)">
+    <path d="M361.453,485.937 C162.329,485.937 0.906,377.828 0.906,244.469 C0.906,111.109 162.329,3.000 361.453,3.000 C560.578,3.000 722.000,111.109 722.000,244.469 C722.000,377.828 560.578,485.937 361.453,485.937 ZM416.641,97.406 C265.289,97.406 142.594,171.314 142.594,262.484 C142.594,353.654 265.289,427.562 416.641,427.562 C567.992,427.562 679.687,377.033 679.687,262.484 C679.687,147.971 567.992,97.406 416.641,97.406 Z" fill="url(#gradientFill-1)" fill-rule="evenodd"/>
+    <path d="M550.000,377.000 C550.000,377.000 571.822,383.585 584.500,390.000 C588.899,392.226 596.510,396.668 602.000,402.500 C607.378,408.212 610.000,414.000 610.000,414.000 L696.000,559.000 L557.000,559.062 L492.000,437.000 C492.000,437.000 478.690,414.131 470.500,407.500 C463.668,401.969 460.755,400.000 454.000,400.000 C449.298,400.000 420.974,400.000 420.974,400.000 L421.000,558.974 L298.000,559.026 L298.000,152.938 L545.000,152.938 C545.000,152.938 657.500,154.967 657.500,262.000 C657.500,369.033 550.000,377.000 550.000,377.000 ZM496.500,241.024 L422.037,240.976 L422.000,310.026 L496.500,310.002 C496.500,310.002 531.000,309.895 531.000,274.877 C531.000,239.155 496.500,241.024 496.500,241.024 Z" fill="url(#gradientFill-2)" fill-rule="evenodd"/>
+  </g>
+  
+  <text x="400" y="110" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#555">14 packages in R 4.4.3</text>
+  
+  <!-- Connecting lines -->
+  <line x1="400" y1="120" x2="400" y2="150" stroke="#888" stroke-width="1.5"/>
+  <line x1="400" y1="150" x2="175" y2="150" stroke="#888" stroke-width="1.5"/>
+  <line x1="400" y1="150" x2="400" y2="150" stroke="#888" stroke-width="1.5"/>
+  <line x1="400" y1="150" x2="625" y2="150" stroke="#888" stroke-width="1.5"/>
+  <line x1="175" y1="150" x2="175" y2="170" stroke="#888" stroke-width="1.5"/>
+  <line x1="400" y1="150" x2="400" y2="170" stroke="#888" stroke-width="1.5"/>
+  <line x1="625" y1="150" x2="625" y2="170" stroke="#888" stroke-width="1.5"/>
+  
+  <!-- Boxes with updated colors to match R logo blue (#276DC3) -->
+  <rect x="75" y="170" width="200" height="340" fill="#D6E4F9" rx="8" ry="8" stroke="#276DC3" stroke-width="1.5"/>
+  <rect x="300" y="170" width="200" height="340" fill="#FFE7C1" rx="8" ry="8" stroke="#DDA55C" stroke-width="1.5"/>
+  <rect x="525" y="170" width="200" height="340" fill="#CEECC9" rx="8" ry="8" stroke="#8AB584" stroke-width="1.5"/>
+  
+  <!-- Box Headers -->
+  <rect x="95" y="190" width="160" height="40" fill="#276DC3" rx="5" ry="5"/>
+  <rect x="320" y="190" width="160" height="40" fill="#DDA55C" rx="5" ry="5"/>
+  <rect x="545" y="190" width="160" height="40" fill="#8AB584" rx="5" ry="5"/>
+  
+  <text x="175" y="215" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Core Package</text>
+  <text x="400" y="215" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Default Packages</text>
+  <text x="625" y="215" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Other Packages</text>
+  
+  <!-- Package Lists -->
+  <!-- Core Package -->
+  <text x="175" y="280" font-family="Consolas, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">{base}</text>
+  <text x="175" y="305" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">The R Base Package</text>
+  <text x="175" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Core language functionality</text>
+  
+  <!-- Default Packages -->
+  <text x="320" y="260" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">1. {datasets}</text>
+  <text x="320" y="290" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">2. {utils}</text>
+  <text x="320" y="320" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">3. {grDevices}</text>
+  <text x="320" y="350" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">4. {graphics}</text>
+  <text x="320" y="380" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">5. {stats}</text>
+  <text x="320" y="410" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">6. {methods}</text>
+  <text x="400" y="440" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333" font-style="italic">Auto-loaded on startup</text>
+  
+  <!-- Other Packages -->
+  <text x="545" y="260" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">1. {compiler}</text>
+  <text x="545" y="290" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">2. {grid}</text>
+  <text x="545" y="320" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">3. {parallel}</text>
+  <text x="545" y="350" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">4. {splines}</text>
+  <text x="545" y="380" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">5. {stats4}</text>
+  <text x="545" y="410" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">6. {tcltk}</text>
+  <text x="545" y="440" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="start" fill="#333">7. {tools}</text>
+  <text x="625" y="470" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333" font-style="italic">Available but not auto-loaded</text>
+  
+  <!-- Formula -->
+  <rect x="200" y="530" width="400" height="40" fill="#e9ecef" rx="5" ry="5" stroke="#ced4da" stroke-width="1"/>
+  <text x="400" y="555" font-family="Consolas, monospace" font-size="16" text-anchor="middle" fill="#333">base R = {base} + {default} + {other}</text>
+</svg>

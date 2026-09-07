@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="225 190 440 440">
+  <title>jobrake rake icon</title>
+  <g id="rake" fill="none" stroke="#126333" stroke-linecap="round" stroke-linejoin="round">
+    <path id="handle" stroke-width="36" d="M448 441.6 603 270" />
+    <path id="crossbar" stroke-width="24" d="M286 411 610 472.2" />
+    <g id="tines" stroke-width="24">
+      <path d="M286 411 C280 433 280 465 286 490" />
+      <path d="M340 421.2 C334 443.2 334 475.2 340 500.2" />
+      <path d="M394 431.4 C388 453.4 388 485.4 394 510.4" />
+      <path d="M448 441.6 C442 463.6 442 495.6 448 520.6" />
+      <path d="M502 451.8 C496 473.8 496 505.8 502 530.8" />
+      <path d="M556 462 C550 484 550 516 556 541" />
+      <path d="M610 472.2 C604 494.2 604 526.2 610 551.2" />
+    </g>
+  </g>
+</svg>

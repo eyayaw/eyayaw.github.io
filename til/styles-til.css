@@ -1,0 +1,160 @@
+/* ── TIL styles ─────────────────────────────────────────────────────────────
+   One construct. Wrap plain fenced code blocks in a `.compare` div:
+
+     ::: {.compare}
+     ```python
+     ...
+     ```
+     ```sql
+     ...
+     ```
+     :::
+
+   Each block becomes a column: a quiet lowercase label above a tinted box
+   that hugs its content, separated by whitespace, not rules. Usually 2–3;
+   more works too — tracks shrink-to-fit so a wide row never clips, and the
+   grid stacks to full-width on tablet (3+ columns) and phones. For 3+ columns
+   add `.column-page-right` for room (left edge stays aligned with the text):
+     ::: {.compare .column-page-right}
+
+   Labels are written at load from each block's language class by the script
+   inlined in `_metadata.yml`: any language works, aliases are normalized
+   (py→python, sh/bash/zsh→shell), and the last class wins so `{.sql .duckdb}`
+   highlights as SQL yet labels "duckdb". `.til-note` is a quiet aside; placed
+   right after a comparison it tucks under.
+*/
+
+:root {
+    --til-muted: #5f5b51; /* warm gray for labels and asides */
+}
+
+/* ── Code blocks: the pre is the box—a flat tint, no chrome ───────────── */
+div.sourceCode {
+    margin: 1.25rem 0;
+    background: none;
+    border: 0;
+}
+
+div.sourceCode pre.sourceCode {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-ivory-medium);
+    border: 0;
+    border-radius: 4px;
+    line-height: 1.55;
+    tab-size: 4;
+}
+
+/* color already differentiates tokens; bold double-encodes and makes
+   keyword-dense SQL panels visually heavier than their neighbors */
+pre.sourceCode span.kw,
+pre.sourceCode span.cf,
+pre.sourceCode span.sc,
+pre.sourceCode span.ot {
+    font-weight: 400;
+}
+
+/* inline code: quiet tint instead of the theme's pink */
+:not(pre) > code:not(.sourceCode) {
+    padding: 0.1em 0.3em;
+    border-radius: 4px;
+    background-color: var(--color-ivory-medium);
+    color: inherit;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+/* ── The comparison: content-sized columns that shrink-to-fit, never clip ── */
+.compare {
+    display: grid;
+    grid-auto-flow: column; /* N blocks → N columns */
+    /* hug the code, but the 0 floor lets tracks shrink and wrap instead of
+       overflowing the page. (the default `auto` floors at min-content—the
+       longest unbreakable token—so wide rows clip off-screen with no scroll.) */
+    grid-auto-columns: minmax(0, max-content);
+    justify-content: start; /* prose-aligned; any slack sits to the right */
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.compare > * {
+    min-width: 0;
+    margin: 0;
+}
+
+/* margin must also be zeroed here: quarto's copy-button JS wraps each block
+   in a scaffold div, so sourceCode isn't always the direct grid child */
+.compare div.sourceCode {
+    margin: 0;
+}
+
+.compare pre.sourceCode {
+    width: 100%; /* fill the content-sized track; wrap if it has to shrink */
+}
+
+/* Stacking, aligned to quarto's own grid breakpoints (768/992). More columns
+   need more room, so they stack sooner; stacked boxes go full-width. */
+@media (max-width: 767.98px) {
+    .compare {
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+    }
+}
+@media (max-width: 991.98px) {
+    .compare:has(> :nth-child(3)) {
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* ── Labels: lowercase, above each box. The script in `_metadata.yml` writes
+   the normalized language name into data-lang at load; the label stays hidden
+   until then, so with JS off there's no empty gap (just no label). ────────── */
+.compare div.sourceCode::before {
+    content: attr(data-lang);
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--til-muted);
+}
+.compare div.sourceCode:not([data-lang])::before {
+    display: none;
+}
+
+/* the label sits at the top of quarto's copy-button scaffold (which is
+   position:relative); the button is absolute top:0, so it lands in the
+   label row. drop it past the label onto the code's top-right corner. */
+.compare .code-copy-button {
+    top: 1.5rem;
+}
+
+/* ── Title-block categories: match the site's lowercase voice ───────────── */
+.quarto-title .quarto-categories .quarto-category {
+    text-transform: lowercase;
+}
+
+/* ── Quiet aside ────────────────────────────────────────────────────────── */
+.til-note {
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    color: var(--til-muted);
+}
+
+.til-note p {
+    margin: 0;
+}
+
+/* inside the quiet aside, code chips would be gray confetti — just mono
+   (:not() bumps specificity above the global inline-code tint) */
+.til-note code:not(.sourceCode) {
+    padding: 0;
+    background: none;
+}
+
+.compare + .til-note {
+    margin-top: -0.5rem;
+} /* tuck under its comparison */

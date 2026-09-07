@@ -1,0 +1,28 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/jobrake-for-the-job/index.html",
+      "/posts/underwhelmed-by-stats-reshape/index.html",
+      "/posts/setting-up-a-new-mac/index.html",
+      "/posts/base-r/index.html",
+      "/posts/welcome-to-my-blog/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/jobrake-for-the-job/index.html",
+      "/posts/underwhelmed-by-stats-reshape/index.html",
+      "/posts/setting-up-a-new-mac/index.html",
+      "/posts/base-r/index.html",
+      "/posts/welcome-to-my-blog/index.html"
+    ]
+  },
+  {
+    "listing": "/til.html",
+    "items": [
+      "/til/til-template/index.html"
+    ]
+  }
+]
