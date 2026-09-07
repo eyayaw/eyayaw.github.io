@@ -1,0 +1,13 @@
+<script>
+{
+  const title = document.querySelector("#title-block-header .quarto-title h1.title");
+  if (title) {
+    const link = document.createElement("a");
+    link.className = "jobrake-repo-link";
+    link.href = "https://github.com/eyayaw/jobrake";
+    link.setAttribute("aria-label", "jobrake GitHub repo");
+    link.title = "jobrake GitHub repo";
+    title.append(link);
+  }
+}
+</script>

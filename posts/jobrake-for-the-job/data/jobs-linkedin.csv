@@ -1,0 +1,186 @@
+site,id,url,title,company,location,date,description,company_url,company_logo,employment_type,is_remote,salary_min,salary_max,salary_currency,salary_period,city,region,country_code,latitude,longitude,posted_at,expires_at,apply_url,apply_type,applicants,experience_months,education
+linkedin,4464088788,https://nl.linkedin.com/jobs/view/data-scientist-at-i4talent-detachering-4464088788,Data Scientist,i4talent detachering,"Amsterdam, North Holland, Netherlands",2026-09-07,"Als Data Scientist bij i4talent werk je aan opdrachten bij organisaties in de Randstad. Je verdient tussen de €3.500 en €5.720 bruto per maand en komt in dienst bij i4talent, terwijl je als consultant werkt aan voorspellende modellen, machine learning, Python en cloudomgevingen zoals Azure of AWS.
+Je werkt op projecten waar data echt verschil kan maken. Denk aan forecasting, klantgedrag, risicoanalyse, optimalisatie of automatisering. Wij kijken samen welke opdracht past bij jouw ervaring, interesses en gewenste ontwikkelrichting.
+Jij als gangmaker
+Voor jou is een model geen einddoel, maar een middel om betere beslissingen te nemen. Je bent nieuwsgierig naar patronen in data, maar ook kritisch op de toepasbaarheid van modellen in de praktijk. Je vertaalt complexe analyses naar begrijpelijke inzichten en weet stakeholders mee te nemen in wat een model doet, waarom het werkt en wat de impact is op hun business.
+Wat ga je doen?
+Als Data Scientist werk je aan uiteenlopende data science vraagstukken binnen cloud-gedreven omgevingen.
+Je houdt je onder andere bezig met:
+Ontwikkelen van voorspellende modellen en machine learning-oplossingen met Python.
+Toepassen van algoritmes voor forecasting, classificatie, clustering en optimalisatie.
+Analyseren van complexe datasets en vertalen naar bruikbare inzichten.
+Operationaliseren van modellen in cloudomgevingen zoals Azure, AWS of GCP
+Samenwerken met Data Engineers om data pipelines en feature sets beschikbaar te maken.
+Sparren met stakeholders over businessvraagstukken en data science toepassingen.
+Verbeteren en monitoren van model performance in productie-omgevingen (MLOps waar van toepassing).
+Afhankelijk van de opdracht werk je met technologieën zoals: Python (Pandas, NumPy, Scikit-learn), TensorFlow of PyTorch (afhankelijk van opdracht), SQL voor data-extractie en
+analyse, Azure Machine Learning / AWS SageMaker, Databricks voor data science en modelontwikkeling, Cloud data platformen zoals Azure , AWS of GCP) en Git en CI/CD pipelines (waar van toepassing)
+Wat krijg je van i4talent?
+Salaris tussen €3.500 en €5.720 bruto per maand.
+Direct contract voor onbepaalde tijd.
+Leaseauto met tankpas, ook privé te gebruiken.
+25 vakantiedagen en 8% vakantiegeld.
+Goede pensioenregeling, waarbij i4talent 2/3 van de premie betaalt.
+Toegang tot de i4talent Academy met online en klassikale trainingen (inhoud en soft skills) via onder andere NIVE en Coursera, inclusief erkende certificaten.
+Persoonlijke begeleiding van een Fieldmanager en Happy professional manager.
+Afwisselende opdrachten bij fintechs, logistieke bedrijven, corporates en scale-ups.
+Events: van inhoudelijke sessies tot trips, bootdagen en borrels.
+Wat breng jij mee?
+Je hebt een sterke analytische basis en weet hoe je data science praktisch toepast binnen organisaties.
+Daarnaast breng je mee:
+Een hbo- of wo-diploma in een kwantitatieve richting (bijv. Data Science, AI, Wiskunde, Econometrie).
+Minimaal 2-3 jaar ervaring als Data Scientist of in een vergelijkbare analytische/ ML rol.
+Sterke ervaring met Python en data science libraries.
+Ervaring met supervised en unsupervised machine learning technieken.
+Ervaring met cloudplatformen zoals Azure of AWS.
+Begrip van modelvalidatie, performance metrics en datavoorbereiding.
+Goede communicatieve vaardigheden en vermogen om complexe materie uit te leggen.
+Vloeiende beheersing van de Nederlandse taal.
+Rijbewijs en bereidheid om te reizen binnen de Randstad.",https://nl.linkedin.com/company/i4talent,https://media.licdn.com/dms/image/v2/C4E0BAQH0g_aKlu9aPA/company-logo_200_200/company-logo_200_200/0/1630634158148/i4talent_logo?e=2147483647&v=beta&t=9adf5IHMOv8mlDlOKSGEF5MoNuUDsC7I_h5u0o-DOoo,full_time,,,,,,Amsterdam,,NL,52.373165,4.89066,2026-09-07T08:48:45.000Z,2026-10-07T08:48:45.000Z,,onsite,25,,bachelor degree
+linkedin,4462948463,https://nl.linkedin.com/jobs/view/short-term-forecasting-data-scientist-at-eneco-4462948463,Short Term Forecasting Data Scientist,Eneco,"Rotterdam, South Holland, Netherlands",2026-09-07,"Good to know: you can easily save this vacancy using the print button at the top of the page. After the closing date, this vacancy will be removed from our website.
+Combine operational responsibility with long-term data science and forecasting projects
+Develop and improve forecasting products that directly support short-term energy trading
+Work closely with traders in a fast feedback environment, where you monitor performance, answer questions, and resolve incidents
+Why choose Eneco?
+The energy transition creates a growing need for accurate and reliable forecasts. Wind and solar production change constantly, while customer demand and energy markets move throughout the day. Your work helps Eneco respond to these changes and contributes to a sustainable energy system that remains reliable and economically viable.
+In this role, you see the impact of your work quickly. You do not develop models at a distance from the business. You work close to the trading operation, learn from real-time results, and use those insights to improve forecasts, tools, and processes. Your work helps reduce imbalance costs related to renewable energy production and customer demand.
+You join a collaborative environment with short feedback loops, open communication, and room to experiment. You can propose ideas, take ownership, and develop your knowledge of energy markets, forecasting, and modern data platforms.
+What You’ll Do
+As a Short Term Forecasting Data Scientist, you combine hands-on operational work with the development of forecasting products.
+You help ensure that traders can rely on accurate forecasts and clear information when making short-term trading decisions. This means monitoring forecast performance, analysing unexpected results, answering questions from traders, and taking action when models, systems, data flows, or forecasts do not behave as expected.
+Incident handling is an important part of the role. When an issue occurs, you investigate what is happening, communicate clearly with the people involved, and help restore a reliable service. You stay calm, set priorities, and work with colleagues to find a robust solution.
+At the same time, you work on longer-term improvements. You collaborate with the Forecast Product Development team to design, validate, operationalise, and improve forecasting products for wind and solar production and for power, gas, and heat consumption. Operational experience provides the context for these improvements: what you observe during daily operations helps you identify where models, monitoring, and processes can become better.
+During your first months, the team supports you in building a strong understanding of the energy market, Eneco’s role within it, and the relevant IT landscape. Operational work is not limited to this onboarding period. Everyone in the team continues to combine operational responsibilities with strategic development projects.
+Is this about you?
+You enjoy applying data science in a dynamic operational environment. You are interested not only in building models, but also in how they perform in practice and how people use their output to make decisions.
+You communicate clearly with technical and non-technical colleagues. When priorities change or an incident occurs, you remain calm and focused. You take a pragmatic approach, investigate problems carefully, and follow through until there is a reliable solution.
+You also bring:
+A quantitative MSc degree;
+At least 4 years of relevant experience in data science;
+Strong Python and SQL skills;
+An analytical and critical mindset, combined with a hands-on approach;
+The ability to initiate improvements and work effectively with traders and other teams;
+Attention to detail and a focus on robust, maintainable solutions;
+Flexibility in an environment where priorities can change with market conditions and business opportunities.
+Experience with energy markets, trading, software engineering, or machine learning engineering is an advantage, but not essential. Knowledge of DevOps, CI/CD, automated testing, MLOps, Git, Databricks, Airflow, Snowflake, or Azure Cloud is also welcome.
+Do you recognise yourself in much of this profile, but not in every requirement? We still encourage you to apply. Your experience, perspective, and motivation may add something valuable to the team.
+You’ll be responsible for
+Monitoring forecast results and identifying irregularities, outliers, and performance issues;
+Supporting day traders by answering questions about forecasts, positions, and monitoring results;
+Investigating and resolving incidents involving models, systems, forecasts, or data flows;
+Developing, improving, and validating forecasting models for renewable production and energy consumption;
+Developing monitoring and reporting products that support Eneco’s trading teams;
+Working with the Forecast Product Development team to turn operational insights into structural improvements;
+Contributing within a DevOps environment using technologies such as Databricks, Python, SQL, Azure DevOps, and CI/CD.
+This is where you’ll work
+You will join the Forecasting Analysis & Execution team within the Short-Term Desk at Eneco Energy Trade. The team develops continuously updated forecasts for energy demand and renewable energy production. These forecasts directly support short-term trading decisions.
+The team values collaboration, open communication, and short feedback loops. Everyone combines operational responsibilities with long-term strategic development projects. This ensures that technical improvements remain closely connected to actual market decisions and day-to-day trading needs.
+The environment is dynamic. Market developments and business opportunities can change priorities quickly. You work with colleagues who share knowledge, reflect on results, and improve products based on what they learn from the operation. There is room to experiment and propose ideas, but also a shared responsibility to keep forecasting products reliable when they are needed most.
+What We Have To Offer
+Gross annual salary between €88.000 and €125.000 Including FlexBudget, 8% holiday allowance, and depending on your role a bonus or collective profit sharing.
+FlexBudget Have it paid out, use it to buy extra holiday days or save it up for something nice, it's up to you.
+Personal and professional growth Eneco is fully committed to help you in your personal and professional development.
+Hybrid working: home, office or abroad Work 40% at the office, 40% from home, and 20% flexibly. With manager approval, you may work abroad (within approved countries) up to 3 weeks/year, max 2 consecutively.
+Want more information about our terms of employment?
+Here's what you get from us
+Work Where Everyone Matters
+When you choose a career at Eneco, you choose ambition, growth, and opportunity in an environment where everyone matters. You’re given the space to develop yourself and to do your work in a way that suits you. We believe that different perspectives, nationalities, and backgrounds make us stronger, which is why we foster an open, safe and inclusive culture. Naturally, we also prioritize a healthy work-life balance, flexible working hours, and the option to work from home when your role allows it. If you have a physical or sensory disability, we will work with you to find the right adjustments so you can perform your job well.
+This is how you build your own future and a sustainable future at the same time. Together with 4,000 colleagues, each with their own talents and ideas, you work on our shared mission: speeding up the energy transition. We help customers become more sustainable faster, create innovative solutions, and seize new opportunities. Will you join us?
+The phases of our application procedure
+Want to know more about this job function?
+Would you like to know more about this vacancy? Koen Bolijn, our Team Lead Forecast Analysts, will be happy to answer your questions via koen.bolijn@eneco.com.
+For more information about the application process, please contact our Recruiter Kevin Wouters, Senior Recruiter Trade Community, via 06-40971932 or kevin.wouters@eneco.com.
+With this job opening, we want to recruit a new Eneco colleague ourselves. This is not a call for acquisition.",https://nl.linkedin.com/company/eneco,https://media.licdn.com/dms/image/v2/D4E0BAQGn0mdlblz-jA/company-logo_200_200/B4EZdop9fcHsAU-/0/1749807520076/eneco_logo?e=2147483647&v=beta&t=38lD5gs65wfIY1RzOqzBJzufN1ypK6-_udHmuR7-GN4,full_time,,,,,,Rotterdam,,NL,51.952805,4.553717,2026-09-07T10:04:59.000Z,2026-10-07T10:04:59.000Z,,offsite,25,48,bachelor degree
+linkedin,4461879641,https://nl.linkedin.com/jobs/view/senior-data-science-consultant-at-sia-4461879641,Senior Data Science Consultant,Sia,"Rotterdam, South Holland, Netherlands",2026-09-07,"Sia is a next-generation, global management consulting group born digital, augmented by data, enhanced by creativity, and driven by responsibility. We partner with clients to resolve challenges and capitalize on opportunities. We believe that in today’s world of change and disruption, optimism is a force multiplier.
+Job Description
+To support its development, Sia is recruiting senior consultants within its data science team whose vocation will be to take charge, in synergy with our different practices, of the work and missions requiring the implementation of complex models. to support our clients in their issues related to:
+Machine learning and statistics : development of explanatory and predictive decision support models (supervised and unsupervised learning algorithms, econometrics, forecasting, quantitative diagnosis, etc.)
+Operational research : design and implementation of optimization solutions under constraints and simulation models
+Big Data : algorithmic knowledge for processing large volumes of unstructured data
+As part of your operational interventions, and your contributions to the internal development of the firm, you:
+Develop and strengthen our offers through training, working groups, dissemination of internal and external media
+Participate in the firm's influence by actively contributing to the publication plan (articles, studies, etc.), and represent the firm at various professional clubs, exhibitions and events.
+Take part in the development of the activity through the design and development of commercial proposals, as well as by identifying new opportunities for collaboration with our clients.
+Manage end-to-end projects , on which you ensure regular reporting to the attention of the manager and the client in order to guarantee the good respect of our commitments.
+Manage the customer relationship on your assignments and build a solid relationship with your client side contacts, at middle management level, who recognize you as an expert on the subjects dealt with.
+Supervise consultants , juniors to confirmed and fulfill the role of referent and relay of the manager for the follow-up of the sites, the validation of the deliverables, the evaluation of the achievements, and above all you ensure the development of their soft and hard skills.
+Qualifications
+You have a Master's degree Civil Engineer (applied mathematics, IT or similar).
+You have 3-6 years relevant working experience.
+Analytical mind, exploring options and able to synthesize into conclusions.
+You have a strong interest in data and AI-related topics, the ability to quickly build expertise in these areas, and you’re excited about helping our clients seize the opportunities they offer.
+You're a fast learner, communicative, flexible and entrepreneurial
+English and Dutch communication and presentation skills
+Strong interest in Data science and related sectors such as Energy and Finance.
+What do we offer?
+Competitive salary with extra advantages: yearly salary increase and bonuses.
+Flexible transport options that match your personal needs.
+Training plan to develop yourself as an expert in your discipline.
+You have the opportunity to work from home, the client or from our inspiring office in Amsterdam.
+Working in an international environment which creates opportunities to share knowledge and work together on international projects with colleagues all over the world.
+Additional Information
+Unfortunately, we are unable to provide a work permit for this position
+Sia is an equal opportunity employer. All aspects of employment, including hiring, promotion, remuneration, or discipline, are based solely on performance, competence, conduct, or business needs.",https://fr.linkedin.com/company/sia-partners,https://media.licdn.com/dms/image/v2/D4E0BAQFV-HsSw3lYlg/company-logo_200_200/company-logo_200_200/0/1737563199089/sia_partners_logo?e=2147483647&v=beta&t=3H2wD7A_bavD21UD2Z3cOlCkz4j9WXuw6iGdNXgIatE,full_time,,,,,,Rotterdam,,NL,51.922913,4.470585,2026-09-07T08:57:21.000Z,2027-03-06T08:57:21.000Z,,onsite,25,36,
+linkedin,4464092721,https://nl.linkedin.com/jobs/view/senior-data-science-consultant-at-sia-4464092721,Senior Data Science Consultant,Sia,"Amsterdam, North Holland, Netherlands",2026-09-07,"Sia is a next-generation, global management consulting group. Founded in 1999, we were born digital. Today our strategy and management capabilities are augmented by data science, enhanced by creativity and driven by responsibility. We’re optimists for change and we help clients initiate, navigate and benefit from transformation. We believe optimism is a force multiplier, helping clients to mitigate downside and maximize opportunity. With expertise across a broad range of sectors and services, our 3,000 consultants serve clients worldwide from 48 locations in 19 countries. Our expertise delivers results. Our optimism transforms outcomes.
+Job Description
+To support its development, Sia is recruiting senior consultants within its data science team whose vocation will be to take charge, in synergy with our different practices, of the work and missions requiring the implementation of complex models. to support our clients in their issues related to:
+Machine learning and statistics : development of explanatory and predictive decision support models (supervised and unsupervised learning algorithms, econometrics, forecasting, quantitative diagnosis, etc.)
+Operational research : design and implementation of optimization solutions under constraints and simulation models
+Big Data : algorithmic knowledge for processing large volumes of unstructured data
+As part of your operational interventions, and your contributions to the internal development of the firm, you:
+Develop and strengthen our offers through training, working groups, dissemination of internal and external media
+Participate in the firm's influence by actively contributing to the publication plan (articles, studies, etc.), and represent the firm at various professional clubs, exhibitions and events.
+Take part in the development of the activity through the design and development of commercial proposals, as well as by identifying new opportunities for collaboration with our clients.
+Manage end-to-end projects , on which you ensure regular reporting to the attention of the manager and the client in order to guarantee the good respect of our commitments.
+Manage the customer relationship on your assignments and build a solid relationship with your client side contacts, at middle management level, who recognize you as an expert on the subjects dealt with.
+Supervise consultants , juniors to confirmed and fulfill the role of referent and relay of the manager for the follow-up of the sites, the validation of the deliverables, the evaluation of the achievements, and above all you ensure the development of their soft and hard skills.
+Qualifications
+You have a master degree or phd in a quantitative field (e.g. computer science, econometrics, (bio-)statistics, operations research) and you have at least 3 years of relevant experience on data science subjects.
+You have an excellent level in statistics and quantitative analysis (theoretical and practical knowledge, intuition, ease of understanding models and applying them)
+You master programming in Python and have a solid foundation in scripting languages (R, matlab, JS, bash) or compiled (C ++, Java) and / or have experience in environments UNIX / LINU
+You have a strong interest in data and AI-related topics, the ability to quickly build expertise in these areas, and you’re excited about helping our clients seize the opportunities they offer.
+You want to get involved and quickly take responsibility for high added value missions within a dynamic structure.
+You have the ability to work in a team, an open mind, a sense of analysis and you want to join a motivating professional environment where you will share our values of excellence, entrepreneurship, innovation, the culture of sharing, benevolence, personal / professional life balance.
+You have a strong interest in data and AI-related topics, the ability to quickly build expertise in these areas, and you’re excited about helping our clients seize the opportunities they offer.
+Professional level Dutch and English essential. German is a big plus!
+Additional Information
+For more information on our Data Science Practice:
+https://datascience.sia-partners.com/en
+What we offer
+Competitive salary combined with an attractive package of benefits (mobile phone, bonus scheme and much more).
+Training opportunities to further develop yourself as an expert within your field.
+Be part of fast growing international company with an entrepreneurial spirit and a flat structure.
+Ability to work on international assignments.
+Working from home, customer or at our inspiring office in the Rembrandt tower in Amsterdam.
+We are unable to provide a work permit for this position
+No-Dutch speaker will no be accepted
+Sia is an equal opportunity employer. All aspects of employment, including hiring, promotion, remuneration, or discipline, are based solely on performance, competence, conduct, or business needs.",https://fr.linkedin.com/company/sia-partners,https://media.licdn.com/dms/image/v2/D4E0BAQFV-HsSw3lYlg/company-logo_200_200/company-logo_200_200/0/1737563199089/sia_partners_logo?e=2147483647&v=beta&t=3H2wD7A_bavD21UD2Z3cOlCkz4j9WXuw6iGdNXgIatE,full_time,,,,,,Amsterdam,,NL,52.373165,4.89066,2026-09-07T08:55:29.000Z,2026-10-07T08:54:50.000Z,,onsite,25,36,
+linkedin,4462945905,https://nl.linkedin.com/jobs/view/data-scientist-at-sire%C2%AE-life-sciences-%F0%9F%A7%AC-4462945905,Data Scientist,SIRE® Life Sciences 🧬,"Utrecht, Netherlands",2026-09-07,"We are seeking a Data Scientist to join its Financial Economic Crime (FEC) Technology team, focusing on Transaction Monitoring optimization. In this role, you will use data analytics, dashboarding, and stakeholder engagement to enhance the effectiveness of anti-money laundering (AML) and financial crime detection processes. Working within a multidisciplinary team, you will transform complex transactional data into actionable insights that support risk identification, operational efficiency, and data-driven decision-making.
+This is an excellent opportunity for a hands-on data professional who combines strong technical expertise with business acumen and enjoys delivering measurable impact in a highly regulated environment.
+Responsibilities
+Lead end-to-end analytical projects, including business intake, requirements gathering, data analysis, coding, visualization, and presentation of findings.
+Design, develop, and maintain Power BI dashboards that support Transaction Monitoring performance and decision-making.
+Build scalable and maintainable analytical solutions using Python.
+Analyze customer transaction data to identify trends, patterns, and opportunities for improving monitoring effectiveness.
+Assess and quantify the impact of proposed changes to Transaction Monitoring rules, models, and parameters.
+Translate business challenges into analytical frameworks and actionable recommendations.
+Partner with business stakeholders to understand requirements and identify opportunities where analytics can deliver value.
+Drive continuous process improvement through data-driven insights and recommendations.
+Collaborate with data scientists, analysts, business experts, and technology teams across the organization.
+Support the optimization of AML and financial crime detection processes through advanced analytics and reporting.
+Requirements
+Master's degree in a quantitative, technical, or analytical discipline.
+Minimum 3 years of experience in a Data Scientist, Data Analyst, or similar analytical role.
+Advanced experience with Power BI, including dashboard development, data visualization, and data storytelling.
+Strong Python programming skills, including:
+Object-Oriented Programming (OOP)
+Software engineering best practices
+Code quality standards and reviews
+Development of scalable and maintainable solutions
+Proven ability to independently lead analytical initiatives and deliver results.
+Strong stakeholder management and communication skills.
+Ability to translate business requirements into analytical solutions.
+Structured, proactive, and organized working style.
+Business-oriented mindset with strong ownership and accountability.
+Fluent written and spoken English.
+Must be based in the Netherlands and legally authorized to work in the Netherlands.",https://nl.linkedin.com/company/sire-search,https://media.licdn.com/dms/image/v2/C4D0BAQEPmJzYpulKbw/company-logo_200_200/company-logo_200_200/0/1630544879342/sire_search_logo?e=2147483647&v=beta&t=DK5Pk9eA28ySDp_wBq6i0K1XLRx2m0EWoCJTDvZdgMI,full_time,,,,,,Utrecht,,NL,52.084232,5.16387,2026-09-07T11:44:35.000Z,2026-10-07T11:44:35.000Z,,onsite,33,36,bachelor degree

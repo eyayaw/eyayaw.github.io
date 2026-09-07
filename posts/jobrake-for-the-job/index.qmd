@@ -1,0 +1,251 @@
+---
+title: "`jobrake` for the job"
+description: 'A simple CLI tool & Python package for raking job postings off LinkedIn & Indeed'
+date: "2026-09-07"
+categories: [package, jobrake, python, cli]
+image: assets/cover.png
+image-alt: "A green rake above the jobrake wordmark on a warm ivory background."
+resources:
+  - assets/icon.svg
+format:
+  html:
+    css: assets/post.css
+    include-after-body: assets/title-link.html
+engine: knitr
+execute:
+  freeze: true
+  echo: true
+  warning: false
+  message: false
+page-layout: full
+---
+
+
+I've been looking for a simple tool for getting new job postings from job boards, because I was tired of doomscrolling on the LinkedIn Jobs tab. Oh yeah, [sg]etting job alerts is equally overwhelming.^[Indeed's interface is annoying as hell anyway.]
+
+Who to blame, but I've not found any that is "reliable", simple, and free.[^other-pkgs]
+
+[^other-pkgs]: I tried [`jobspy`](https://github.com/speedyapply/JobSpy) for some time. However, the API is unstable and bundles unnecessary _downstream_ [dependencies](https://github.com/speedyapply/JobSpy/blob/fda080a373e8226f3fd60635323f5da9af9892b1/pyproject.toml#L19-L28) such as `pandas` and `numpy`. Unfortunately, it also appears not actively maintained. Nonetheless, `jobrake` owes a lot to `jobspy`.
+
+::: callout-tip
+I spend bonkers amount of time trying to "automate" my job search, but less on actually searching. So, heed my advice on this matter. 😅
+:::
+
+So `jobrake` (<a href="https://github.com/eyayaw/jobrake"><i class="bi bi-github"></i></a>) is an ambitious attempt to address these challenges.
+
+It's a simple CLI tool and Python package that fetches job postings from Indeed and LinkedIn and returns every result as the same small [`Job`](https://github.com/eyayaw/jobrake/blob/main/src/jobrake/models.py#L30-L60) dictionary. There is no login, no browser automation, just simple requests via `httpx`.
+
+I intend `jobrake` to be simple and light[^deps]. It searches, normalizes, and returns jobs. That is it. It helps you swing the rake at the big piles---LinkedIn and Indeed. So, currently, it does not support other boards such as Glassdoor or ZipRecruiter.
+
+[^deps]: It depends on `httpx` and `beautifulsoup`. I leave it to you if you need downstream poking with the job search data with `pandas` and co. I had to point this because `jobspy` depends on lots of such packages.
+
+## Installation
+
+`jobrake` is not on PyPI so install it from GitHub with [`uv`](https://astral.sh/uv). Please read the [installation guides](https://docs.astral.sh/uv/getting-started/installation/) for your system.
+
+> _I assume unix-based systems hereafter, sorry Windows-(or dare I say WSL-) people, you're on your own---read the uv docs, adapt all the code wherever necessary; you can do it!_
+
+I personally use `jobrake` through the CLI, so you can install it as a tool, too. `uv` installs `jobrake` and adds it to your `${PATH}`.
+
+```sh
+uv tool install git+https://github.com/eyayaw/jobrake
+# For ephemeral use
+# uvx git+https://github.com/eyayaw/jobrake
+```
+
+## A first rake
+
+Say you're an _economist_ looking for _data science_ roles in the _Netherlands_, just like <mark>me</mark>^[<mark>Btw, seriously looking for a job. Hire me.</mark>].
+
+::: {.columns style="font-size:0.9em;"}
+::: column
+
+```{sh}
+#| label: linkedin-scraper
+#| code-fold: show
+#| code-overflow: scroll
+jobrake linkedin \
+        --query "economist OR data scientist" \
+        --location "amsterdam, netherlands" \
+        --max-age 24 \
+        --results 5 \
+        --output data/jobs-linkedin.csv \
+        --details 2>/dev/null
+```
+
+:::
+
+::: column
+
+```{sh}
+#| label: indeed-scraper
+#| code-fold: show
+jobrake indeed \
+        -q "economist OR data scientist" \
+        -c "netherlands" \
+        -l "amsterdam" \
+        -a 24 \
+        -n 5 \
+        -o data/jobs-indeed.json 2>/dev/null
+```
+
+:::
+:::
+_Note: If you're new to CLI lingo, left and right are the same interface twice: long flags spelled out for LinkedIn, and their short aliases for Indeed. Remove the redirect (`2>/dev/null`) to see progress updates and other info._
+
+<details>
+<summary>Expand for the results</summary>
+::: panel-tabset
+### LinkedIn
+```{sh}
+#| label: linkedin-output
+#| output: asis
+# The first three rows, some fields, description truncated
+duckdb --markdown <<quack
+select
+    date,
+    title: printf('[%s](%s)', title, url),
+    company: printf('[%s](%s)', company, company_url),
+    location,
+    employment_type,
+    applicants,
+    description: regexp_replace(description, '\s+', ' ', 'g')[:500] || '...'
+from 'data/jobs-linkedin.csv'
+order by date desc
+limit 3;
+quack
+```
+
+### Indeed
+
+````{sh}
+#| label: indeed-output
+#| output: asis
+# The first three jobs, all fields, description truncated
+echo '```json'
+duckdb -json <<quack | jq
+select * replace (regexp_replace(description, '\s+', ' ', 'g')[:500] || '...' as description)
+from 'data/jobs-indeed.json'
+order by date desc
+limit 3;
+quack
+echo '```'
+````
+
+:::
+</details>
+
+By default, results are compact JSON on stdout:
+
+````{sh}
+#| label: default-stdout-output
+#| output: asis
+jobrake linkedin \
+-q "data scientist" \
+-l "london, england" -n 5 2>/dev/null \
+| jq -r '"```json\n\(.)\n```"'
+````
+
+## Descriptions and other details
+
+Every job result includes the same **identity** and **summary fields**, with `null` for unavailable summary values. **Detail fields** appear only when the job board supplies a value[^csv]. This keeps the common fields predictable, while keeping optional details compact.
+
+[^csv]: However, if you request CSV via `--format csv` or `--output jobs.csv`, all fields appear as columns. 
+
+The two sites differ in how much info they display upfront. Indeed includes every supported detail field in its search results. However, LinkedIn search cards contain only basic summaries, so `jobrake` "hydrates" them---fetches each posting page---when you ask for details such as the job description with `--details | -d`:
+
+```sh
+jobrake linkedin \
+  -q "economist" \
+  -l "amsterdam, north holland, netherlands" \
+  -d
+```
+
+The difference also affects speed. Indeed searches are fast because we use its mobile app API. LinkedIn's guest search API is rate-limited, so `jobrake` uses a token bucket to pace requests. The LinkedIn scraper takes longer by design, so keep blinking at the progress bar.[^saying]
+  
+`jobrake` caches fetched details in your <mark>user cache directory</mark>. Repeated searches can reuse those details. If the cache is missing or damaged, `jobrake` fetches them again. Use `--no-cache` to disable caching.
+
+[^saying]: Hey, let's talk LinkedIn at its own pace, as slow as we can. 😅 As they say, "_If you want to go fast, go alone. If you want to go far, go together._"
+
+## Using `jobrake` from Python
+
+Add it to your project dependencies with `uv`.
+
+```sh
+# create a .venv (uv venv .venv) or init a project uv init
+uv add git+https://github.com/eyayaw/jobrake
+```
+
+The package entry point is asynchronous:
+
+```python
+import asyncio
+
+from jobrake import scrape
+
+
+async def main():
+    jobs = await scrape(
+        "indeed",
+        query="data scientist",
+        country="netherlands",
+        location="amsterdam",
+        results=10,
+    )
+
+    for job in jobs:
+        print(job["date"], job["title"], job["company"])
+
+asyncio.run(main())
+```
+
+## What if ...?
+
+::: {.callout-warning title="A caveat"}
+Breaking in no time: Scrapers do not make promises, right? 🙃 `jobrake` pings unofficial(ly) (api) endpoints and relies on small HTML markups, so it lives at the mercy of LinkedIn and Indeed.
+Changes of API endpoints or markups can break it any day. If a request fails, it's probably them, not us. [File an issue](https://github.com/eyayaw/jobrake/issues), and offer fixes.
+:::
+
+The code is available at [github.com/eyayaw/jobrake](https://github.com/eyayaw/jobrake).
+
+Happy searching, I mean, raking!
+
+<hr style="border: 0; height: 1px; width: 85%; margin: 3.5rem auto
+  2.5rem; background: linear-gradient(to right, transparent, #aaa,
+  transparent);">
+
+# Appendix {#appendix}
+
+## Output formats
+
+Explicit output-format selection:
+
+```sh
+jobrake ... --format json
+jobrake ... -f jsonl
+jobrake ... -f csv
+```
+
+Files still infer their format from the extension.
+
+```sh
+jobrake ... -o jobs.csv
+jobrake ... -o jobs.jsonl
+```
+
+An explicit `--format` overrides that inference, i.e., you can do `-f jsonl -o jobs.txt` but you get JSON Lines in a `.txt` file.
+
+## Place name resolution
+
+`jobrake` can also resolve place names from the CLI. LinkedIn needs an unambiguous location to return results. Look up the place first, then use its display name in your search:
+
+```sh
+jobrake places linkedin "amsterdam"
+# Then search with -l "Amsterdam, North Holland, Netherlands"
+```
+
+For Indeed, include the country:
+
+```sh
+jobrake places indeed -c netherlands "amsterdam"
+```

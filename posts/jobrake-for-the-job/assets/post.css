@@ -1,0 +1,20 @@
+#title-block-header .quarto-title h1.title {
+  position: relative;
+  padding-inline-end: 2em;
+}
+
+#title-block-header .quarto-title h1.title .jobrake-repo-link {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  transform: translateY(-50%);
+  background: url("icon.svg") center / contain no-repeat;
+}
+
+#title-block-header .jobrake-repo-link:focus-visible {
+  outline: 2px solid #126333;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
