@@ -23,7 +23,7 @@ class ScaffoldTests(unittest.TestCase):
         project = "true, other] # category"
         with (
             TemporaryDirectory() as directory,
-            patch.object(new, "ROOT", Path(directory)),
+            patch.object(new, "ROOT", Path(directory).resolve()),
         ):
             for kind in new.KINDS:
                 for index, title in enumerate(titles):
