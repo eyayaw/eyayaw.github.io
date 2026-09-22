@@ -1,0 +1,15 @@
+---
+title: ${TITLE}
+description: ""
+date: "${DATE}"
+language:
+  title-block-published: "Talk given"
+categories: [talk]
+draft: true
+---
+
+Where and to whom I gave the talk, and what I wanted them to leave with.
+
+*[Slides](), source [on GitHub]().*
+
+{{< var sign >}}

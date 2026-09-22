@@ -29,6 +29,7 @@ kind:
   - package # something I built and released
   - config # dotfiles, machine setup, defaults
   - meta # about this site
+  - talk # slides I presented somewhere, with the write-up here
 
 # Which of my projects? Add the term when a project gets its first post.
 project:

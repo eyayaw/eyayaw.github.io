@@ -15,6 +15,7 @@ TEMPLATES = ROOT / "_templates"
 KINDS = {
     "post": ("posts", "post.qmd"),
     "package": ("posts", "package.qmd"),
+    "talk": ("posts", "talk.qmd"),
     "til": ("til", "til.qmd"),
 }
 
@@ -73,7 +74,9 @@ def main():
     parser.add_argument("title")
     parser.add_argument("--slug", help="override the slug derived from the title")
     parser.add_argument(
-        "--date", type=date.fromisoformat, help="ISO date (default: today)"
+        "--date",
+        type=date.fromisoformat,
+        help="ISO date, the day given for a talk (default: today)",
     )
     parser.add_argument("--project", help="project category for a package post")
     args = parser.parse_args()
