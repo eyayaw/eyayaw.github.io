@@ -1,0 +1,47 @@
+---
+title: "Leveraging Gen AI"
+description: "Slides from a talk at an Ethiopian community gathering in Wageningen, on what LLMs can do beyond typing into the chat box"
+date: "2025-07-13"
+language:
+  title-block-published: "Talk given"
+categories: [talk, python]
+---
+
+_Have you ever called an LLM from somewhere other than its chat window?_
+I motivated my talk with that question at my Ethiopian community gathering in Wageningen, Netherlands,
+and most of [the talk](https://eyayaw.github.io/talks/leveraging-genai-ethio-wage-july-2025/) is my answer to it.
+
+Most of us use LLMs daily but still carry the impression of the ChatGPT of November
+2022, when they hallucinated a ton, knew nothing past their training cutoff,
+and came in one flavor from one provider. A lot has changed since then.
+Models are generally better, and the playing field has gotten crowded with providers and options,
+closed-source or otherwise: OpenAI, Anthropic, Google, xAI, Meta, Mistral, Alibaba, DeepSeek, and
+the open-weight models you can run yourself with [Ollama](https://ollama.com/) or [LM Studio](https://lmstudio.ai/).
+
+My objective was to show the community (WUR staff, postdocs, and PhD candidates, plus
+our kids and other family members) that we can go beyond the chat window and put these models
+to productive use, and to stress <mark>calling them programmatically</mark>.
+
+You can customize them by adding context: system instructions, tool use, and MCP, use them for data extraction (RAG).
+I use them to fix my writing and to draft cover letters. A system prompt: "act as a career coach, say upfront when I'm not a good fit for the job, and avoid clichés and flashy words".
+
+I showed two demos about using LLMs for data extraction from unstructured data.
+
+The first extracts (OCRs) the numbers from a [photograph of a blackboard](https://nwcommons.nwciowa.edu/schuitemanethiopia/256/)
+chalked in Mettu in 1972, showing some data points about Ethiopia. I asked for valid CSV in tidy
+long format and read the result straight into R with [`read.csv`](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html).
+
+The second asks for structured output. I gave the [Gemini API](https://ai.google.dev/gemini-api/docs/structured-output)
+a `responseSchema` and an Amharic rental listing, and got back JSON object with the requested fields, even from the transliterated text.
+
+I ended the talk with questions to the audience. What are your use cases? Will this take our jobs?
+What role does it play in economic development back home? Is Ethiopia lagging behind wrt AI usage and literacy?
+
+::: callout-note
+At that time, July 13, 2025, Ethiopia **was not** on Anthropic's list of [supported countries](https://www.anthropic.com/supported-countries).
+:::
+
+*Slides: [Leveraging Gen AI](https://eyayaw.github.io/talks/leveraging-genai-ethio-wage-july-2025/),
+source [on GitHub](https://github.com/eyayaw/talks/tree/main/leveraging-genai-ethio-wage-july-2025).*
+
+{{< var sign >}}
