@@ -1,0 +1,76 @@
+---
+title: "Reproducible research workflows"
+description: "Slides from a talk at AMS Institute on research workflows: project organization, version control, dependency management, and literate programming"
+date: "2026-01-29"
+language:
+  title-block-published: "Talk given"
+categories: [talk, r, python]
+---
+
+I gave [my talk](https://eyayaw.github.io/rrw/) at the [AMS Institute](https://www.ams-institute.org/) to research fellows at our all-hands meeting.
+
+My old workflow went like this.
+I wrote in Word, copied summary stats out of Excel, and made regressions and figures in Stata or QGIS, then pasted them in by hand.
+Then, say, I want to change one threshold, and I have to answer: How did I clean the data? How did I make that figure? How many things do I need to update?
+Meanwhile, the folder has `analysis_v3_FINAL.do` next to `final_final_draft.docx`.
+
+_Sound familiar?_
+
+My objective was to show colleagues that there is a better workflow, and how to adopt it slowly and make it a habit.
+I also wanted to undeerscore **literate programming**. The code and the prose live in one <mark>source of truth</mark>, so you don't hardcode stats or copy-paste results.
+
+I organized the talk around four pillars.
+
+1. **Project organization:** A self-contained repo per project, with data, code, and outputs together. Raw data vs processed data separation, and writing docs (e.g., a README.md). For a cumulative dissertation, each chapter can be a git submodule, but I used separate [repos](https://github.com/eyayaw/dissertation).
+2. **Version control with Git & GitHub:** Use Git to track your work (code, prose, or docs), even as a single author, with GitHub or locally.
+3. **Dependency management:** Our analysis depends on specific package versions, and package updates can break our code. <mark>_It does not work on my machine!_</mark>
+   [`uv`](https://docs.astral.sh/uv/) (Python) and [`renv`](https://rstudio.github.io/renv/) (R) record package versions so the code runs on another machine.
+4. **Literate programming:** Code, results, and narrative in one document (kept tightly together). No copy-paste errors, changes (of data, threshold, vars etc.) cascade and results update automatically.
+
+I spent most of the talk on literate programming with [Quarto](https://quarto.org), because it entails the other three.
+
+::: callout-note
+The reproducibility crisis is real. See the [Data Colada](https://datacolada.org/118) posts on the Gino case. It may take you down, from earning [$1M+ a year](https://fortune.com/2023/08/02/harvard-professor-gino-dishonesty-investigation-falsified-research/) to a pleb! :D
+Journals and reviewers increasingly ask for code and data.
+:::
+
+One source but several output formats:
+
+```{mermaid}
+%%| label: fig-one-source
+%%| fig-cap: "Write in Markdown, embed R or Python, render to HTML, PDF, Word, or slides."
+flowchart LR
+  project["project/
+  ├── data/
+  │   ├── raw/
+  │   └── processed/
+  └── code/
+  #nbsp;   ├── download_data.py
+  #nbsp;   └── clean_data.R"]
+
+  project --> article["article.qmd"]
+  project --> seminar["internal-seminar-2026.qmd"]
+
+  article -->|render| html["HTML"]
+  article -->|render| pdf["PDF"]
+  article -->|render| docx["Word"]
+
+  seminar -->|render| revealjs["reveal.js slides (HTML)"]
+  seminar -->|render| beamer["Beamer slides (PDF)"]
+  seminar -->|render| pptx["PowerPoint slides"]
+
+  %% mermaid trims leading spaces in a label, so the code/ children start with #nbsp;
+  classDef tree text-align:left,font-family:monospace,white-space:pre
+  class project tree
+```
+
+The demo analyzes trends in [WOZ property values](https://eyayaw.github.io/rrw/demo/woz_analysis.html) across Dutch municipalities. It loads a CSV, makes exploratory plots, runs a regression with the results inline, adds cross-references and citations, and renders to HTML and PDF.
+
+
+*[Slides](https://eyayaw.github.io/rrw/), with the [WOZ demo](https://eyayaw.github.io/rrw/demo/woz_analysis.html) and the talk [repo](https://github.com/eyayaw/rrw).\
+Dissertation chapters:
+[housing supply elasticity](https://github.com/eyayaw/housing-supply-elasticity-in-germany),
+[the German donut effect](https://github.com/eyayaw/de-donut-effect), and
+[Addis Ababa gradients](https://github.com/eyayaw/the-monocentric-city-gradients-addis-ababa):*
+
+{{< var sign >}}
