@@ -32,7 +32,7 @@ def scaffold(kind, title, slug=None, when=None, project=None):
     # frozen once published even if the title later changes.
     target = (ROOT / section / slug).resolve()
     # A --slug of "../elsewhere", "/tmp/x", or "a/b/c" would otherwise write
-    # outside the section, and the listings only glob one level deep.
+    # outside the section or nest deeper than check_posts.py's */index.qmd glob reaches.
     if target.parent != (ROOT / section) or not slug:
         raise SystemExit(f"error: {slug!r} must be a single directory name")
     if target.exists():
