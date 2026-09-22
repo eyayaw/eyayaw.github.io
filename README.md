@@ -3,11 +3,13 @@
 [eyayaw.github.io](https://eyayaw.github.io), built with [Quarto](https://quarto.org/).
 
 ```sh
-uv run scripts/new.py post "<TITLE>" # kinds: post,package,til; --help for flags
+uv run scripts/new.py post "<TITLE>" # kinds: post,package,talk,til; --help for flags
 uv run scripts/check_posts.py # frontmatter + categories
+uv run python -m unittest tests/test_*.py
 ```
 
 `new.py` drops a `draft: true` skeleton at `<section>/<slug>/index.qmd`, flip it for publish.
+A talk is a post: pass `--date` as the day it was given, which the title block labels "Talk given".
 
 ## Stuff I may forget
 
@@ -16,8 +18,8 @@ giscus comment key, so renaming orphans the thread. Same reason slugs are named
 after the post rather than its subject.
 
 New top-level directory only if it needs its own listing, `_metadata.yml`, or
-render settings. `til/` does. "All my package posts" doesn't, that's a category
-and a listing that filters on it:
+render settings. `til/` does. "All my package posts" or "all my talks" doesn't,
+that's a category and a listing that filters on it:
 
 ```yaml
 listing:
